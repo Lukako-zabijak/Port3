@@ -2,6 +2,11 @@
   "name": "my-app",
   "private": true,
   "version": "0.0.0",
+  "packageManager": "npm@10.9.2",
+  "engines": {
+    "node": "22.x",
+    "npm": "10.x"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
