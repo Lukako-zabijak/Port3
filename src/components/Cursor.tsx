@@ -5,17 +5,12 @@ export default function Cursor() {
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [hovering, setHovering] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [touch, setTouch] = useState(false);
+  const [supports_custom_cursor] = useState(() =>
+    window.matchMedia('(min-width: 768px) and (hover: hover) and (pointer: fine)').matches
+  );
 
   useEffect(() => {
-    if (
-      window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
-      'ontouchstart' in window ||
-      navigator.maxTouchPoints > 0
-    ) {
-      setTouch(true);
-      return;
-    }
+    if (!supports_custom_cursor) return;
 
     const move = (e: MouseEvent) => {
       setPos({ x: e.clientX, y: e.clientY });
@@ -41,9 +36,9 @@ export default function Cursor() {
       window.removeEventListener('mouseover', over);
       document.removeEventListener('mouseleave', leave);
     };
-  }, []);
+  }, [supports_custom_cursor]);
 
-  if (touch) return null;
+  if (!supports_custom_cursor) return null;
 
   return (
     <div
