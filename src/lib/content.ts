@@ -190,28 +190,6 @@ export const RULES = [
   },
 ];
 
-/* ── Reviews ── */
-export const REVIEWS = [
-  {
-    handle: '@Dev_ProjectLead',
-    project: 'Unannounced RPG',
-    avatar: 1,
-    body: 'Cleanest codebase we\'ve integrated this year. The combat system handles high-ping players perfectly without dragging down server performance.',
-  },
-  {
-    handle: '@Studio_Owner',
-    project: 'Survival Simulator',
-    avatar: 2,
-    body: 'Super reliable framework developer. Handled our complete round cycle logic and left the code incredibly easy for our UI designers to hook into.',
-  },
-  {
-    handle: '@Community_Manager',
-    project: '1M+ Visits FPS',
-    avatar: 3,
-    body: 'Fastest scripter I\'ve ever worked with. The anti-cheat measures he implemented stopped our exploiter problem. Highly recommend for any serious project.',
-  },
-];
-
 /* ── FAQ ── */
 export const FAQS = [
   {
