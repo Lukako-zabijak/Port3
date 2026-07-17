@@ -11,7 +11,6 @@ import Services from './sections/Services';
 import Process from './sections/Process';
 import Pricing from './sections/Pricing';
 import Estimator from './components/Estimator';
-import Reviews from './sections/Reviews';
 import Faq from './sections/Faq';
 import Contact from './sections/Contact';
 import {
@@ -52,7 +51,6 @@ export default function App() {
         <Process />
         <Pricing />
         <Estimator />
-        <Reviews />
         <Faq />
         <Contact />
       </main>
