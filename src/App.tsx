@@ -6,6 +6,7 @@ import Preloader from './components/Preloader';
 import Nav from './components/Nav';
 import Hero from './sections/Hero';
 import Work from './sections/Work';
+import Showcase from './sections/Showcase';
 import About from './sections/About';
 import Services from './sections/Services';
 import Process from './sections/Process';
@@ -46,6 +47,7 @@ export default function App() {
       <main className="relative z-10">
         {ready ? <Hero ready={ready} /> : <div className="min-h-[100svh]" />}
         <Work />
+        <Showcase />
         <About />
         <Services />
         <Process />

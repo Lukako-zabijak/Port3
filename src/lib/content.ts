@@ -5,6 +5,7 @@ export const ROBLOX_ID = '1829644134';
 
 export const NAV_LINKS = [
   { label: 'Work', id: 'work' },
+  { label: 'Showcase', id: 'showcase' },
   { label: 'About', id: 'about' },
   { label: 'Services', id: 'services' },
   { label: 'Pricing', id: 'pricing' },
