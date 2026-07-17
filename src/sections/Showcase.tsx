@@ -6,7 +6,7 @@ const showcase_url = 'https://lukako.carrd.co/';
 
 export default function Showcase() {
   return (
-    <section id="showcase" className="relative scroll-mt-24 overflow-hidden border-y border-white/10 bg-black/90 px-5 py-20 md:py-28">
+    <section id="showcase" className="relative scroll-mt-24 overflow-hidden border-y border-ac-20 bg-transparent px-5 py-20 md:py-28">
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="absolute -right-32 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-ac-10 blur-[110px]" />
         <div className="absolute inset-y-0 left-[12%] w-px bg-gradient-to-b from-transparent via-white/10 to-transparent" />
