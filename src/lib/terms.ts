@@ -42,7 +42,7 @@ export const terms_sections: terms_section[] = [
     number: '04',
     title: 'Payment',
     paragraphs: [
-      'Unless the quote says otherwise, 50% is due upfront and the remaining 50% is due after the working demo but before editable source code or final files are handed over.',
+      'Unless the quote says otherwise, 50% is due upfront and the remaining 50% is due after a recorded demonstration but before any playable access, editable source code, or final files are handed over.',
     ],
     bullets: [
       'PayPal or Robux is accepted only when the chosen method is written in the quote.',
@@ -56,7 +56,8 @@ export const terms_sections: terms_section[] = [
     number: '05',
     title: 'Demo, revision, and approval',
     paragraphs: [
-      'You receive a working demo before the final balance is requested. One reasonable revision round within the original written scope is included.',
+      'Before the final balance is requested, I send a recorded demonstration of the working system. This is a review opportunity, not access to the test place, playable build, project, or source code.',
+      'One reasonable revision round within the original written scope is included.',
       'New systems, redesigned behavior, or requests that contradict the accepted specification require a separate quote and may change the schedule.',
     ],
   },
@@ -65,7 +66,8 @@ export const terms_sections: terms_section[] = [
     number: '06',
     title: 'Delivery',
     paragraphs: [
-      'Editable source code and final files are delivered after full cleared payment. A reversed or disputed payment suspends delivery and the usage licence until the payment issue is resolved.',
+      'Playable or test-place access, project access, editable source code, and final files are delivered only after full cleared payment. A reversed or disputed payment suspends delivery and the usage licence until the payment issue is resolved.',
+      'Progress messages and recorded demonstrations are previews. They are not delivery and do not grant access to or a licence to use the work.',
       'After handover, you are responsible for keeping backups of the delivered files and credentials.',
     ],
   },

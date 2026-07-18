@@ -19,4 +19,15 @@ describe('terms content', () => {
     expect(terms_version).toBe('1.0');
     expect(terms_effective_date).toBe('18 July 2026');
   });
+
+  it('keeps playable access locked until full payment', () => {
+    const payment_and_delivery = terms_sections
+      .filter((section) => ['payment', 'revision', 'delivery'].includes(section.id))
+      .flatMap((section) => section.paragraphs)
+      .join(' ')
+      .toLowerCase();
+
+    expect(payment_and_delivery).toContain('not access to the test place');
+    expect(payment_and_delivery).toContain('only after full cleared payment');
+  });
 });

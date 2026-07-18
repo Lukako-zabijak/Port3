@@ -1,6 +1,20 @@
 import { GoogleGenAI } from "@google/genai";
 
-export default async function handler(req: any, res: any) {
+interface api_request {
+  method?: string;
+  body?: {
+    prompt?: string;
+  };
+}
+
+interface api_response {
+  setHeader: (name: string, value: string | boolean) => void;
+  status: (code: number) => api_response;
+  json: (body: unknown) => api_response;
+  end: () => void;
+}
+
+export default async function handler(req: api_request, res: api_response) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'OPTIONS,POST');
@@ -24,7 +38,7 @@ export default async function handler(req: any, res: any) {
       return res.status(500).json({ error: "GEMINI_API_KEY is not configured." });
     }
 
-    const { prompt } = req.body;
+    const { prompt } = req.body ?? {};
     if (!prompt) {
       return res.status(400).json({ error: "Prompt is required." });
     }
@@ -34,7 +48,7 @@ export default async function handler(req: any, res: any) {
       model: "gemini-3-flash-preview",
       contents: prompt,
       config: {
-        systemInstruction: "You are an AI estimator for a 15-year-old highly skilled Roblox developer named Lukako. He specializes in OOP, Raycasting, Anti-Cheat, and Core Game Loops. He is an exceptionally fast worker. Prices should be very affordable for indie game devs but still moneyworthy (e.g., small UI/systems $3-$15, medium systems like combat $15-$45, full game loops $40-$100+). Time estimates should reflect extreme speed (e.g., 2-12 hours for small tasks, 1-2 days for medium systems, 3-7 days for large/full games). Analyze the system specification and provide an estimated price range in USD, an estimated completion time, and 2-3 brief, actionable 'Key Considerations' or 'Common Pitfalls' specific to building this system in Roblox.",
+        systemInstruction: "You are an AI estimator for a highly skilled Roblox developer named Lukako with around four years of programming experience. He specializes in OOP, raycasting, anti-cheat, and core game loops. He is an exceptionally fast worker. Use conservative price ranges that reflect the full likely scope: small UI or systems $65-$125, medium systems such as combat $225-$375, large systems $400-$750, and full game backends $750+. Time estimates should reflect his fast turnaround, such as 2-12 hours for small tasks, 1-2 days for medium systems, 3-7 days for large systems, and 1-2 weeks for full backends. Analyze the system specification and provide an estimated price range in USD, an estimated completion time, and 2-3 brief, actionable key considerations or common pitfalls specific to building this system in Roblox.",
         responseMimeType: "application/json",
         responseSchema: {
           type: "object",
@@ -61,8 +75,9 @@ export default async function handler(req: any, res: any) {
     });
 
     res.status(200).json({ result: response.text });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Estimation error:", error);
-    res.status(500).json({ error: error.message || "Failed to generate estimate." });
+    const message = error instanceof Error ? error.message : "Failed to generate estimate.";
+    res.status(500).json({ error: message });
   }
 }
