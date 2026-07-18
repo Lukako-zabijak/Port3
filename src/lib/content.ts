@@ -138,13 +138,13 @@ export const PROCESS_STEPS = [
   },
   {
     step: '03',
-    title: 'Watch it get built',
-    body: 'You get test-place access while I work, so you can poke the system and course-correct early.',
+    title: 'Progress updates',
+    body: 'I keep you updated on what I am working on and send recorded demos as the system takes shape. Development stays in my private test place, with no playable or editable access before full payment.',
   },
   {
     step: '04',
-    title: 'Demo & handover',
-    body: 'I demo the finished system live, you pay the remaining 50%, and I walk you through the codebase.',
+    title: 'Review & handover',
+    body: 'I send a recorded demo of the finished system for review. After the included revision and remaining 50% are settled, I deliver the source and walk you through it.',
   },
 ];
 
@@ -153,14 +153,14 @@ export const PRICING_TIERS = [
   {
     name: 'UI Systems',
     desc: 'Shop logic, inventory systems, menu wiring and tweening on your UI art.',
-    price: 'from $75',
+    price: 'from $65',
     note: 'robux equivalent fine',
     featured: false,
   },
   {
     name: 'Combat & Frameworks',
     desc: 'Modular combat, OOP frameworks, raycasting, netcode — the heavy machinery.',
-    price: 'from $250',
+    price: 'from $225',
     note: 'most common request',
     featured: true,
   },
@@ -203,7 +203,7 @@ export const FAQS = [
   },
   {
     q: 'How does payment work?',
-    a: '50% upfront through PayPal or Robux before I write the first line, the rest after I demo the finished system in a test place. No percentages, no rev-share.',
+    a: '50% upfront through PayPal or Robux before I write the first line, then the rest after I send a recorded demo of the finished system. Playable access and source are delivered only after full payment. No percentages, no rev-share.',
   },
   {
     q: 'Will it survive exploiters?',

@@ -107,19 +107,19 @@ export function localEstimate(spec: string): Estimate {
   let time: string;
   if (score <= 2) {
     tier = 'small';
-    price = '$5 – $15';
+    price = '$65 – $125';
     time = '2 – 12 hours';
   } else if (score <= 4.5) {
     tier = 'medium';
-    price = '$15 – $45';
+    price = '$225 – $375';
     time = '1 – 2 days';
   } else if (score <= 7.5) {
     tier = 'large';
-    price = '$40 – $100';
+    price = '$400 – $750';
     time = '3 – 7 days';
   } else {
     tier = 'xl';
-    price = '$100+';
+    price = '$750+';
     time = '1 – 2 weeks';
   }
 
@@ -133,6 +133,7 @@ export function localEstimate(spec: string): Estimate {
  * when the endpoint isn't reachable, so the tool always answers.
  */
 export async function getEstimate(spec: string): Promise<Estimate> {
+  const baseline = localEstimate(spec);
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 7000);
 
@@ -153,8 +154,8 @@ export async function getEstimate(spec: string): Promise<Estimate> {
     const parsed = JSON.parse(jsonStr);
     if (parsed.price && parsed.time && Array.isArray(parsed.considerations)) {
       return {
-        tier: localEstimate(spec).tier,
-        price: parsed.price,
+        tier: baseline.tier,
+        price: baseline.price,
         time: parsed.time,
         considerations: parsed.considerations.slice(0, 3),
         source: 'live',
@@ -162,7 +163,7 @@ export async function getEstimate(spec: string): Promise<Estimate> {
     }
     throw new Error('bad payload');
   } catch {
-    return localEstimate(spec);
+    return baseline;
   } finally {
     clearTimeout(timeout);
   }
