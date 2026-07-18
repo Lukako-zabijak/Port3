@@ -153,14 +153,14 @@ export const PRICING_TIERS = [
   {
     name: 'UI Systems',
     desc: 'Shop logic, inventory systems, menu wiring and tweening on your UI art.',
-    price: 'from $65',
+    price: 'from $40',
     note: 'robux equivalent fine',
     featured: false,
   },
   {
     name: 'Combat & Frameworks',
     desc: 'Modular combat, OOP frameworks, raycasting, netcode — the heavy machinery.',
-    price: 'from $225',
+    price: 'from $165',
     note: 'most common request',
     featured: true,
   },

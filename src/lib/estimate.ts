@@ -107,19 +107,19 @@ export function localEstimate(spec: string): Estimate {
   let time: string;
   if (score <= 2) {
     tier = 'small';
-    price = '$65 – $125';
+    price = '$40 – $90';
     time = '2 – 12 hours';
   } else if (score <= 4.5) {
     tier = 'medium';
-    price = '$225 – $375';
+    price = '$165 – $275';
     time = '1 – 2 days';
   } else if (score <= 7.5) {
     tier = 'large';
-    price = '$400 – $750';
+    price = '$275 – $500';
     time = '3 – 7 days';
   } else {
     tier = 'xl';
-    price = '$750+';
+    price = '$500+';
     time = '1 – 2 weeks';
   }
 

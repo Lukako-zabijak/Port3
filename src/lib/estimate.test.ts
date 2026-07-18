@@ -5,14 +5,14 @@ describe('price estimator engine', () => {
   it('prices a simple UI-only spec at the entry tier', () => {
     const e = localEstimate('a shop UI with clean tweening and a settings menu');
     expect(e.tier).toBe('small');
-    expect(e.price).toBe('$65 – $125');
+    expect(e.price).toBe('$40 – $90');
     expect(e.time).toBe('2 – 12 hours');
   });
 
   it('prices a combat system as a medium build', () => {
     const e = localEstimate('a melee combat system with raycast hits and parry mechanics');
     expect(e.tier).toBe('medium');
-    expect(e.price).toBe('$225 – $375');
+    expect(e.price).toBe('$165 – $275');
     expect(e.time).toBe('1 – 2 days');
   });
 
@@ -21,7 +21,7 @@ describe('price estimator engine', () => {
       'full game: round-based combat with matchmaking, datastore saving for player profiles, trading, and anti-cheat'
     );
     expect(e.tier).toBe('xl');
-    expect(e.price).toBe('$750+');
+    expect(e.price).toBe('$500+');
     expect(e.time).toBe('1 – 2 weeks');
   });
 
