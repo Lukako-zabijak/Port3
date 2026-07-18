@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowUpRight, MessageCircle, Gamepad2 } from 'lucide-react';
+import { Link } from 'react-router';
 import { Reveal, Magnetic } from '../components/bits';
 import { DISCORD_LINK, ROBLOX_LINK, DISCORD_ID, ROBLOX_ID } from '../lib/content';
 
@@ -68,6 +69,16 @@ export default function Contact() {
               </a>
             </Magnetic>
           </div>
+        </Reveal>
+
+        <Reveal delay={0.38}>
+          <p className="mt-7 text-xs leading-5 text-zinc-600">
+            By commissioning me, you acknowledge the{' '}
+            <Link to="/terms" className="text-zinc-400 underline decoration-white/20 underline-offset-4 transition-colors hover:text-ac">
+              Terms of Service
+            </Link>
+            .
+          </p>
         </Reveal>
 
         <Reveal delay={0.4}>
