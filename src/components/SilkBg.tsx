@@ -90,7 +90,7 @@ export default function SilkBg({ theme }: { theme: ThemeKey }) {
     if (!canvas) return;
     const gl = canvas.getContext('webgl', {
       antialias: false,
-      alpha: false,
+      alpha: true,
       depth: false,
       stencil: false,
       powerPreference: 'low-power',
@@ -113,7 +113,10 @@ export default function SilkBg({ theme }: { theme: ThemeKey }) {
     gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
     gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
     gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      canvas.style.display = 'none';
+      return;
+    }
     gl.useProgram(prog);
 
     const buf = gl.createBuffer();
@@ -218,8 +221,16 @@ export default function SilkBg({ theme }: { theme: ThemeKey }) {
     };
   }, []);
 
+  const fallback = getTheme(theme);
+
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden>
+    <div
+      className="fixed inset-0 z-0 pointer-events-none"
+      style={{
+        background: `radial-gradient(ellipse 80% 60% at 50% 0%, ${fallback.accent}22, transparent 60%), ${fallback.bg}`,
+      }}
+      aria-hidden
+    >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       <div className="absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay" />
     </div>

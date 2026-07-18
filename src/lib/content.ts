@@ -72,7 +72,7 @@ export const PROJECTS: Project[] = [
 
 /* ── About ── */
 export const ABOUT_INTRO =
-  "I'm 15, and for the past year I've been rebuilding the way I write code from the ground up — strict typing, OOP frameworks, and server-authoritative everything.";
+  "Around four years of programming experience led me to the way I build now — strict Luau, OOP frameworks, and server-authoritative systems from the ground up.";
 
 export const ABOUT_BODY =
   "What that means for you: systems that don't fall over when the player count climbs, don't hand exploiters free wins, and don't turn into spaghetti the moment you ask for a change. I work fast, I price fair, and I finish what I start.";
