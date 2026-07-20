@@ -134,7 +134,7 @@ export const PROCESS_STEPS = [
   {
     step: '02',
     title: 'Quote locked in',
-    body: 'I reply with a fixed price and a timeframe. 50% upfront via PayPal or Robux, then I start writing code.',
+    body: 'I reply with a fixed Robux price and a timeframe. You pay 50% upfront through the specified gamepass, then I start writing code.',
   },
   {
     step: '03',
@@ -154,7 +154,7 @@ export const PRICING_TIERS = [
     name: 'UI Systems',
     desc: 'Shop logic, inventory systems, menu wiring and tweening on your UI art.',
     price: 'from $40',
-    note: 'robux equivalent fine',
+    note: 'paid in robux',
     featured: false,
   },
   {
@@ -176,7 +176,8 @@ export const PRICING_TIERS = [
 export const PAYMENT_POINTS = [
   'Minimum commission: $10 or 4,000 Robux — smaller requests are not accepted',
   '50% upfront, 50% on demo — no rev-share, no percentages',
-  'PayPal or Robux via group funds, adjusted for DevEx',
+  'Robux only, paid through the gamepasses specified for the commission',
+  'Gamepass prices account for Roblox fees so the received amount matches the quote',
   'Fixed price once scoped — no surprise invoices',
   'Small tasks welcome when they meet the minimum commission',
 ];
@@ -204,7 +205,7 @@ export const FAQS = [
   },
   {
     q: 'How does payment work?',
-    a: '50% upfront through PayPal or Robux before I write the first line, then the rest after I send a recorded demo of the finished system. Playable access and source are delivered only after full payment. No percentages, no rev-share.',
+    a: 'Payment is Robux only. You pay 50% upfront through the specified gamepass before I write the first line, then the remaining 50% through the final gamepass after I send a recorded demo. Playable access and source are delivered only after full payment. No percentages or rev-share.',
   },
   {
     q: 'Will it survive exploiters?',
