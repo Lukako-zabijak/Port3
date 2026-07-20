@@ -6,7 +6,7 @@ export interface terms_section {
   bullets?: string[];
 }
 
-export const terms_version = '1.1';
+export const terms_version = '1.2';
 export const terms_effective_date = '21 July 2026';
 
 export const terms_sections: terms_section[] = [
@@ -42,14 +42,13 @@ export const terms_sections: terms_section[] = [
     number: '04',
     title: 'Payment',
     paragraphs: [
-      'Unless the quote says otherwise, 50% is due upfront and the remaining 50% is due after a recorded demonstration but before any playable access, editable source code, or final files are handed over.',
+      'Payment is accepted only in Robux through the gamepasses specified for the commission. Unless the quote says otherwise, 50% is due upfront and the remaining 50% is due after a recorded demonstration but before any playable access, editable source code, or final files are handed over.',
     ],
     bullets: [
-      'Commissions priced below USD $10 or 4,000 Robux are not accepted.',
-      'PayPal or Robux is accepted only when the chosen method is written in the quote.',
-      'You cover transaction and platform fees so the amount I receive equals the accepted quote.',
-      'A Robux quote states an exact amount and a Roblox-compliant payment method. Robux is not represented as cash or guaranteed DevEx value.',
-      'You confirm that you are authorized to commission the work and use the selected payment account or method.',
+      'The minimum commission is 4,000 Robux, shown on the portfolio as a $10 reference. Smaller commissions are not accepted.',
+      'Each gamepass price accounts for Roblox transaction fees so the amount I receive equals the accepted Robux quote.',
+      'The quote states the exact Robux amount and identifies the gamepasses used for payment. Robux is not represented as cash or guaranteed DevEx value.',
+      'You confirm that you are authorized to commission the work and use the Roblox account making each purchase.',
     ],
   },
   {
