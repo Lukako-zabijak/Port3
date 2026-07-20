@@ -1,4 +1,4 @@
-export type Tier = 'small' | 'medium' | 'large' | 'xl';
+export type Tier = 'small' | 'standard' | 'medium' | 'large' | 'complex' | 'xl';
 
 export interface Estimate {
   tier: Tier;
@@ -32,7 +32,7 @@ const RULES: Rule[] = [
   },
   {
     pattern: /round|lobby|matchmaking|game ?loop|queue/i,
-    weight: 3,
+    weight: 1.5,
     tip: 'Round loops need graceful handling for players leaving mid-match, or the state machine eventually deadlocks.',
   },
   {
@@ -77,6 +77,16 @@ const RULES: Rule[] = [
   },
 ];
 
+const scope_signals: Array<{ pattern: RegExp; weight: number }> = [
+  { pattern: /full game|complete game|entire (?:game|backend)|all systems/i, weight: 6 },
+  { pattern: /cross[- ]server|messagingservice|teleportservice|global matchmaking/i, weight: 2.5 },
+  { pattern: /multiplayer|replication|networking|remoteevent|remotefunction/i, weight: 1.5 },
+  { pattern: /mobile|controller|console|cross[- ]platform/i, weight: 1 },
+  { pattern: /production[- ]ready|scalable|performance|load test|\d+ players/i, weight: 1.5 },
+  { pattern: /integration|webhook|httpservice|external api|third[- ]party/i, weight: 1.5 },
+  { pattern: /procedural|customizable|configurable|multiple (?:modes|maps|classes|teams)/i, weight: 1.5 },
+];
+
 const GENERIC_TIPS = [
   'Everything critical gets validated server-side — the client is a view, never a source of truth.',
   'A clear spec up front is the single biggest factor in keeping the price at the low end.',
@@ -92,31 +102,50 @@ function scoreSpec(spec: string): { score: number; tips: string[] } {
       tips.push(rule.tip);
     }
   }
+  for (const signal of scope_signals) {
+    if (signal.pattern.test(spec)) score += signal.weight;
+  }
+
+  const feature_separators = spec.match(/,|;|\band\b/gi)?.length ?? 0;
+  score += Math.min(feature_separators * 0.35, 1.75);
+
   // longer, more detailed specs usually mean a broader scope
   const words = spec.trim().split(/\s+/).length;
-  if (words > 60) score += 1.5;
-  else if (words > 25) score += 0.5;
+  if (words > 100) score += 2.5;
+  else if (words > 60) score += 1.5;
+  else if (words > 25) score += 0.75;
   return { score, tips };
 }
 
-export function localEstimate(spec: string): Estimate {
-  const { score, tips } = scoreSpec(spec);
-
+function estimate_from_score(
+  score: number,
+  tips: string[],
+  source: Estimate['source'],
+  time_override?: string,
+): Estimate {
   let tier: Tier;
   let price: string;
   let time: string;
-  if (score <= 2) {
+  if (score <= 1) {
     tier = 'small';
-    price = '$40 – $90';
-    time = '2 – 12 hours';
+    price = '$40 – $75';
+    time = '2 – 6 hours';
+  } else if (score <= 2.5) {
+    tier = 'standard';
+    price = '$75 – $140';
+    time = '6 – 12 hours';
   } else if (score <= 4.5) {
     tier = 'medium';
-    price = '$165 – $275';
+    price = '$170 – $200';
     time = '1 – 2 days';
-  } else if (score <= 7.5) {
+  } else if (score <= 6.5) {
     tier = 'large';
-    price = '$275 – $500';
+    price = '$200 – $350';
     time = '3 – 7 days';
+  } else if (score <= 9) {
+    tier = 'complex';
+    price = '$350 – $500';
+    time = '5 – 10 days';
   } else {
     tier = 'xl';
     price = '$500+';
@@ -124,7 +153,12 @@ export function localEstimate(spec: string): Estimate {
   }
 
   const considerations = [...tips, ...GENERIC_TIPS].slice(0, 3);
-  return { tier, price, time, considerations, source: 'local' };
+  return { tier, price, time: time_override ?? time, considerations, source };
+}
+
+export function localEstimate(spec: string): Estimate {
+  const { score, tips } = scoreSpec(spec);
+  return estimate_from_score(score, tips, 'local');
 }
 
 /**
@@ -133,7 +167,8 @@ export function localEstimate(spec: string): Estimate {
  * when the endpoint isn't reachable, so the tool always answers.
  */
 export async function getEstimate(spec: string): Promise<Estimate> {
-  const baseline = localEstimate(spec);
+  const local_result = scoreSpec(spec);
+  const baseline = estimate_from_score(local_result.score, local_result.tips, 'local');
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 7000);
 
@@ -152,14 +187,10 @@ export async function getEstimate(spec: string): Promise<Estimate> {
       jsonStr = jsonStr.replace(/^```(?:json)?\n?/i, '').replace(/\n?```$/i, '').trim();
     }
     const parsed = JSON.parse(jsonStr);
-    if (parsed.price && parsed.time && Array.isArray(parsed.considerations)) {
-      return {
-        tier: baseline.tier,
-        price: baseline.price,
-        time: parsed.time,
-        considerations: parsed.considerations.slice(0, 3),
-        source: 'live',
-      };
+    const ai_score = Number(parsed.complexity_score);
+    if (Number.isFinite(ai_score) && parsed.time && Array.isArray(parsed.considerations)) {
+      const final_score = Math.max(local_result.score, Math.min(Math.max(ai_score, 0), 12));
+      return estimate_from_score(final_score, parsed.considerations, 'live', parsed.time);
     }
     throw new Error('bad payload');
   } catch {

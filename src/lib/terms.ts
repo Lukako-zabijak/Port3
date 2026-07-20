@@ -6,8 +6,8 @@ export interface terms_section {
   bullets?: string[];
 }
 
-export const terms_version = '1.0';
-export const terms_effective_date = '18 July 2026';
+export const terms_version = '1.1';
+export const terms_effective_date = '21 July 2026';
 
 export const terms_sections: terms_section[] = [
   {
@@ -45,6 +45,7 @@ export const terms_sections: terms_section[] = [
       'Unless the quote says otherwise, 50% is due upfront and the remaining 50% is due after a recorded demonstration but before any playable access, editable source code, or final files are handed over.',
     ],
     bullets: [
+      'Commissions priced below USD $10 or 4,000 Robux are not accepted.',
       'PayPal or Robux is accepted only when the chosen method is written in the quote.',
       'You cover transaction and platform fees so the amount I receive equals the accepted quote.',
       'A Robux quote states an exact amount and a Roblox-compliant payment method. Robux is not represented as cash or guaranteed DevEx value.',
