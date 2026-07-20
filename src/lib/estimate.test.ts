@@ -12,7 +12,7 @@ describe('price estimator engine', () => {
   it('prices a combat system as a medium build', () => {
     const e = localEstimate('a melee combat system with raycast hits and parry mechanics');
     expect(e.tier).toBe('medium');
-    expect(e.price).toBe('$165 – $250');
+    expect(e.price).toBe('$170 – $200');
     expect(e.time).toBe('1 – 2 days');
   });
 
@@ -42,6 +42,12 @@ describe('price estimator engine', () => {
       'a production-ready multiplayer vehicle system with mobile and controller support, networking, customization, performance testing, and external api integration'
     );
     expect(['complex', 'xl']).toContain(e.tier);
+  });
+
+  it('keeps a basic standalone round system below the medium tier', () => {
+    const e = localEstimate('a basic round system');
+    expect(e.tier).toBe('standard');
+    expect(e.price).toBe('$75 – $140');
   });
 
   it('allows ai complexity to raise the local estimate', async () => {
@@ -76,7 +82,7 @@ describe('price estimator engine', () => {
 
     const e = await getEstimate('a melee combat system with raycast hits and parry mechanics');
     expect(e.tier).toBe('medium');
-    expect(e.price).toBe('$165 – $250');
+    expect(e.price).toBe('$170 – $200');
     vi.unstubAllGlobals();
   });
 });

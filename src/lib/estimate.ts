@@ -32,7 +32,7 @@ const RULES: Rule[] = [
   },
   {
     pattern: /round|lobby|matchmaking|game ?loop|queue/i,
-    weight: 3,
+    weight: 1.5,
     tip: 'Round loops need graceful handling for players leaving mid-match, or the state machine eventually deadlocks.',
   },
   {
@@ -136,11 +136,11 @@ function estimate_from_score(
     time = '6 – 12 hours';
   } else if (score <= 4.5) {
     tier = 'medium';
-    price = '$165 – $250';
+    price = '$170 – $200';
     time = '1 – 2 days';
   } else if (score <= 6.5) {
     tier = 'large';
-    price = '$250 – $350';
+    price = '$200 – $350';
     time = '3 – 7 days';
   } else if (score <= 9) {
     tier = 'complex';
