@@ -174,10 +174,11 @@ export const PRICING_TIERS = [
 ];
 
 export const PAYMENT_POINTS = [
+  'Minimum commission: $10 or 4,000 Robux — smaller requests are not accepted',
   '50% upfront, 50% on demo — no rev-share, no percentages',
   'PayPal or Robux via group funds, adjusted for DevEx',
   'Fixed price once scoped — no surprise invoices',
-  'Small tasks welcome if the spec is clear',
+  'Small tasks welcome when they meet the minimum commission',
 ];
 
 export const RULES = [
@@ -211,6 +212,6 @@ export const FAQS = [
   },
   {
     q: 'Can I hire you for something small?',
-    a: 'Yes, as long as the spec is clear. Run it through the estimator first — if the range looks right to you, DM me and we\'ll sort it out.',
+    a: 'Yes, as long as the spec is clear and the quote meets the $10 or 4,000 Robux minimum. Run it through the estimator first, then DM me if the range looks right.',
   },
 ];

@@ -72,6 +72,9 @@ export default function Estimator() {
             <div className="p-6 md:p-8 font-mono text-[13px] md:text-sm leading-relaxed">
               <div className="text-zinc-600 mb-5">
                 # describe the system you need — get a price range and a timeframe
+                <span className="mt-1 block text-ac-dim">
+                  # minimum commission: $10 or 4,000 robux
+                </span>
               </div>
 
               {/* previous runs */}

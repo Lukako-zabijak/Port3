@@ -48,14 +48,14 @@ export default async function handler(req: api_request, res: api_response) {
       model: "gemini-3-flash-preview",
       contents: prompt,
       config: {
-        systemInstruction: "You are an AI estimator for a highly skilled Roblox developer named Lukako with around four years of programming experience. He specializes in OOP, raycasting, anti-cheat, and core game loops. He is an exceptionally fast worker. Use conservative price ranges that reflect the full likely scope: small UI or systems $40-$90, medium systems such as combat $165-$275, large systems $275-$500, and full game backends $500+. Time estimates should reflect his fast turnaround, such as 2-12 hours for small tasks, 1-2 days for medium systems, 3-7 days for large systems, and 1-2 weeks for full backends. Analyze the system specification and provide an estimated price range in USD, an estimated completion time, and 2-3 brief, actionable key considerations or common pitfalls specific to building this system in Roblox.",
+        systemInstruction: "You estimate the implementation complexity of Roblox programming commissions for Lukako, a fast developer with around four years of experience. Consider the number of distinct systems, networking, persistence, security, cross-platform support, integrations, scalability, edge cases, testing, and ambiguity. Return a conservative complexity_score from 0 to 12, where 0-1 is a tiny isolated task, 1-2.5 is a standard small system, 2.5-4.5 is a medium system such as basic combat, 4.5-6.5 is a large multi-feature system, 6.5-9 is complex production work, and above 9 is a full backend or similarly broad commission. Do not lower complexity merely because the developer is fast. Also provide an estimated completion time and 2-3 brief, actionable considerations specific to the requested system.",
         responseMimeType: "application/json",
         responseSchema: {
           type: "object",
           properties: {
-            price: {
-              type: "string",
-              description: "Estimated price range in USD, e.g., '$15 - $30'",
+            complexity_score: {
+              type: "number",
+              description: "Conservative implementation complexity from 0 to 12.",
             },
             time: {
               type: "string",
@@ -69,7 +69,7 @@ export default async function handler(req: api_request, res: api_response) {
               description: "2-3 brief, actionable key considerations or common pitfalls for this specific project in Roblox.",
             },
           },
-          required: ["price", "time", "considerations"],
+          required: ["complexity_score", "time", "considerations"],
         },
       },
     });

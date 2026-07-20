@@ -16,8 +16,13 @@ describe('terms content', () => {
   });
 
   it('publishes the approved version and effective date', () => {
-    expect(terms_version).toBe('1.0');
-    expect(terms_effective_date).toBe('18 July 2026');
+    expect(terms_version).toBe('1.1');
+    expect(terms_effective_date).toBe('21 July 2026');
+  });
+
+  it('publishes the minimum commission', () => {
+    const payment = terms_sections.find((section) => section.id === 'payment');
+    expect(payment?.bullets?.join(' ')).toContain('$10 or 4,000 Robux');
   });
 
   it('keeps playable access locked until full payment', () => {
