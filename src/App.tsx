@@ -8,6 +8,7 @@ import Nav from './components/Nav';
 import Hero from './sections/Hero';
 import Work from './sections/Work';
 import Showcase from './sections/Showcase';
+import ClientReview from './sections/ClientReview';
 import About from './sections/About';
 import Services from './sections/Services';
 import Process from './sections/Process';
@@ -55,6 +56,7 @@ export default function App() {
                 {ready ? <Hero ready={ready} /> : <div className="min-h-[100svh]" />}
                 <Work />
                 <Showcase />
+                <ClientReview />
                 <About />
                 <Services />
                 <Process />

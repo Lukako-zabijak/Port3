@@ -70,6 +70,26 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+export interface client_review {
+  quote: string;
+  client: string;
+  project: string;
+  role: string;
+  disclosure: string;
+  proof: string[];
+}
+
+export const client_reviews: client_review[] = [
+  {
+    quote: 'You reworked my entire combat system and made it 100x smoother and better. You also created a new move system, added the characters I provided, and fixed every issue I showed you. You fixed vulnerable code that could have let hackers ruin my game, along with game-breaking bugs. You really helped a ton and basically created most, if not everything, here. Your work is amazing, and I love it.',
+    client: 'Pixieyaps2',
+    project: 'Bungo Battlegrounds',
+    role: 'Roblox combat-system client',
+    disclosure: 'Edited for clarity and length',
+    proof: ['Combat overhaul', 'New move system', 'Security fixes', 'Bug fixing'],
+  },
+];
+
 /* ── About ── */
 export const ABOUT_INTRO =
   "Around four years of programming experience led me to the way I build now — strict Luau, OOP frameworks, and server-authoritative systems from the ground up.";
