@@ -37,7 +37,7 @@ export default function Hero({ ready }: { ready: boolean }) {
           {...anim(0.42)}
           className="mt-7 max-w-2xl text-lg md:text-xl text-zinc-400 font-light leading-relaxed"
         >
-          I'm Lukako — a Luau programmer with around four years of programming
+          I'm Lukako — a Luau programmer with around five years of programming
           experience. Combat frameworks, data systems, anti-cheat. Built to
           survive a hundred players and the exploiters that follow them.
         </motion.p>
