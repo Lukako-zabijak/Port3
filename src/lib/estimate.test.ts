@@ -49,10 +49,23 @@ describe('price estimator engine', () => {
   it('shows the server cooldown message instead of producing a local estimate', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: false,
+      status: 429,
       json: async () => ({ error: 'Please wait five minutes between estimates.' }),
     }));
 
     await expect(getEstimate('a combat system with parries')).rejects.toThrow('Please wait five minutes');
+    vi.unstubAllGlobals();
+  });
+
+  it('falls back to the built-in estimator when deployment infrastructure rejects the request', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: false,
+      status: 401,
+      json: async () => null,
+    }));
+
+    const estimate = await getEstimate('a combat system with parries');
+    expect(estimate.source).toBe('local');
     vi.unstubAllGlobals();
   });
 

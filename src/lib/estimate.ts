@@ -203,7 +203,8 @@ export async function getEstimate(spec: string): Promise<Estimate> {
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       const message = typeof data?.error === 'string' ? data.error : 'The estimator is temporarily unavailable. Please try again shortly.';
-      throw new estimator_error(message);
+      if (res.status === 400 || res.status === 429) throw new estimator_error(message);
+      return baseline;
     }
 
     const data = await res.json();
