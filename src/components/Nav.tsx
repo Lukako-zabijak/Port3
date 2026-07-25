@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal as create_portal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, Check } from 'lucide-react';
 import { THEMES, type ThemeKey } from '../lib/themes';
@@ -7,11 +8,17 @@ import { Magnetic } from './bits';
 
 function ThemeDots({ theme, onChange }: { theme: ThemeKey; onChange: (t: ThemeKey) => void }) {
   const [open, setOpen] = useState(false);
+  const [panel_right, set_panel_right] = useState<number>();
   const ref = useRef<HTMLDivElement>(null);
+  const panel_ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const close = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      const target = e.target as Node;
+      const clicked_trigger = ref.current?.contains(target) ?? false;
+      const clicked_panel = panel_ref.current?.contains(target) ?? false;
+
+      if (!clicked_trigger && !clicked_panel) setOpen(false);
     };
     const close_on_escape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false);
@@ -26,102 +33,114 @@ function ThemeDots({ theme, onChange }: { theme: ThemeKey; onChange: (t: ThemeKe
     };
   }, []);
 
+  useLayoutEffect(() => {
+    if (!open) return;
+
+    const position_panel = () => {
+      if (window.innerWidth < 640) {
+        set_panel_right(undefined);
+        return;
+      }
+
+      const trigger = ref.current?.getBoundingClientRect();
+      if (trigger) set_panel_right(Math.max(24, window.innerWidth - trigger.right));
+    };
+
+    position_panel();
+    window.addEventListener('resize', position_panel);
+    return () => window.removeEventListener('resize', position_panel);
+  }, [open]);
+
   const active = THEMES.find((t) => t.key === theme)!;
 
   return (
-    <div ref={ref} className="relative">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Change background theme"
-        aria-expanded={open}
-        aria-haspopup="dialog"
-        className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-white/5 transition-colors"
-      >
-        <span
-          className="w-4 h-4 rounded-full border border-white/20 transition-all duration-500"
-          style={{ background: `linear-gradient(135deg, ${active.accent}, ${active.accent2})` }}
-        />
-        <span className="hidden md:inline font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-400">
-          {active.label}
-        </span>
-      </button>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 8, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.96 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            role="dialog"
-            aria-label="Choose a color palette"
-            className="fixed inset-x-4 top-20 z-[99] rounded-2xl p-3 shadow-2xl backdrop-blur-xl sm:absolute sm:left-auto sm:right-0 sm:top-12 sm:w-72"
-            style={{ background: 'rgba(8,8,10,0.94)', border: '1px solid rgba(255,255,255,0.10)' }}
-          >
-            <div
-              className="relative overflow-hidden rounded-xl border border-white/10 px-4 py-3.5"
-              style={{ background: `linear-gradient(135deg, ${active.accent}26, ${active.accent2}12)` }}
-            >
-              <span
-                aria-hidden="true"
-                className="absolute -right-6 -top-7 h-24 w-24 rounded-full opacity-25 blur-2xl"
-                style={{ background: active.accent }}
-              />
-              <div className="relative flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-zinc-500">
-                    Active palette
-                  </span>
-                  <p className="mt-1 font-display text-lg font-semibold leading-none text-white">{active.label}</p>
-                  <p className="mt-2 text-[11px] leading-relaxed text-zinc-400">{active.blurb}</p>
-                </div>
-                <span
-                  className="mt-1 h-10 w-10 shrink-0 rounded-full border border-white/20 shadow-lg"
-                  style={{ background: `linear-gradient(135deg, ${active.accent}, ${active.accent2})` }}
-                />
-              </div>
-            </div>
+    <>
+      <div ref={ref} className="relative">
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Change background theme"
+          aria-expanded={open}
+          aria-haspopup="dialog"
+          className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-white/5 transition-colors"
+        >
+          <span
+            className="w-4 h-4 rounded-full border border-white/20 transition-all duration-500"
+            style={{ background: `linear-gradient(135deg, ${active.accent}, ${active.accent2})` }}
+          />
+          <span className="hidden md:inline font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-400">
+            {active.label}
+          </span>
+        </button>
+      </div>
 
-            <div className="px-1 pb-1 pt-3">
-              <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-zinc-600">Choose color</span>
-            </div>
-            <div className="grid grid-cols-5 gap-1" role="radiogroup" aria-label="Portfolio color palettes">
-              {THEMES.map((t) => (
-                <button
-                  key={t.key}
-                  onClick={() => {
-                    onChange(t.key);
-                    setOpen(false);
+      {typeof document !== 'undefined'
+        ? create_portal(
+            <AnimatePresence>
+              {open && (
+                <motion.div
+                  ref={panel_ref}
+                  initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  role="dialog"
+                  aria-label="Choose a color palette"
+                  className="fixed left-4 right-4 top-20 z-[100] rounded-2xl p-3 shadow-2xl backdrop-blur-xl sm:left-auto sm:right-6 sm:w-80"
+                  style={{
+                    background: 'rgba(8,8,10,0.96)',
+                    border: '1px solid rgba(255,255,255,0.10)',
+                    right: panel_right,
                   }}
-                  aria-label={`Use ${t.label} color palette`}
-                  aria-checked={theme === t.key}
-                  role="radio"
-                  title={t.blurb}
-                  className={`group relative min-w-0 rounded-xl px-1 py-2 transition-colors duration-200 ${
-                    theme === t.key ? 'bg-white/10' : 'hover:bg-white/5'
-                  }`}
                 >
-                  <span
-                    className="mx-auto block h-9 w-9 rounded-full border border-white/15 transition-transform duration-200 group-hover:-translate-y-0.5 sm:h-10 sm:w-10"
-                    style={{
-                      background: `linear-gradient(145deg, ${t.accent}, ${t.accent2})`,
-                      boxShadow: theme === t.key ? `0 0 0 2px #09090b, 0 0 0 3px ${t.accent}` : undefined,
-                    }}
-                  />
-                  <span className="mt-2 block truncate text-center font-mono text-[7px] uppercase tracking-[0.04em] text-zinc-500 sm:text-[8px]">
-                    {t.label}
-                  </span>
-                  {theme === t.key && (
-                    <span className="absolute left-1/2 top-2 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full bg-black/15 text-white sm:h-10 sm:w-10">
-                      <Check className="h-2.5 w-2.5" />
+                  <div className="flex items-center justify-between gap-4 px-1 pb-3">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-zinc-500">
+                      Color palette
                     </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+                    <span className="truncate font-mono text-[9px] uppercase tracking-[0.14em] text-ac">
+                      {active.label}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-5 gap-1.5" role="group" aria-label="Portfolio color palettes">
+                    {THEMES.map((t) => (
+                      <button
+                        key={t.key}
+                        onClick={() => {
+                          onChange(t.key);
+                          setOpen(false);
+                        }}
+                        aria-label={`Use ${t.label} color palette`}
+                        aria-pressed={theme === t.key}
+                        title={t.blurb}
+                        className={`group relative min-w-0 rounded-xl p-1 transition-colors duration-200 ${
+                          theme === t.key ? 'bg-white/10' : 'hover:bg-white/5'
+                        }`}
+                      >
+                        <span
+                          className="block aspect-square w-full rounded-lg border border-white/15 transition-transform duration-200 group-hover:-translate-y-0.5"
+                          style={{
+                            background: `linear-gradient(145deg, ${t.accent}, ${t.accent2})`,
+                            boxShadow: theme === t.key ? `0 0 0 1px #09090b, 0 0 0 2px ${t.accent}` : undefined,
+                          }}
+                        />
+                        <span className="mt-1.5 block truncate text-center font-mono text-[7px] uppercase tracking-normal text-zinc-500 sm:text-[8px]">
+                          {t.label}
+                        </span>
+                        {theme === t.key && (
+                          <span className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded-md bg-zinc-950/90 text-white">
+                            <Check className="h-2.5 w-2.5" />
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
+    </>
   );
 }
 
