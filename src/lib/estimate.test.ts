@@ -50,10 +50,10 @@ describe('price estimator engine', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: false,
       status: 429,
-      json: async () => ({ error: 'Please wait five minutes between estimates.' }),
+      json: async () => ({ error: 'Please wait three minutes between estimates.' }),
     }));
 
-    await expect(getEstimate('a combat system with parries')).rejects.toThrow('Please wait five minutes');
+    await expect(getEstimate('a combat system with parries')).rejects.toThrow('Please wait three minutes');
     vi.unstubAllGlobals();
   });
 

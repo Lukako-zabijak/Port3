@@ -43,7 +43,7 @@ Static output in `dist/`.
 1. **Live** — POSTs to `api/estimate.ts` (Vercel-style serverless function).
    Set `GEMINI_API_KEY` in the deploy environment (see `.env.example`). Add
    `KV_REST_API_URL` and `KV_REST_API_TOKEN` from an Upstash Redis database
-   connected through Vercel for a consistent five-minute cooldown across
+   connected through Vercel for a consistent three-minute cooldown across
    serverless instances; without Redis, the endpoint uses a best-effort local
    cooldown instead of disabling the estimator.
 2. **Built-in engine** — when the endpoint isn't reachable, it prices the

@@ -11,6 +11,22 @@ interface Run {
 }
 
 const MIN_THINK_MS = 2100;
+const cooldown_ms = 180_000;
+const cooldown_storage_key = 'lukako-estimator-cooldown-until';
+
+function get_cooldown_remaining(): number {
+  const expires_at = Number(window.localStorage.getItem(cooldown_storage_key));
+  const remaining = expires_at - Date.now();
+  if (!Number.isFinite(expires_at) || remaining <= 0) {
+    window.localStorage.removeItem(cooldown_storage_key);
+    return 0;
+  }
+  return remaining;
+}
+
+function format_cooldown(remaining: number): string {
+  return `${Math.max(1, Math.ceil(remaining / 60_000))} minute${remaining > 60_000 ? 's' : ''}`;
+}
 
 export default function Estimator() {
   const [input, setInput] = useState('');
@@ -18,6 +34,10 @@ export default function Estimator() {
   const [stepIdx, setStepIdx] = useState(0);
   const [runs, setRuns] = useState<Run[]>([]);
   const [notice, setNotice] = useState<string | null>(null);
+  const [cooldown_until, setCooldownUntil] = useState(() => {
+    if (typeof window === 'undefined') return 0;
+    return Date.now() + get_cooldown_remaining();
+  });
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -26,9 +46,22 @@ export default function Estimator() {
     }
   }, [runs]);
 
+  useEffect(() => {
+    const remaining = cooldown_until - Date.now();
+    if (remaining <= 0) return;
+
+    const timer = window.setTimeout(() => setCooldownUntil(0), remaining);
+    return () => window.clearTimeout(timer);
+  }, [cooldown_until]);
+
   const run = async () => {
     const spec = input.trim();
     if (!spec || busy) return;
+    const cooldown_remaining = get_cooldown_remaining();
+    if (cooldown_remaining > 0) {
+      setNotice(`Please wait ${format_cooldown(cooldown_remaining)} before running another estimate.`);
+      return;
+    }
     setNotice(null);
     setBusy(true);
     setStepIdx(0);
@@ -46,6 +79,9 @@ export default function Estimator() {
       }
       setRuns((r) => [...r.slice(-2), { spec, estimate }]);
       setInput('');
+      const next_cooldown = Date.now() + cooldown_ms;
+      window.localStorage.setItem(cooldown_storage_key, String(next_cooldown));
+      setCooldownUntil(next_cooldown);
     } catch (error) {
       setNotice(error instanceof estimator_error ? error.message : 'The estimator is temporarily unavailable. Please try again shortly.');
     } finally {
@@ -83,7 +119,7 @@ export default function Estimator() {
                   # minimum commission: $10 or 4,000 robux
                 </span>
                 <span className="mt-1 block text-zinc-600">
-                  # one estimate per client every five minutes
+                  # one estimate per client every three minutes
                 </span>
               </div>
 
@@ -173,7 +209,7 @@ export default function Estimator() {
               <div id="estimator-out" className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <button
                   onClick={run}
-                  disabled={busy || !input.trim()}
+                  disabled={busy || !input.trim() || cooldown_until > Date.now()}
                   className="inline-flex items-center gap-2.5 bg-ac text-zinc-950 px-6 py-3 rounded-full font-bold text-[11px] uppercase tracking-[0.14em] hover:brightness-110 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed glow-ac"
                 >
                   run estimate

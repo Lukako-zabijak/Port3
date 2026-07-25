@@ -1,7 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { estimate_elaboration_message, validate_estimate_spec } from '../src/lib/estimate-guard';
 
-const rate_cooldown_seconds = 300;
+const rate_cooldown_seconds = 180;
 const local_rate_buckets = new Map<string, number>();
 
 interface api_request {
@@ -125,7 +125,7 @@ export default async function handler(req: api_request, res: api_response) {
     if (!limit.allowed) {
       res.setHeader('Retry-After', String(limit.retry_after));
       return res.status(429).json({
-        error: 'Please wait five minutes between estimates, or message me on Discord with your spec.',
+        error: 'Please wait three minutes between estimates, or message me on Discord with your spec.',
       });
     }
 
