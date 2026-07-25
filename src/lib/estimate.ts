@@ -1,3 +1,5 @@
+import { validate_estimate_spec } from './estimate-guard';
+
 export type Tier = 'small' | 'standard' | 'medium' | 'large' | 'complex' | 'xl';
 
 export interface Estimate {
@@ -7,6 +9,15 @@ export interface Estimate {
   considerations: string[];
   source: 'live' | 'local';
 }
+
+export class estimator_error extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'estimator_error';
+  }
+}
+
+export { estimate_elaboration_message, validate_estimate_spec } from './estimate-guard';
 
 interface Rule {
   pattern: RegExp;
@@ -167,19 +178,33 @@ export function localEstimate(spec: string): Estimate {
  * when the endpoint isn't reachable, so the tool always answers.
  */
 export async function getEstimate(spec: string): Promise<Estimate> {
+  const validation_error = validate_estimate_spec(spec);
+  if (validation_error) throw new estimator_error(validation_error);
+
   const local_result = scoreSpec(spec);
   const baseline = estimate_from_score(local_result.score, local_result.tips, 'local');
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 7000);
 
+  let res: Response;
   try {
-    const res = await fetch('/api/estimate', {
+    res = await fetch('/api/estimate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: `System specification: ${spec}` }),
+      body: JSON.stringify({ prompt: spec }),
       signal: controller.signal,
     });
-    if (!res.ok) throw new Error('endpoint unavailable');
+  } catch {
+    clearTimeout(timeout);
+    return baseline;
+  }
+
+  try {
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      const message = typeof data?.error === 'string' ? data.error : 'The estimator is temporarily unavailable. Please try again shortly.';
+      throw new estimator_error(message);
+    }
 
     const data = await res.json();
     let jsonStr = (data?.result ?? '').trim();
@@ -193,7 +218,8 @@ export async function getEstimate(spec: string): Promise<Estimate> {
       return estimate_from_score(final_score, parsed.considerations, 'live', parsed.time);
     }
     throw new Error('bad payload');
-  } catch {
+  } catch (error) {
+    if (error instanceof estimator_error) throw error;
     return baseline;
   } finally {
     clearTimeout(timeout);

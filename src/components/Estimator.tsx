@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import { getEstimate, THINKING_STEPS, type Estimate } from '../lib/estimate';
+import { estimator_error, getEstimate, THINKING_STEPS, type Estimate } from '../lib/estimate';
 import { DISCORD_LINK } from '../lib/content';
 import { SectionHead, Reveal, EASE } from './bits';
 
@@ -17,6 +17,7 @@ export default function Estimator() {
   const [busy, setBusy] = useState(false);
   const [stepIdx, setStepIdx] = useState(0);
   const [runs, setRuns] = useState<Run[]>([]);
+  const [notice, setNotice] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function Estimator() {
   const run = async () => {
     const spec = input.trim();
     if (!spec || busy) return;
+    setNotice(null);
     setBusy(true);
     setStepIdx(0);
 
@@ -36,15 +38,20 @@ export default function Estimator() {
     }, MIN_THINK_MS / THINKING_STEPS.length);
 
     const started = performance.now();
-    const estimate = await getEstimate(spec);
-    const elapsed = performance.now() - started;
-    if (elapsed < MIN_THINK_MS) {
-      await new Promise((r) => setTimeout(r, MIN_THINK_MS - elapsed));
+    try {
+      const estimate = await getEstimate(spec);
+      const elapsed = performance.now() - started;
+      if (elapsed < MIN_THINK_MS) {
+        await new Promise((r) => setTimeout(r, MIN_THINK_MS - elapsed));
+      }
+      setRuns((r) => [...r.slice(-2), { spec, estimate }]);
+      setInput('');
+    } catch (error) {
+      setNotice(error instanceof estimator_error ? error.message : 'The estimator is temporarily unavailable. Please try again shortly.');
+    } finally {
+      window.clearInterval(stepTimer);
+      setBusy(false);
     }
-    window.clearInterval(stepTimer);
-    setRuns((r) => [...r.slice(-2), { spec, estimate }]);
-    setInput('');
-    setBusy(false);
   };
 
   return (
@@ -74,6 +81,9 @@ export default function Estimator() {
                 # describe the system you need — get a price range and a timeframe
                 <span className="mt-1 block text-ac-dim">
                   # minimum commission: $10 or 4,000 robux
+                </span>
+                <span className="mt-1 block text-zinc-600">
+                  # seven estimates per client every 24 hours
                 </span>
               </div>
 
@@ -147,7 +157,10 @@ export default function Estimator() {
                 <input
                   ref={inputRef}
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
+                  onChange={(e) => {
+                    setInput(e.target.value);
+                    if (notice) setNotice(null);
+                  }}
                   onKeyDown={(e) => e.key === 'Enter' && run()}
                   
                   disabled={busy}
@@ -179,6 +192,11 @@ export default function Estimator() {
                   send me this spec →
                 </a>
               </div>
+              {notice && (
+                <p role="alert" className="mt-4 max-w-2xl text-xs leading-relaxed text-amber-300">
+                  {notice}
+                </p>
+              )}
             </div>
           </div>
         </Reveal>

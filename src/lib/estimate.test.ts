@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { getEstimate, localEstimate } from './estimate';
+import { estimate_elaboration_message, getEstimate, localEstimate } from './estimate';
 
 describe('price estimator engine', () => {
   it('prices a multi-screen UI spec as a standard build', () => {
@@ -37,6 +37,25 @@ describe('price estimator engine', () => {
     expect(e.considerations.length).toBeGreaterThan(0);
   });
 
+  it('rejects nonsense before calling the estimator endpoint', async () => {
+    const fetch_mock = vi.fn();
+    vi.stubGlobal('fetch', fetch_mock);
+
+    await expect(getEstimate(',')).rejects.toThrow(estimate_elaboration_message);
+    expect(fetch_mock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
+
+  it('shows the server rate-limit message instead of producing a local estimate', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: false,
+      json: async () => ({ error: 'You have used all 7 estimates for this 24-hour period.' }),
+    }));
+
+    await expect(getEstimate('a combat system with parries')).rejects.toThrow('You have used all 7 estimates');
+    vi.unstubAllGlobals();
+  });
+
   it('raises broad production work above a single keyword match', () => {
     const e = localEstimate(
       'a production-ready multiplayer vehicle system with mobile and controller support, networking, customization, performance testing, and external api integration'
@@ -62,7 +81,7 @@ describe('price estimator engine', () => {
       }),
     }));
 
-    const e = await getEstimate('a basic button');
+    const e = await getEstimate('a basic combat system');
     expect(e.tier).toBe('xl');
     expect(e.price).toBe('$500+');
     vi.unstubAllGlobals();
