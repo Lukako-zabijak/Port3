@@ -59,7 +59,7 @@ export const THEMES: ThemeDef[] = [
 ];
 
 export const DEFAULT_THEME: ThemeKey = 'neon';
-export const THEME_STORAGE_KEY = 'lukako-theme';
+export const THEME_STORAGE_KEY = 'lukako-theme-v2';
 
 export function getTheme(key: ThemeKey): ThemeDef {
   return THEMES.find((t) => t.key === key) ?? THEMES[0];

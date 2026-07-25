@@ -4,10 +4,10 @@
 
 /* ── Theme accent variables (swapped at runtime by the theme engine) ── */
 :root {
-  --ac: #34d399;
-  --ac2: #0d9488;
-  --bg: #0a0a0b;
-  --panel: #0e0e11;
+  --ac: #f472b6;
+  --ac2: #a78bfa;
+  --bg: #0d0910;
+  --panel: #130d18;
 }
 
 html {
