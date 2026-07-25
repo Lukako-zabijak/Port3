@@ -53,9 +53,6 @@ async function take_rate_limit(client_key: string): Promise<rate_limit_result> {
   const token = process.env.KV_REST_API_TOKEN;
 
   if (!url || !token) {
-    if (process.env.VERCEL_ENV === 'production') {
-      return { allowed: false, retry_after: 0, unavailable: true };
-    }
     return take_local_rate_limit(client_key);
   }
 
@@ -72,7 +69,7 @@ async function take_rate_limit(client_key: string): Promise<rate_limit_result> {
         ['ttl', key],
       ]),
     });
-    if (!response.ok) return { allowed: false, retry_after: 0, unavailable: true };
+    if (!response.ok) return take_local_rate_limit(client_key);
 
     const data: Array<{ result?: unknown }> = await response.json();
     const allowed = data[0]?.result === 'OK';
@@ -83,7 +80,7 @@ async function take_rate_limit(client_key: string): Promise<rate_limit_result> {
       retry_after: Number.isFinite(retry_after) && retry_after > 0 ? retry_after : rate_cooldown_seconds,
     };
   } catch {
-    return { allowed: false, retry_after: 0, unavailable: true };
+    return take_local_rate_limit(client_key);
   }
 }
 

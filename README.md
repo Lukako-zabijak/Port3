@@ -41,10 +41,11 @@ Static output in `dist/`.
 `src/components/TerminalEstimator.tsx` answers quotes one of two ways:
 
 1. **Live** — POSTs to `api/estimate.ts` (Vercel-style serverless function).
-   Set `GEMINI_API_KEY`, `KV_REST_API_URL`, and `KV_REST_API_TOKEN` in the
-   deploy environment (see `.env.example`). The Redis values come from an
-   Upstash Redis database connected through Vercel and enforce one valid
-   estimate per client every five minutes.
+   Set `GEMINI_API_KEY` in the deploy environment (see `.env.example`). Add
+   `KV_REST_API_URL` and `KV_REST_API_TOKEN` from an Upstash Redis database
+   connected through Vercel for a consistent five-minute cooldown across
+   serverless instances; without Redis, the endpoint uses a best-effort local
+   cooldown instead of disabling the estimator.
 2. **Built-in engine** — when the endpoint isn't reachable, it prices the
    spec locally against the same ranges. Rejected specifications and rate-limit
    responses never fall back to a local estimate; the terminal asks for detail
