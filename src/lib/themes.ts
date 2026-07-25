@@ -58,7 +58,7 @@ export const THEMES: ThemeDef[] = [
   },
 ];
 
-export const DEFAULT_THEME: ThemeKey = 'terminal';
+export const DEFAULT_THEME: ThemeKey = 'neon';
 export const THEME_STORAGE_KEY = 'lukako-theme';
 
 export function getTheme(key: ThemeKey): ThemeDef {
