@@ -1,9 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 import { estimate_elaboration_message, validate_estimate_spec } from '../src/lib/estimate-guard';
 
-const rate_limit = 7;
-const rate_window_seconds = 86_400;
-const local_rate_buckets = new Map<string, { count: number; expires_at: number }>();
+const rate_cooldown_seconds = 300;
+const local_rate_buckets = new Map<string, number>();
 
 interface api_request {
   method?: string;
@@ -34,16 +33,18 @@ function get_client_key(req: api_request): string {
 
 function take_local_rate_limit(client_key: string): rate_limit_result {
   const now = Date.now();
-  const current = local_rate_buckets.get(client_key);
-  const bucket = current && current.expires_at > now
-    ? current
-    : { count: 0, expires_at: now + rate_window_seconds * 1000 };
+  const expires_at = local_rate_buckets.get(client_key) ?? 0;
+  if (expires_at > now) {
+    return {
+      allowed: false,
+      retry_after: Math.max(1, Math.ceil((expires_at - now) / 1000)),
+    };
+  }
 
-  bucket.count += 1;
-  local_rate_buckets.set(client_key, bucket);
+  local_rate_buckets.set(client_key, now + rate_cooldown_seconds * 1000);
   return {
-    allowed: bucket.count <= rate_limit,
-    retry_after: Math.max(1, Math.ceil((bucket.expires_at - now) / 1000)),
+    allowed: true,
+    retry_after: rate_cooldown_seconds,
   };
 }
 
@@ -67,21 +68,19 @@ async function take_rate_limit(client_key: string): Promise<rate_limit_result> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify([
-        ['incr', key],
-        ['expire', key, String(rate_window_seconds), 'nx'],
+        ['set', key, '1', 'ex', String(rate_cooldown_seconds), 'nx'],
         ['ttl', key],
       ]),
     });
     if (!response.ok) return { allowed: false, retry_after: 0, unavailable: true };
 
     const data: Array<{ result?: unknown }> = await response.json();
-    const count = Number(data[0]?.result);
-    const retry_after = Number(data[2]?.result);
-    if (!Number.isFinite(count)) return { allowed: false, retry_after: 0, unavailable: true };
+    const allowed = data[0]?.result === 'OK';
+    const retry_after = Number(data[1]?.result);
 
     return {
-      allowed: count <= rate_limit,
-      retry_after: Number.isFinite(retry_after) && retry_after > 0 ? retry_after : rate_window_seconds,
+      allowed,
+      retry_after: Number.isFinite(retry_after) && retry_after > 0 ? retry_after : rate_cooldown_seconds,
     };
   } catch {
     return { allowed: false, retry_after: 0, unavailable: true };
@@ -129,7 +128,7 @@ export default async function handler(req: api_request, res: api_response) {
     if (!limit.allowed) {
       res.setHeader('Retry-After', String(limit.retry_after));
       return res.status(429).json({
-        error: 'You have used all 7 estimates for this 24-hour period. Please come back later or message me on Discord with your spec.',
+        error: 'Please wait five minutes between estimates, or message me on Discord with your spec.',
       });
     }
 

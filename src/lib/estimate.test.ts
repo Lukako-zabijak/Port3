@@ -46,13 +46,13 @@ describe('price estimator engine', () => {
     vi.unstubAllGlobals();
   });
 
-  it('shows the server rate-limit message instead of producing a local estimate', async () => {
+  it('shows the server cooldown message instead of producing a local estimate', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: false,
-      json: async () => ({ error: 'You have used all 7 estimates for this 24-hour period.' }),
+      json: async () => ({ error: 'Please wait five minutes between estimates.' }),
     }));
 
-    await expect(getEstimate('a combat system with parries')).rejects.toThrow('You have used all 7 estimates');
+    await expect(getEstimate('a combat system with parries')).rejects.toThrow('Please wait five minutes');
     vi.unstubAllGlobals();
   });
 

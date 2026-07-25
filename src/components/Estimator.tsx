@@ -83,7 +83,7 @@ export default function Estimator() {
                   # minimum commission: $10 or 4,000 robux
                 </span>
                 <span className="mt-1 block text-zinc-600">
-                  # seven estimates per client every 24 hours
+                  # one estimate per client every five minutes
                 </span>
               </div>
 

@@ -43,8 +43,8 @@ Static output in `dist/`.
 1. **Live** — POSTs to `api/estimate.ts` (Vercel-style serverless function).
    Set `GEMINI_API_KEY`, `KV_REST_API_URL`, and `KV_REST_API_TOKEN` in the
    deploy environment (see `.env.example`). The Redis values come from an
-   Upstash Redis database connected through Vercel and enforce seven valid
-   estimates per client in each 24-hour period.
+   Upstash Redis database connected through Vercel and enforce one valid
+   estimate per client every five minutes.
 2. **Built-in engine** — when the endpoint isn't reachable, it prices the
    spec locally against the same ranges. Rejected specifications and rate-limit
    responses never fall back to a local estimate; the terminal asks for detail
