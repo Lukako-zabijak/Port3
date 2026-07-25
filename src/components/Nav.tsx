@@ -41,34 +41,49 @@ function ThemeDots({ theme, onChange }: { theme: ThemeKey; onChange: (t: ThemeKe
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute right-0 top-12 w-56 rounded-2xl p-2 shadow-2xl"
+            className="absolute right-0 top-12 w-64 rounded-2xl p-3 shadow-2xl"
             style={{ background: 'rgba(8,8,10,0.96)', border: '1px solid rgba(255,255,255,0.10)' }}
           >
-            <div className="px-3 pt-2 pb-1 font-mono text-[9px] tracking-[0.25em] uppercase text-zinc-600">
-              Background theme
+            <div className="flex items-center justify-between px-1 pb-3">
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-zinc-600">
+                Color palette
+              </span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-ac">
+                {active.label}
+              </span>
             </div>
-            {THEMES.map((t) => (
-              <button
-                key={t.key}
-                onClick={() => {
-                  onChange(t.key);
-                  setOpen(false);
-                }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors duration-200 ${
-                  theme === t.key ? 'bg-white/10' : 'hover:bg-white/5'
-                }`}
-              >
-                <span
-                  className="w-5 h-5 rounded-full shrink-0 border border-white/10"
-                  style={{ background: `linear-gradient(135deg, ${t.accent}, ${t.accent2})` }}
-                />
-                <span className="flex-1 min-w-0">
-                  <span className="block text-sm font-semibold text-zinc-200">{t.label}</span>
-                  <span className="block text-[10px] text-zinc-600 truncate">{t.blurb}</span>
-                </span>
-                {theme === t.key && <Check className="w-3.5 h-3.5 text-ac shrink-0" />}
-              </button>
-            ))}
+            <div className="grid grid-cols-5 gap-1.5">
+              {THEMES.map((t) => (
+                <button
+                  key={t.key}
+                  onClick={() => {
+                    onChange(t.key);
+                    setOpen(false);
+                  }}
+                  aria-label={`Use ${t.label} color palette`}
+                  title={t.blurb}
+                  className={`group relative rounded-xl p-1.5 transition-colors duration-200 ${
+                    theme === t.key ? 'bg-white/10' : 'hover:bg-white/5'
+                  }`}
+                >
+                  <span
+                    className="block h-10 w-full rounded-lg border border-white/10 transition-transform duration-200 group-hover:-translate-y-0.5"
+                    style={{ background: `linear-gradient(145deg, ${t.accent}, ${t.accent2})` }}
+                  />
+                  <span className="mt-1.5 block truncate text-center font-mono text-[7px] uppercase tracking-[0.08em] text-zinc-500">
+                    {t.label}
+                  </span>
+                  {theme === t.key && (
+                    <span className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-zinc-950 text-ac">
+                      <Check className="h-2.5 w-2.5" />
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+            <p className="mt-3 border-t border-white/5 px-1 pt-2.5 text-[10px] leading-relaxed text-zinc-600">
+              {active.blurb}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>

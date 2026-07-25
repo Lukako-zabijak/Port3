@@ -33,17 +33,26 @@ export default function Hero({ ready }: { ready: boolean }) {
           can <span className="grad-ac-text">stand on.</span>
         </motion.h1>
 
-        <motion.p
+        <motion.div
           {...anim(0.42)}
-          className="mt-7 max-w-3xl text-base font-light leading-[1.75] text-zinc-400 sm:text-lg md:text-xl"
+          className="mt-8 max-w-4xl text-left"
         >
-          <span className="block text-zinc-300">
-            Hey! I'm Luka, and I've been working in Roblox Studio for around 6 years now. Been scripting for 5 years total.
-          </span>
-          <span className="mx-auto mt-4 block max-w-2xl">
-            I enjoy making any types of systems, but mainly advanced combat frameworks, strong anti cheats, data systems (and data migration), and trading systems. I don't like fps shooters. My goal is to make sure your game will not break upon releasing, and I've succeeded to do that many times.
-          </span>
-        </motion.p>
+          <div className="flex items-start gap-4 sm:gap-6">
+            <span
+              className="mt-1 h-14 w-px shrink-0 sm:h-16"
+              style={{ background: 'linear-gradient(to bottom, var(--ac), color-mix(in srgb, var(--ac) 40%, transparent), transparent)' }}
+              aria-hidden
+            />
+            <p className="font-display text-xl font-medium leading-snug tracking-[-0.02em] text-zinc-100 sm:text-2xl md:text-[1.75rem]">
+              Hey! I'm Luka, and I've been working in Roblox Studio for around 6 years now. Been scripting for 5 years total.
+            </p>
+          </div>
+          <p className="mt-5 max-w-3xl pl-5 text-sm font-light leading-[1.8] text-zinc-400 sm:pl-7 sm:text-base md:text-lg">
+            I enjoy making any types of systems, but mainly <span className="text-zinc-200">advanced combat frameworks, strong anti cheats, data systems (and data migration), and trading systems.</span>{' '}
+            <span className="text-ac">I don't like fps shooters.</span>{' '}
+            My goal is to make sure your game will not break upon releasing, and I've succeeded to do that many times.
+          </p>
+        </motion.div>
 
         <motion.div {...anim(0.55)} className="mt-10 flex flex-col sm:flex-row items-center gap-4">
           <Magnetic>
