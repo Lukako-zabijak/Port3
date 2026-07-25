@@ -37,9 +37,7 @@ export default function Hero({ ready }: { ready: boolean }) {
           {...anim(0.42)}
           className="mt-7 max-w-2xl text-lg md:text-xl text-zinc-400 font-light leading-relaxed"
         >
-          I'm Lukako — a Luau programmer with around five years of programming
-          experience. Combat frameworks, data systems, anti-cheat. Built to
-          survive a hundred players and the exploiters that follow them.
+          Hey! I'm Luka, and I've been working in Roblox Studio for around 6 years now. Been scripting for 5 years total. I enjoy making any types of systems, but mainly advanced combat frameworks, strong anti cheats, data systems (and data migration), and trading systems. I don't like fps shooters. My goal is to make sure your game will not break upon releasing, and I've succeeded to do that many times.
         </motion.p>
 
         <motion.div {...anim(0.55)} className="mt-10 flex flex-col sm:flex-row items-center gap-4">

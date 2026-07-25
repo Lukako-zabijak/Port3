@@ -32,7 +32,7 @@ export default function Showcase() {
           </h2>
 
           <p className="mt-7 max-w-2xl text-base leading-relaxed text-zinc-400 md:text-lg">
-            My showcase portfolio collects project demos, short videos, and past work in one focused place. See how the systems look and feel before deciding whether I’m the right programmer for your game.
+            Here, you can see my past works. There isn't many, as I'm now finally starting with commissions after fully dedicating my life to Roblox scripting.
           </p>
         </div>
 

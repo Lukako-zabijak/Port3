@@ -1,4 +1,4 @@
-export type ThemeKey = 'terminal' | 'aurora' | 'ember' | 'frost';
+export type ThemeKey = 'terminal' | 'aurora' | 'ember' | 'frost' | 'neon';
 
 export interface ThemeDef {
   key: ThemeKey;
@@ -47,6 +47,15 @@ export const THEMES: ThemeDef[] = [
     panel: '#0c1013',
     blurb: 'Cold drift, clean commits',
   },
+  {
+    key: 'neon',
+    label: 'Neon',
+    accent: '#f472b6',
+    accent2: '#a78bfa',
+    bg: '#0d0910',
+    panel: '#130d18',
+    blurb: 'Pink signal through the dark',
+  },
 ];
 
 export const DEFAULT_THEME: ThemeKey = 'terminal';
@@ -68,7 +77,7 @@ export function applyTheme(def: ThemeDef) {
 export function loadStoredTheme(): ThemeKey {
   try {
     const v = localStorage.getItem(THEME_STORAGE_KEY);
-    if (v === 'terminal' || v === 'aurora' || v === 'ember' || v === 'frost') return v;
+    if (v === 'terminal' || v === 'aurora' || v === 'ember' || v === 'frost' || v === 'neon') return v;
   } catch {
     /* private mode etc. */
   }

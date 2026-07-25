@@ -92,7 +92,7 @@ export const client_reviews: client_review[] = [
 
 /* ── About ── */
 export const ABOUT_INTRO =
-  "Around five years of programming experience led me to the way I build now — strict Luau, OOP frameworks, and server-authoritative systems from the ground up.";
+  "As mentioned before, I have around 5 years of scripting experience. I'm able to comfortably use strict Luau, OOP frameworks, any type of hit detection, and depending on the request, even full, highly complex frameworks.";
 
 export const ABOUT_BODY =
   "What that means for you: systems that don't fall over when the player count climbs, don't hand exploiters free wins, and don't turn into spaghetti the moment you ask for a change. I work fast, I price fair, and I finish what I start.";
@@ -142,6 +142,14 @@ export const SERVICES = [
     title: 'UI Logic',
     body: 'You bring the art — I wire it up. Shops, inventories, drag-and-drop, clean tweening.',
   },
+  {
+    title: 'Trading Systems',
+    body: 'Secure player-to-player trades, item validation, confirmation flows and transaction handling.',
+  },
+  {
+    title: 'Data Migration',
+    body: 'Move old saves into safer schemas without wiping progress or leaving players stuck between versions.',
+  },
 ];
 
 /* ── Process ── */
@@ -149,7 +157,7 @@ export const PROCESS_STEPS = [
   {
     step: '01',
     title: 'Send the spec',
-    body: 'DM me on Discord with what you need. A paragraph is fine — the estimator below gives you a ballpark first.',
+    body: 'After having the AI estimator giving you a price and time estimate, feel free to DM me on Discord.',
   },
   {
     step: '02',
@@ -159,7 +167,7 @@ export const PROCESS_STEPS = [
   {
     step: '03',
     title: 'Progress updates',
-    body: 'I keep you updated on what I am working on and send recorded demos as the system takes shape. Development stays in my private test place, with no playable or editable access before full payment.',
+    body: 'While working, I\'ll set milestones. After hitting every milestone, I\'ll DM you, show the current state the game is in, so you can make changes early. Everything stays in my private place, and I\'ll publish the changes to your actual game once you pay the remaining 50%.',
   },
   {
     step: '04',
