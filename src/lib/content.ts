@@ -19,8 +19,8 @@ export const STACK_MARQUEE = [
 ];
 
 export const HERO_STATS = [
-  { label: 'small tasks', value: '2–12h' },
-  { label: 'medium systems', value: '1–2 days' },
+  { label: 'small tasks', value: '2 to 12h' },
+  { label: 'medium systems', value: '1 to 2 days' },
   { label: 'stress-tested at', value: '100 players' },
   { label: 'payment terms', value: '50/50' },
 ];
@@ -42,7 +42,7 @@ export const PROJECTS: Project[] = [
     index: '01',
     title: 'Next-Gen Combat',
     tag: 'combat framework',
-    problem: 'Most combat systems fall apart above 30 players — hits stop registering, the server chokes, exploiters walk through everything.',
+    problem: 'Most combat systems fall apart above 30 players. Hits stop registering, the server chokes, exploiters walk through everything.',
     built: 'A modular, OOP combat framework built for 100-player servers. Server-authoritative hit validation, client-side prediction so swings still feel instant, and packed remote payloads that keep bandwidth flat under load.',
     highlights: ['Server-validated raycast hits', 'Client-side prediction, zero felt delay', 'Packed remote buffers, flat bandwidth'],
     chips: ['server-validated hits', 'client prediction', 'packed remotes', '100-player tested'],
@@ -52,7 +52,7 @@ export const PROJECTS: Project[] = [
     index: '02',
     title: 'Aegis Anti-Cheat',
     tag: 'security layer',
-    problem: 'Once a game gets popular, the exploiters arrive — speed hacks, memory injection, remote spam.',
+    problem: 'Once a game gets popular, the exploiters arrive: speed hacks, memory injection, remote spam.',
     built: 'A server-authoritative security layer that watches physics deltas, validates remote traffic and flags injection patterns. It logs first and bans on confidence, so legit players on bad connections don\'t get caught in the net.',
     highlights: ['WalkSpeed delta 16 → 150 flagged', 'Remote rate limiting per player', 'Log first, ban on confidence'],
     chips: ['physics delta checks', 'remote rate limiting', 'injection heuristics', 'appeal-friendly logs'],
@@ -62,7 +62,7 @@ export const PROJECTS: Project[] = [
     index: '03',
     title: 'Framework Core',
     tag: 'architecture',
-    problem: 'Games that grow past a few systems turn into spaghetti — scripts requiring scripts in circles, nobody knows what loads first.',
+    problem: 'Games that grow past a few systems turn into spaghetti. Scripts require scripts in circles, and nobody knows what loads first.',
     built: 'A central orchestrator that boots services and controllers in order, injects dependencies cleanly, and fails loudly when a module breaks instead of silently corrupting the game state.',
     highlights: ['Ordered boot: services → controllers', 'Dependency injection, no circular requires', 'Loud failure instead of silent corruption'],
     chips: ['ordered boot', 'dependency injection', 'strict Luau', 'loud failure'],
@@ -81,11 +81,11 @@ export interface client_review {
 
 export const client_reviews: client_review[] = [
   {
-    quote: 'You reworked my entire combat system and made it 100x smoother and better. You also created a new move system, added the characters I provided, and fixed every issue I showed you. You fixed vulnerable code that could have let hackers ruin my game, along with game-breaking bugs. You really helped a ton and basically created most, if not everything, here. Your work is amazing, and I love it.',
+    quote: 'first of all, you reworked my entire combat system and made it 100x smoother and better. you also created a new move system for me, added the characters i provided and fixed bugs without any complain. any issue i showed you, you fixed it. along that you fixed alot of my vulnerable code, that could lead to hackers basically ruining my game, alot of game breaking bugs and all that other stuff. you really helped a tonne with this and basically created most if not everything here. your work is amazing and i love it.',
     client: 'Pixieyaps2',
     project: 'Bungo Battlegrounds',
     role: 'Roblox combat-system client',
-    disclosure: 'Edited for clarity and length',
+    disclosure: 'Original message shown below',
     proof: ['Combat overhaul', 'New move system', 'Security fixes', 'Bug fixing'],
   },
 ];
@@ -120,7 +120,7 @@ export const PRINCIPLES = [
 export const SERVICES = [
   {
     title: 'Core Game Loops',
-    body: 'Round cycles, lobby flow, matchmaking logic and win conditions — the skeleton your whole game hangs on.',
+    body: 'Round cycles, lobby flow, matchmaking logic and win conditions. It is the skeleton your whole game hangs on.',
   },
   {
     title: 'Combat Systems',
@@ -140,7 +140,7 @@ export const SERVICES = [
   },
   {
     title: 'UI Logic',
-    body: 'You bring the art — I wire it up. Shops, inventories, drag-and-drop, clean tweening.',
+    body: 'You bring the art, I wire it up. Shops, inventories, drag-and-drop, clean tweening.',
   },
   {
     title: 'Trading Systems',
@@ -187,14 +187,14 @@ export const PRICING_TIERS = [
   },
   {
     name: 'Combat & Frameworks',
-    desc: 'Modular combat, OOP frameworks, raycasting, netcode — the heavy machinery.',
+    desc: 'Modular combat, OOP frameworks, raycasting, and netcode. The heavy machinery.',
     price: 'from $165',
     note: 'most common request',
     featured: true,
   },
   {
     name: 'Full Game Backend',
-    desc: 'The entire server side of a game — loop, data, security, the lot.',
+    desc: 'The entire server side of a game: loop, data, security, the lot.',
     price: 'quoted',
     note: 'scoped in DMs',
     featured: false,
@@ -202,11 +202,11 @@ export const PRICING_TIERS = [
 ];
 
 export const PAYMENT_POINTS = [
-  'Minimum commission: $10 or 4,000 Robux — smaller requests are not accepted',
-  '50% upfront, 50% on demo — no rev-share, no percentages',
+  'Minimum commission: $10 or 4,000 Robux. Smaller requests are not accepted',
+  '50% upfront, 50% on demo. No rev-share, no percentages',
   'Robux only, paid through the gamepasses specified for the commission',
   'Gamepass prices account for Roblox fees so the received amount matches the quote',
-  'Fixed price once scoped — no surprise invoices',
+  'Fixed price once scoped. No surprise invoices',
   'Small tasks welcome when they meet the minimum commission',
 ];
 
@@ -217,7 +217,7 @@ export const RULES = [
   },
   {
     title: 'Programming only',
-    body: 'Models, VFX, animations and UI art come from you. I make them work — I don\'t make them pretty.',
+    body: 'Models, VFX, animations and UI art come from you. I make them work, I do not make them pretty.',
   },
 ];
 
@@ -225,11 +225,11 @@ export const RULES = [
 export const FAQS = [
   {
     q: 'Do you design UI or animate models?',
-    a: 'No — I\'m a programmer, not an artist. You provide the UI art, models and animations, and I write the logic that makes them actually work. That split is what keeps me fast.',
+    a: 'No. I\'m a programmer, not an artist. You provide the UI art, models and animations, and I write the logic that makes them actually work. That split is what keeps me fast.',
   },
   {
     q: 'How long does a typical system take?',
-    a: 'Small tasks land in 2–12 hours. Medium systems like a combat framework take 1–2 days. Large structural work runs 3–7 days. The estimator below gives you a tailored timeframe.',
+    a: 'Small tasks land in 2 to 12 hours. Medium systems like a combat framework take 1 to 2 days. Large structural work runs 3 to 7 days. The estimator below gives you a tailored timeframe.',
   },
   {
     q: 'How does payment work?',

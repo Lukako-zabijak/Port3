@@ -38,7 +38,7 @@ export default function Contact() {
         <Reveal delay={0.2}>
           <p className="mt-6 max-w-xl mx-auto text-lg text-zinc-400 font-light leading-relaxed">
             Send the spec, get a number, watch it ship. Discord is the fastest
-            way to reach me — I answer within a day.
+            way to reach me. I answer within a day.
           </p>
         </Reveal>
 

@@ -8,7 +8,7 @@ describe('client review content', () => {
       client: 'Pixieyaps2',
       project: 'Bungo Battlegrounds',
       role: 'Roblox combat-system client',
-      disclosure: 'Edited for clarity and length',
+      disclosure: 'Original message shown below',
     });
     expect(client_reviews[0].quote).toContain('100x smoother and better');
     expect(client_reviews[0].proof).toEqual([

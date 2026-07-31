@@ -22,7 +22,7 @@ export default function About() {
                 </div>
                 <div>
                   <div className="text-white font-semibold tracking-tight text-sm">RTX 5070 dev rig</div>
-                  <div className="text-zinc-500 text-xs mt-0.5">Studio never stutters here — so testing never slows your build down.</div>
+                  <div className="text-zinc-500 text-xs mt-0.5">Studio never stutters here, so testing never slows your build down.</div>
                 </div>
               </div>
             </div>
