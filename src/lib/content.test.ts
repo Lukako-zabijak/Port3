@@ -7,7 +7,7 @@ describe('client review content', () => {
     expect(client_reviews[0]).toMatchObject({
       client: 'Pixieyaps2',
       project: 'Bungo Battlegrounds',
-      role: 'Roblox combat-system client',
+      role: 'Roblox combat system client',
       disclosure: 'Original message shown below',
     });
     expect(client_reviews[0].quote).toContain('100x smoother and better');

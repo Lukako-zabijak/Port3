@@ -29,22 +29,22 @@ const RULES: Rule[] = [
   {
     pattern: /combat|weapon|hitbox|melee|parry|block|sword|gun|fps/i,
     weight: 3,
-    tip: 'Raycast and hitbox checks must run on the server. Client-side hit detection is a free win for exploiters.',
+    tip: 'Raycast and hitbox checks must run on the server. Client side hit detection is a free win for exploiters.',
   },
   {
     pattern: /anti[- ]?cheat|exploit|security|ban|moderation/i,
     weight: 3,
-    tip: 'Log before you ban: aggressive instant-bans catch legit high-ping players. Confidence scoring avoids the angry DMs.',
+    tip: 'Log before you ban: aggressive instant bans catch legit high ping players. Confidence scoring avoids the angry DMs.',
   },
   {
     pattern: /data ?store|saving|save|profile|inventory data|progress/i,
     weight: 2.5,
-    tip: 'Session-locked profiles are non-negotiable for saving. Without them, rejoin-duping is a matter of time.',
+    tip: 'Session locked profiles are not optional for saving. Without them, rejoin duping is a matter of time.',
   },
   {
     pattern: /round|lobby|matchmaking|game ?loop|queue/i,
     weight: 1.5,
-    tip: 'Round loops need graceful handling for players leaving mid-match, or the state machine eventually deadlocks.',
+    tip: 'Round loops need graceful handling for players leaving mid match, or the state machine eventually deadlocks.',
   },
   {
     pattern: /ui|shop|menu|interface|hud|inventory screen/i,
@@ -54,7 +54,7 @@ const RULES: Rule[] = [
   {
     pattern: /npc|boss|enemy|pathfind|ai\b/i,
     weight: 2,
-    tip: 'State-machine NPCs stay cheap on the server; per-frame raycast spam does not. Worth deciding early.',
+    tip: 'State machine NPCs stay cheap on the server; per frame raycast spam does not. Worth deciding early.',
   },
   {
     pattern: /framework|oop|modular|architecture/i,
@@ -64,7 +64,7 @@ const RULES: Rule[] = [
   {
     pattern: /trad(e|ing)|economy|currency|market/i,
     weight: 2.5,
-    tip: 'Trading needs atomic server transactions. Two-step commits are how duplication glitches are born.',
+    tip: 'Trading needs atomic server transactions. Two step commits are how duplication glitches are born.',
   },
   {
     pattern: /admin|command|mod tool/i,
@@ -74,7 +74,7 @@ const RULES: Rule[] = [
   {
     pattern: /pet|simulator|clicker|tycoon/i,
     weight: 2,
-    tip: 'Simulator-style games live or die on data design. Batched writes keep DataStore limits far away.',
+    tip: 'Simulator style games live or die on data design. Batched writes keep DataStore limits far away.',
   },
   {
     pattern: /vehicle|car|plane|boat/i,
@@ -84,7 +84,7 @@ const RULES: Rule[] = [
   {
     pattern: /vfx|effect|animation|tween|cutscene/i,
     weight: 0.5,
-    tip: 'Client-side VFX with server triggers keeps the game smooth without trusting the client with gameplay.',
+    tip: 'Client side VFX with server triggers keeps the game smooth without trusting the client with gameplay.',
   },
 ];
 
@@ -99,7 +99,7 @@ const scope_signals: Array<{ pattern: RegExp; weight: number }> = [
 ];
 
 const GENERIC_TIPS = [
-  'Everything critical gets validated server-side. The client is a view, never a source of truth.',
+  'Everything critical gets validated server side. The client is a view, never a source of truth.',
   'A clear spec up front is the single biggest factor in keeping the price at the low end.',
   'Systems are built modular, so extending this later costs hours, not days.',
 ];

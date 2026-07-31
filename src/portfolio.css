@@ -273,15 +273,15 @@
   display: flex;
   min-height: 100svh;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 9rem 0 2.2rem;
+  justify-content: center;
+  padding: 11rem 0 3rem;
 }
 
 .hero-copy {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(20rem, 0.55fr);
-  column-gap: 5vw;
-  align-items: end;
+  grid-template-columns: minmax(0, 1.42fr) minmax(22rem, 0.58fr);
+  column-gap: clamp(4rem, 7vw, 8rem);
+  align-items: center;
 }
 
 .hero-copy h1,
@@ -290,13 +290,14 @@
   color: white;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 650;
-  letter-spacing: -0.065em;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
 }
 
 .hero-copy h1 {
-  max-width: 16ch;
-  font-size: clamp(4rem, 7.5vw, 8rem);
-  line-height: 0.91;
+  max-width: 13ch;
+  font-size: clamp(3.8rem, 7vw, 7.4rem);
+  line-height: 1.02;
 }
 
 .hero-copy h1 span {
@@ -304,17 +305,18 @@
 }
 
 .hero-intro {
-  padding-bottom: 0.65rem;
+  padding: 1.2rem 0 1.2rem 2rem;
+  border-left: 1px solid color-mix(in srgb, var(--ac) 55%, transparent);
 }
 
 .hero-intro p {
   color: #b5b5be;
-  font-size: clamp(0.98rem, 1.3vw, 1.12rem);
-  line-height: 1.75;
+  font-size: clamp(1rem, 1.25vw, 1.14rem);
+  line-height: 1.9;
 }
 
 .hero-intro p + p {
-  margin-top: 1rem;
+  margin-top: 1.35rem;
   color: #777781;
 }
 
@@ -323,7 +325,7 @@
   grid-column: 1 / -1;
   align-items: center;
   gap: 0.8rem;
-  margin-top: 3rem;
+  margin-top: 3.8rem;
 }
 
 .button-primary,
@@ -377,7 +379,7 @@
 .hero-facts {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: 5.2rem;
+  margin-top: 5.8rem;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -386,7 +388,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  padding: 1.15rem 1.35rem;
+  gap: 0.55rem;
+  padding: 1.45rem 1.6rem;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -409,7 +412,7 @@
 }
 
 .page-section {
-  padding: clamp(7rem, 11vw, 11rem) 0;
+  padding: clamp(9rem, 13vw, 14rem) 0;
   scroll-margin-top: 70px;
 }
 
@@ -419,28 +422,28 @@
 
 .section-title {
   display: grid;
-  grid-template-columns: 8rem minmax(0, 1fr);
+  grid-template-columns: 7rem minmax(0, 1fr);
   align-items: start;
-  margin-bottom: 3.5rem;
+  margin-bottom: clamp(4.5rem, 7vw, 7rem);
 }
 
 .section-title > span {
-  padding-top: 0.65rem;
+  padding-top: 0.9rem;
   color: var(--ac);
 }
 
 .section-title h2 {
-  max-width: 19ch;
-  font-size: clamp(3rem, 6vw, 6.6rem);
-  line-height: 0.98;
+  max-width: 16ch;
+  font-size: clamp(3rem, 5.6vw, 6.2rem);
+  line-height: 1.08;
 }
 
 .section-lead {
   max-width: 42rem;
-  margin: -1rem 0 4.5rem 8rem;
+  margin: -2.5rem 0 6rem 7rem;
   color: #8a8a94;
   font-size: 1.05rem;
-  line-height: 1.7;
+  line-height: 1.9;
 }
 
 .project-list {
@@ -449,9 +452,9 @@
 
 .project-row {
   display: grid;
-  grid-template-columns: 8rem minmax(0, 1.45fr) minmax(15rem, 0.7fr);
-  gap: 2.3rem;
-  padding: 3.4rem 0;
+  grid-template-columns: 7rem minmax(0, 1.4fr) minmax(16rem, 0.72fr);
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  padding: clamp(4.5rem, 7vw, 7rem) 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.13);
 }
 
@@ -476,18 +479,19 @@
 }
 
 .project-main h3 {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.8rem;
   font-size: clamp(2rem, 3vw, 3.4rem);
+  line-height: 1.15;
 }
 
 .project-main p {
   max-width: 49rem;
   color: #9c9ca6;
-  line-height: 1.7;
+  line-height: 1.9;
 }
 
 .project-main .project-problem {
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
   color: #666670;
   font-style: italic;
 }
@@ -496,7 +500,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 0.85rem;
+  gap: 1.15rem;
 }
 
 .project-row li {
@@ -504,7 +508,7 @@
   padding-left: 1.25rem;
   color: #b8b8c0;
   font-size: 0.83rem;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
 .project-row li::before {
@@ -519,7 +523,7 @@
 }
 
 .showcase-link-wrap {
-  margin-top: 2rem;
+  margin-top: 3.5rem;
 }
 
 .showcase-link {
@@ -527,7 +531,7 @@
   grid-template-columns: 1fr auto auto;
   align-items: center;
   gap: 1.3rem;
-  padding: 1.7rem 0;
+  padding: 2.4rem 0;
   border-bottom: 1px solid var(--ac);
   color: white;
   font-family: 'Space Grotesk', sans-serif;
@@ -559,8 +563,8 @@
 
 .review-layout {
   display: grid;
-  grid-template-columns: 15rem minmax(0, 1fr);
-  gap: 5rem;
+  grid-template-columns: 14rem minmax(0, 1fr);
+  gap: clamp(4rem, 8vw, 8rem);
 }
 
 .review-info {
@@ -591,22 +595,22 @@
 
 .review-content {
   min-width: 0;
-  padding-left: 3.3rem;
+  padding-left: clamp(2.5rem, 5vw, 5rem);
   border-left: 1px solid color-mix(in srgb, var(--ac) 50%, transparent);
 }
 
 .review-content blockquote {
-  max-width: 41ch;
+  max-width: 47ch;
   color: white;
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.55rem, 2.7vw, 3rem);
   font-weight: 550;
   letter-spacing: -0.035em;
-  line-height: 1.25;
+  line-height: 1.48;
 }
 
 .review-content figure {
-  margin-top: 3rem;
+  margin-top: 4.5rem;
   overflow-x: auto;
   padding: 0.85rem;
   border: 1px solid rgba(255, 255, 255, 0.11);
@@ -645,8 +649,8 @@
   grid-template-columns: 3rem minmax(0, 0.75fr) minmax(0, 1fr);
   gap: 1rem;
   align-items: start;
-  min-height: 10.5rem;
-  padding-block: 2rem;
+  min-height: 13rem;
+  padding-block: 3rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -657,6 +661,7 @@
 
 .skills-list h3 {
   font-size: 1.2rem;
+  line-height: 1.45;
 }
 
 .skills-list p,
@@ -664,16 +669,16 @@
 .price-ledger p {
   color: #7d7d87;
   font-size: 0.9rem;
-  line-height: 1.65;
+  line-height: 1.85;
 }
 
 .skills-note {
   max-width: 50rem;
-  margin: 2.4rem 0 0 auto;
+  margin: 3.5rem 0 0 auto;
   padding-left: 1.4rem;
   border-left: 1px solid var(--ac);
   color: #a6a6af;
-  line-height: 1.7;
+  line-height: 1.9;
 }
 
 .process-list {
@@ -692,8 +697,8 @@
 }
 
 .process-list article {
-  min-height: 23rem;
-  padding: 2rem;
+  min-height: 28rem;
+  padding: 3rem 2.4rem;
 }
 
 .process-list article > span {
@@ -704,8 +709,9 @@
 }
 
 .process-list h3 {
-  margin: 3rem 0 1rem;
+  margin: 5rem 0 1.4rem;
   font-size: 1.45rem;
+  line-height: 1.35;
 }
 
 .price-ledger {
@@ -718,7 +724,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 2rem;
   align-items: center;
-  padding: 2.4rem 0;
+  padding: 3.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.13);
 }
 
@@ -727,7 +733,7 @@
 }
 
 .price-ledger h3 {
-  margin: 0.45rem 0 0.35rem;
+  margin: 0.65rem 0 0.65rem;
   font-size: clamp(1.6rem, 3vw, 2.6rem);
 }
 
@@ -742,7 +748,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 3rem;
-  margin-top: 2.3rem;
+  margin-top: 3.2rem;
 }
 
 .payment-notes ul {
@@ -756,6 +762,7 @@
   padding-left: 1rem;
   color: #797983;
   font-size: 0.78rem;
+  line-height: 1.65;
 }
 
 .payment-notes li::before {
@@ -812,7 +819,7 @@
 
 .estimator-wrap #estimator > div > div:first-child {
   display: block;
-  margin-bottom: 3.5rem;
+  margin-bottom: 5rem;
 }
 
 .estimator-wrap #estimator > div > div:first-child > div:first-child {
@@ -825,8 +832,9 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(3rem, 6vw, 6rem);
   font-weight: 650;
-  letter-spacing: -0.065em;
-  line-height: 0.98;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+  text-transform: uppercase;
 }
 
 .estimator-wrap .glass-deep {
@@ -847,12 +855,13 @@
   grid-template-columns: 4rem 1fr auto;
   align-items: center;
   width: 100%;
-  padding: 1.8rem 0;
+  padding: 2.4rem 0;
   color: white;
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.2rem, 2vw, 1.65rem);
   font-weight: 600;
   text-align: left;
+  line-height: 1.35;
 }
 
 .faq-list button span {
@@ -880,9 +889,9 @@
 
 .faq-list article > div p {
   max-width: 53rem;
-  padding: 0 0 1.9rem 4rem;
+  padding: 0 0 2.6rem 4rem;
   color: #8a8a94;
-  line-height: 1.75;
+  line-height: 1.9;
 }
 
 .contact-section {
@@ -899,7 +908,7 @@
   max-width: 16ch;
   margin: 1.5rem auto 2.5rem;
   font-size: clamp(3.4rem, 7vw, 7.2rem);
-  line-height: 0.95;
+  line-height: 1.08;
 }
 
 .contact-section > div > div {
@@ -961,7 +970,7 @@
 
   .hero-copy {
     grid-template-columns: 1fr;
-    gap: 2.3rem;
+    gap: 4rem;
   }
 
   .hero-intro {
@@ -1016,13 +1025,23 @@
     width: min(92vw, 42rem);
   }
 
+  .page-section {
+    padding: 7.5rem 0;
+  }
+
   .hero-section {
     min-height: auto;
-    padding-top: 9.5rem;
+    padding: 9.5rem 0 3.5rem;
   }
 
   .hero-copy h1 {
-    font-size: clamp(3.4rem, 15vw, 5.2rem);
+    max-width: 14ch;
+    font-size: clamp(2.8rem, 12vw, 4.7rem);
+    line-height: 1.08;
+  }
+
+  .hero-intro {
+    padding: 0.6rem 0 0.6rem 1.3rem;
   }
 
   .hero-actions {
@@ -1049,11 +1068,13 @@
 
   .section-title {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
   }
 
   .section-title h2 {
-    font-size: clamp(2.8rem, 13vw, 4.7rem);
+    font-size: clamp(2.7rem, 11.5vw, 4.4rem);
+    line-height: 1.1;
   }
 
   .section-lead {
@@ -1062,7 +1083,8 @@
 
   .project-row {
     grid-template-columns: 1fr;
-    gap: 1.4rem;
+    gap: 2rem;
+    padding: 3.8rem 0;
   }
 
   .project-row ul {
@@ -1093,6 +1115,7 @@
 
   .review-content blockquote {
     font-size: clamp(1.35rem, 6vw, 2rem);
+    line-height: 1.55;
   }
 
   .skills-list {
@@ -1107,6 +1130,8 @@
 
   .skills-list article {
     grid-template-columns: 2rem 1fr;
+    min-height: auto;
+    padding-block: 2.8rem;
   }
 
   .skills-list article p {
@@ -1124,10 +1149,11 @@
 
   .process-list article {
     min-height: auto;
+    padding: 3rem 0.4rem;
   }
 
   .process-list h3 {
-    margin-top: 1.8rem;
+    margin-top: 2.8rem;
   }
 
   .price-ledger article {
@@ -1153,6 +1179,11 @@
 
   .faq-list article > div p {
     padding-left: 2.4rem;
+  }
+
+  .contact-section h2 {
+    font-size: clamp(2.8rem, 12vw, 4.4rem);
+    line-height: 1.1;
   }
 
   .contact-section > div > div {

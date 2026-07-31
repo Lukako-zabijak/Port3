@@ -13,15 +13,15 @@ export const NAV_LINKS = [
 ];
 
 export const STACK_MARQUEE = [
-  'Luau', 'OOP', 'Raycasting', 'DataStores', 'Anti-Cheat', 'Netcode',
-  'Server-Authoritative', 'Client Prediction', 'Pathfinding', 'ModuleScripts',
+  'Luau', 'OOP', 'Raycasting', 'DataStores', 'Anti Cheat', 'Netcode',
+  'Server Authoritative', 'Client Prediction', 'Pathfinding', 'ModuleScripts',
   'Strict Typing', 'Roblox Studio', 'Git', 'TweenService',
 ];
 
 export const HERO_STATS = [
   { label: 'small tasks', value: '2 to 12h' },
   { label: 'medium systems', value: '1 to 2 days' },
-  { label: 'stress-tested at', value: '100 players' },
+  { label: 'stress tested at', value: '100 players' },
   { label: 'payment terms', value: '50/50' },
 ];
 
@@ -40,22 +40,22 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     index: '01',
-    title: 'Next-Gen Combat',
+    title: 'Next Gen Combat',
     tag: 'combat framework',
     problem: 'Most combat systems fall apart above 30 players. Hits stop registering, the server chokes, exploiters walk through everything.',
-    built: 'A modular, OOP combat framework built for 100-player servers. Server-authoritative hit validation, client-side prediction so swings still feel instant, and packed remote payloads that keep bandwidth flat under load.',
-    highlights: ['Server-validated raycast hits', 'Client-side prediction, zero felt delay', 'Packed remote buffers, flat bandwidth'],
-    chips: ['server-validated hits', 'client prediction', 'packed remotes', '100-player tested'],
+    built: 'A modular, OOP combat framework built for 100 player servers. Server authoritative hit validation, client side prediction so swings still feel instant, and packed remote payloads that keep bandwidth flat under load.',
+    highlights: ['Server validated raycast hits', 'Client side prediction, zero felt delay', 'Packed remote buffers, flat bandwidth'],
+    chips: ['server validated hits', 'client prediction', 'packed remotes', '100 player tested'],
     image: 'combat',
   },
   {
     index: '02',
-    title: 'Aegis Anti-Cheat',
+    title: 'Aegis Anti Cheat',
     tag: 'security layer',
     problem: 'Once a game gets popular, the exploiters arrive: speed hacks, memory injection, remote spam.',
-    built: 'A server-authoritative security layer that watches physics deltas, validates remote traffic and flags injection patterns. It logs first and bans on confidence, so legit players on bad connections don\'t get caught in the net.',
+    built: 'A server authoritative security layer that watches physics deltas, validates remote traffic and flags injection patterns. It logs first and bans on confidence, so legit players on bad connections don\'t get caught in the net.',
     highlights: ['WalkSpeed delta 16 → 150 flagged', 'Remote rate limiting per player', 'Log first, ban on confidence'],
-    chips: ['physics delta checks', 'remote rate limiting', 'injection heuristics', 'appeal-friendly logs'],
+    chips: ['physics delta checks', 'remote rate limiting', 'injection heuristics', 'appeal friendly logs'],
     image: 'aegis',
   },
   {
@@ -84,7 +84,7 @@ export const client_reviews: client_review[] = [
     quote: 'first of all, you reworked my entire combat system and made it 100x smoother and better. you also created a new move system for me, added the characters i provided and fixed bugs without any complain. any issue i showed you, you fixed it. along that you fixed alot of my vulnerable code, that could lead to hackers basically ruining my game, alot of game breaking bugs and all that other stuff. you really helped a tonne with this and basically created most if not everything here. your work is amazing and i love it.',
     client: 'Pixieyaps2',
     project: 'Bungo Battlegrounds',
-    role: 'Roblox combat-system client',
+    role: 'Roblox combat system client',
     disclosure: 'Original message shown below',
     proof: ['Combat overhaul', 'New move system', 'Security fixes', 'Bug fixing'],
   },
@@ -100,7 +100,7 @@ export const ABOUT_BODY =
 export const PRINCIPLES = [
   {
     title: 'The server is the referee',
-    body: 'Clients lie. Every hit, purchase and trade gets validated server-side before it becomes real.',
+    body: 'Clients lie. Every hit, purchase and trade gets validated server side before it becomes real.',
   },
   {
     title: 'Strict types or nothing',
@@ -128,23 +128,23 @@ export const SERVICES = [
   },
   {
     title: 'Data & Saving',
-    body: 'Session-locked profiles, migrations, retry logic. Your players\' progress survives crashes and dupes.',
+    body: 'Session locked profiles, migrations, retry logic. Your players\' progress survives crashes and dupes.',
   },
   {
-    title: 'Anti-Cheat & Security',
+    title: 'Anti Cheat & Security',
     body: 'Server validation for movement, remotes and purchases. Built in from the start, not bolted on later.',
   },
   {
     title: 'NPC & AI Logic',
-    body: 'Pathfinding enemies, state-machine bosses, NPC routines that don\'t tank server FPS.',
+    body: 'Pathfinding enemies, state machine bosses, NPC routines that don\'t tank server FPS.',
   },
   {
     title: 'UI Logic',
-    body: 'You bring the art, I wire it up. Shops, inventories, drag-and-drop, clean tweening.',
+    body: 'You bring the art, I wire it up. Shops, inventories, drag and drop, clean tweening.',
   },
   {
     title: 'Trading Systems',
-    body: 'Secure player-to-player trades, item validation, confirmation flows and transaction handling.',
+    body: 'Secure player to player trades, item validation, confirmation flows and transaction handling.',
   },
   {
     title: 'Data Migration',
@@ -203,7 +203,7 @@ export const PRICING_TIERS = [
 
 export const PAYMENT_POINTS = [
   'Minimum commission: $10 or 4,000 Robux. Smaller requests are not accepted',
-  '50% upfront, 50% on demo. No rev-share, no percentages',
+  '50% upfront, 50% on demo. No revenue share, no percentages',
   'Robux only, paid through the gamepasses specified for the commission',
   'Gamepass prices account for Roblox fees so the received amount matches the quote',
   'Fixed price once scoped. No surprise invoices',
@@ -233,11 +233,11 @@ export const FAQS = [
   },
   {
     q: 'How does payment work?',
-    a: 'Payment is Robux only. You pay 50% upfront through the specified gamepass before I write the first line, then the remaining 50% through the final gamepass after I send a recorded demo. Playable access and source are delivered only after full payment. No percentages or rev-share.',
+    a: 'Payment is Robux only. You pay 50% upfront through the specified gamepass before I write the first line, then the remaining 50% through the final gamepass after I send a recorded demo. Playable access and source are delivered only after full payment. No percentages or revenue share.',
   },
   {
     q: 'Will it survive exploiters?',
-    a: 'That\'s the whole point of how I build. Every critical action is validated on the server, and I write anti-cheat logic directly into combat and interaction loops instead of stapling it on afterwards.',
+    a: 'That\'s the whole point of how I build. Every critical action is validated on the server, and I write anti cheat logic directly into combat and interaction loops instead of stapling it on afterwards.',
   },
   {
     q: 'Can I hire you for something small?',

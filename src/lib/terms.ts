@@ -15,7 +15,7 @@ export const terms_sections: terms_section[] = [
     number: '01',
     title: 'Acceptance and precedence',
     paragraphs: [
-      'By commissioning me, accepting a quote, asking me to begin, or making a payment, you acknowledge these Terms of Service and the project-specific quote.',
+      'By commissioning me, accepting a quote, asking me to begin, or making a payment, you acknowledge these Terms of Service and the project specific quote.',
       'The written quote controls the agreed scope, price, payment method, and schedule if it differs from this general policy. Nothing here removes rights that cannot legally be waived.',
     ],
   },
@@ -34,7 +34,7 @@ export const terms_sections: terms_section[] = [
     title: 'Quotes and scheduling',
     paragraphs: [
       'A quote is fixed once accepted unless the scope changes. Work begins after the 50% upfront payment has cleared and I have received the materials needed to start.',
-      'Timelines are good-faith estimates. Client delays, missing dependencies, platform incidents, or changes outside my control may move the delivery date.',
+      'Timelines are good faith estimates. Client delays, missing dependencies, platform incidents, or changes outside my control may move the delivery date.',
     ],
   },
   {
@@ -66,7 +66,7 @@ export const terms_sections: terms_section[] = [
     number: '06',
     title: 'Delivery',
     paragraphs: [
-      'Playable or test-place access, project access, editable source code, and final files are delivered only after full cleared payment. A reversed or disputed payment suspends delivery and the usage licence until the payment issue is resolved.',
+      'Playable or test place access, project access, editable source code, and final files are delivered only after full cleared payment. A reversed or disputed payment suspends delivery and the usage licence until the payment issue is resolved.',
       'Progress messages and recorded demonstrations are previews. They are not delivery and do not grant access to or a licence to use the work.',
       'After handover, you are responsible for keeping backups of the delivered files and credentials.',
     ],
@@ -74,10 +74,10 @@ export const terms_sections: terms_section[] = [
   {
     id: 'bugs',
     number: '07',
-    title: 'Bug-fix period',
+    title: 'Bug fix period',
     paragraphs: [
       'Verified defects that cause the delivered work to fail the accepted specification are fixed free for seven calendar days after delivery.',
-      'Client edits, third-party code, misuse, new requirements, and later Roblox or API changes are not included. Continued maintenance is quoted separately.',
+      'Client edits, third party code, misuse, new requirements, and later Roblox or API changes are not included. Continued maintenance is quoted separately.',
     ],
   },
   {
@@ -104,12 +104,12 @@ export const terms_sections: terms_section[] = [
     number: '10',
     title: 'Code licence and ownership',
     paragraphs: [
-      'After full payment, you receive a non-exclusive licence to use and modify the delivered code in the Roblox experience named in the quote.',
+      'After full payment, you receive a non exclusive licence to use and modify the delivered code in the Roblox experience named in the quote.',
     ],
     bullets: [
       'You may not resell, sublicense, publish, or redistribute the commissioned system as standalone code.',
       'I retain ownership and may reuse or relicense techniques, architecture, utilities, and similar code.',
-      'Client-provided and third-party assets keep their existing ownership and licence terms.',
+      'Client provided and third party assets keep their existing ownership and licence terms.',
     ],
   },
   {
