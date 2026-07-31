@@ -407,7 +407,6 @@ function ReviewSection() {
             height={95}
             loading="lazy"
           />
-          <figcaption>The original message, untouched</figcaption>
         </figure>
       </Reveal>
     </section>
