@@ -32,20 +32,21 @@ import { THEMES, type ThemeKey } from '../lib/themes';
 import '../portfolio.css';
 
 const ease = [0.16, 1, 0.3, 1] as const;
+const carrd_link = 'https://lukako.carrd.co/';
 
 const nav_links = [
-  ['work', 'work'],
-  ['review', 'review'],
-  ['skills', 'skills'],
-  ['process', 'process'],
-  ['pricing', 'pricing'],
-  ['faq', 'faq'],
+  ['Work', 'work'],
+  ['Review', 'review'],
+  ['Skills', 'skills'],
+  ['Process', 'process'],
+  ['Pricing', 'pricing'],
+  ['FAQ', 'faq'],
 ] as const;
 
 const hero_facts = [
-  ['5 years', 'scripting'],
-  ['6 years', 'in studio'],
-  ['100 players', 'tested at'],
+  ['6 years', 'in Roblox Studio'],
+  ['5 years', 'of scripting'],
+  ['100 players', 'tested at once'],
   ['50 / 50', 'payment split'],
 ] as const;
 
@@ -113,7 +114,7 @@ function SiteNav({
           lukako<span>_</span>
         </button>
 
-        <nav className="nav-links" aria-label="main navigation">
+        <nav className="nav-links" aria-label="Main navigation">
           {nav_links.map(([label, id]) => (
             <button key={id} onClick={() => go(id)}>
               {label}
@@ -124,19 +125,23 @@ function SiteNav({
         <div className="nav-actions">
           <button
             className="palette-button"
-            aria-label="change color palette"
+            aria-label="Change color palette"
             aria-expanded={palette_open}
             onClick={() => set_palette_open((open) => !open)}
           >
             <Palette />
           </button>
+          <a href={carrd_link} target="_blank" rel="noopener noreferrer" className="nav-carrd">
+            Carrd
+            <ArrowUpRight />
+          </a>
           <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="nav-dm">
-            dm me
+            DM me
             <ArrowUpRight />
           </a>
           <button
             className="menu-button"
-            aria-label="open menu"
+            aria-label="Open menu"
             onClick={() => set_menu_open(true)}
           >
             <Menu />
@@ -152,7 +157,7 @@ function SiteNav({
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.2 }}
             >
-              <p>pick a color</p>
+              <p>Pick a color</p>
               <div>
                 {THEMES.map((item) => (
                   <button
@@ -169,7 +174,7 @@ function SiteNav({
                         background: `linear-gradient(135deg, ${item.accent}, ${item.accent2})`,
                       }}
                     />
-                    {item.label.toLowerCase()}
+                    {item.label}
                     {theme === item.key ? <Check /> : null}
                   </button>
                 ))}
@@ -190,11 +195,11 @@ function SiteNav({
           >
             <div className="mobile-menu-head">
               <span>lukako_</span>
-              <button aria-label="close menu" onClick={() => set_menu_open(false)}>
+              <button aria-label="Close menu" onClick={() => set_menu_open(false)}>
                 <X />
               </button>
             </div>
-            <nav aria-label="mobile navigation">
+            <nav aria-label="Mobile navigation">
               {nav_links.map(([label, id], index) => (
                 <button key={id} onClick={() => go(id)}>
                   <span>0{index + 1}</span>
@@ -202,10 +207,16 @@ function SiteNav({
                 </button>
               ))}
             </nav>
-            <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
-              dm me on discord
-              <ArrowUpRight />
-            </a>
+            <div className="mobile-menu-actions">
+              <a href={carrd_link} target="_blank" rel="noopener noreferrer">
+                Open my Carrd
+                <ArrowUpRight />
+              </a>
+              <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
+                DM me on Discord
+                <ArrowUpRight />
+              </a>
+            </div>
           </motion.div>
         ) : null}
       </AnimatePresence>
@@ -224,31 +235,32 @@ function Hero({ ready }: { ready: boolean }) {
       >
         <div className="hero-statement">
           <h1>
-            roblox systems that feel sharp <span>and stay stable.</span>
+            Roblox systems that feel sharp <span>and stay stable.</span>
           </h1>
           <div className="hero-actions">
             <a href="#work" className="button-primary">
-              view the work
+              View the work
               <ArrowDown />
             </a>
-            <a href="#estimator" className="button-secondary">
-              check the price
+            <a href={carrd_link} target="_blank" rel="noopener noreferrer" className="button-secondary">
+              Open my Carrd
+              <ArrowUpRight />
             </a>
           </div>
         </div>
 
         <aside className="hero-brief">
           <p>
-            hey, i&apos;m luka. i build combat, data, trading, security, and backend systems
-            for roblox games.
+            Hey, I&apos;m Luka. I have been working in Roblox Studio for 6 years and scripting
+            for 5 years.
           </p>
           <p>
-            i care about both sides of the work. it should feel immediate for players, while
-            the server keeps the final say.
+            I build combat, data, trading, security, and backend systems that feel immediate
+            for players while the server keeps the final say.
           </p>
           <div className="hero-status">
             <span />
-            available for commissions
+            Available for commissions
           </div>
         </aside>
       </motion.div>
@@ -268,7 +280,7 @@ function Hero({ ready }: { ready: boolean }) {
       </motion.div>
 
       <a href="#work" className="hero-scroll" aria-label="scroll to selected work">
-        selected work
+        Selected work
         <ArrowDown />
       </a>
     </section>
@@ -283,8 +295,8 @@ function WorkSection() {
     <section id="work" className="page-section work-section">
       <SectionHeading
         number="01"
-        title="selected systems"
-        copy="three examples of how i approach combat, security, and game architecture."
+        title="Selected systems"
+        copy="Three examples of how I approach combat, security, and game architecture."
       />
 
       <div className="workbench">
@@ -296,7 +308,7 @@ function WorkSection() {
               onClick={() => set_active_project(index)}
             >
               <span>0{index + 1}</span>
-              <strong>{item.title.toLowerCase()}</strong>
+              <strong>{item.title}</strong>
               <small>{item.tag}</small>
             </button>
           ))}
@@ -315,14 +327,14 @@ function WorkSection() {
                 <span>0{active_project + 1}</span>
                 <p>{project.tag}</p>
               </header>
-              <h3>{project.title.toLowerCase()}</h3>
+              <h3>{project.title}</h3>
               <div className="project-copy">
                 <div>
-                  <span>the problem</span>
+                  <span>The problem</span>
                   <p>{project.problem}</p>
                 </div>
                 <div>
-                  <span>what i built</span>
+                  <span>What I built</span>
                   <p>{project.built}</p>
                 </div>
               </div>
@@ -340,14 +352,14 @@ function WorkSection() {
       </div>
 
       <a
-        href="https://lukako.carrd.co/"
+        href={carrd_link}
         target="_blank"
         rel="noopener noreferrer"
         className="showcase-link"
       >
         <span>
-          <small>video demos and older work</small>
-          open the full showcase
+          <small>More videos, demos, and older work</small>
+          See my full Carrd portfolio
         </span>
         <ArrowUpRight />
       </a>
@@ -366,13 +378,13 @@ function ReviewSection() {
     >
       <SectionHeading
         number="02"
-        title="the client said it better"
-        copy="the message below is kept exactly as it was sent."
+        title="The client said it better"
+        copy="The message below is kept exactly as it was sent."
       />
 
       <div className="review-grid">
         <aside className="review-identity">
-          <span>client</span>
+          <span>Client</span>
           <strong>{review.client}</strong>
           <p>{review.project}</p>
           <small>{review.role}</small>
@@ -380,7 +392,7 @@ function ReviewSection() {
 
         <Reveal className="review-message">
           <h2 id="review-heading" className="sr-only">
-            client review from {review.client}
+            Client review from {review.client}
           </h2>
           <blockquote>&ldquo;{review.quote}&rdquo;</blockquote>
         </Reveal>
@@ -390,12 +402,12 @@ function ReviewSection() {
         <figure>
           <img
             src={review_screenshot}
-            alt="original discord message from pixieyaps2 reviewing the bungo battlegrounds commission"
+            alt="Original Discord message from pixieyaps2 reviewing the Bungo Battlegrounds commission"
             width={1825}
             height={95}
             loading="lazy"
           />
-          <figcaption>the original message, untouched</figcaption>
+          <figcaption>The original message, untouched</figcaption>
         </figure>
       </Reveal>
     </section>
@@ -407,8 +419,8 @@ function SkillsSection() {
     <section id="skills" className="page-section skills-section">
       <SectionHeading
         number="03"
-        title="what i can handle"
-        copy="the systems behind the game, from the first round loop to the last save."
+        title="What I can handle"
+        copy="The systems behind the game, from the first round loop to the last save."
       />
 
       <div className="capability-grid">
@@ -417,7 +429,7 @@ function SkillsSection() {
             <article>
               <span>{String(index + 1).padStart(2, '0')}</span>
               <div>
-                <h3>{service.title.toLowerCase()}</h3>
+                <h3>{service.title}</h3>
                 <p>{service.body}</p>
               </div>
             </article>
@@ -426,7 +438,7 @@ function SkillsSection() {
       </div>
 
       <p className="skills-note">
-        programming only. you bring the models, vfx, animations, and ui art. i build the
+        Programming only. You bring the models, VFX, animations, and UI art. I build the
         systems that make them work.
       </p>
     </section>
@@ -440,8 +452,8 @@ function ProcessSection() {
         <div className="process-intro">
           <SectionHeading
             number="04"
-            title="from spec to handover"
-            copy="a simple process with clear checkpoints and no guessing about what happens next."
+            title="From spec to handover"
+            copy="A simple process with clear checkpoints and no guessing about what happens next."
           />
         </div>
 
@@ -454,7 +466,7 @@ function ProcessSection() {
                   {index < PROCESS_STEPS.length - 1 ? <i /> : null}
                 </div>
                 <div>
-                  <h3>{step.title.toLowerCase()}</h3>
+                  <h3>{step.title}</h3>
                   <p>{step.body}</p>
                 </div>
               </article>
@@ -471,8 +483,8 @@ function PricingSection() {
     <section id="pricing" className="page-section pricing-section">
       <SectionHeading
         number="05"
-        title="rough pricing"
-        copy="starting points before we turn your idea into a proper scope."
+        title="Rough pricing"
+        copy="Starting points before we turn your idea into a proper scope."
       />
 
       <div className="pricing-table">
@@ -482,7 +494,7 @@ function PricingSection() {
               <span>0{index + 1}</span>
               <div>
                 <small>{tier.note}</small>
-                <h3>{tier.name.toLowerCase()}</h3>
+                <h3>{tier.name}</h3>
                 <p>{tier.desc}</p>
               </div>
               <strong>{tier.price}</strong>
@@ -501,7 +513,7 @@ function PricingSection() {
           ))}
         </ul>
         <Link to="/terms">
-          read the full tos
+          Read the full TOS
           <ArrowRight />
         </Link>
       </div>
@@ -515,9 +527,9 @@ function EstimatorSection() {
       <div className="estimator-shell">
         <div className="estimator-intro">
           <span>06</span>
-          <h2>turn the idea into a rough scope</h2>
+          <h2>Turn the idea into a rough scope</h2>
           <p>
-            describe what you need. the estimator gives you a starting range before you dm me.
+            Describe what you need. The estimator gives you a starting range before you DM me.
           </p>
         </div>
         <div className="estimator-panel">
@@ -536,8 +548,8 @@ function FaqSection() {
       <div className="faq-layout">
         <SectionHeading
           number="07"
-          title="before you ask"
-          copy="the common questions, answered properly."
+          title="Before you ask"
+          copy="The common questions, answered properly."
         />
 
         <div className="faq-list">
@@ -580,8 +592,8 @@ function ContactSection() {
     <section id="contact" className="contact-section">
       <Reveal>
         <div className="contact-card">
-          <p>got a game that needs a serious backend?</p>
-          <h2>send the spec. i&apos;ll tell you what it takes.</h2>
+          <p>Got a game that needs a serious backend?</p>
+          <h2>Send the spec. I&apos;ll tell you what it takes.</h2>
           <div>
             <a
               href={DISCORD_LINK}
@@ -590,7 +602,7 @@ function ContactSection() {
               className="button-primary"
             >
               <MessageCircle />
-              dm me on discord
+              DM me on Discord
             </a>
             <a
               href={ROBLOX_LINK}
@@ -598,12 +610,21 @@ function ContactSection() {
               rel="noopener noreferrer"
               className="button-secondary"
             >
-              roblox profile
+              Roblox profile
+              <ArrowUpRight />
+            </a>
+            <a
+              href={carrd_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button-secondary"
+            >
+              Carrd portfolio
               <ArrowUpRight />
             </a>
           </div>
           <small>
-            by commissioning me, you agree to the <Link to="/terms">terms of service</Link>.
+            By commissioning me, you agree to the <Link to="/terms">terms of service</Link>.
           </small>
         </div>
       </Reveal>
@@ -636,13 +657,14 @@ export default function PortfolioPage({
         <ContactSection />
       </main>
       <footer className="site-footer">
-        <span>© {new Date().getFullYear()} lukako</span>
+        <span>© {new Date().getFullYear()} Lukako</span>
         <div>
-          <Link to="/terms">tos</Link>
-          <a href="#top">back to top</a>
+          <Link to="/terms">TOS</Link>
+          <a href={carrd_link} target="_blank" rel="noopener noreferrer">Carrd</a>
+          <a href="#top">Back to top</a>
         </div>
         <span>
-          discord {DISCORD_ID} · roblox {ROBLOX_ID}
+          Discord {DISCORD_ID} | Roblox {ROBLOX_ID}
         </span>
       </footer>
     </>
