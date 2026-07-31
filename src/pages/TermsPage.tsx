@@ -15,7 +15,7 @@ export default function TermsPage() {
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     const previous_description = description?.content;
 
-    document.title = 'Terms of Service — Lukako';
+    document.title = 'Terms of Service | Lukako';
     if (description) description.content = terms_description;
     window.scrollTo({ top: 0, behavior: 'auto' });
 

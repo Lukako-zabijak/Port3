@@ -6,7 +6,7 @@ attribute vec2 aPos;
 void main() { gl_Position = vec4(aPos, 0.0, 1.0); }
 `;
 
-/* Domain-warped fbm flow — the "living" backdrop. */
+/* Domain-warped fbm flow, the "living" backdrop. */
 const FRAG = `
 precision highp float;
 uniform vec2 uRes;
@@ -97,7 +97,7 @@ export default function SilkBg({ theme }: { theme: ThemeKey }) {
     });
 
     if (!gl) {
-      // no WebGL — fall back to a static themed gradient
+      // no WebGL, fall back to a static themed gradient
       const def = getTheme(themeRef.current);
       canvas.style.background = `radial-gradient(ellipse 80% 60% at 50% 0%, ${def.accent}22, transparent 60%), ${def.bg}`;
       return;
@@ -133,7 +133,7 @@ export default function SilkBg({ theme }: { theme: ThemeKey }) {
     const uB = gl.getUniformLocation(prog, 'uB');
     const uBase = gl.getUniformLocation(prog, 'uBase');
 
-    // current colors — lerped toward the active theme every frame
+    // current colors, lerped toward the active theme every frame
     const init = getTheme(themeRef.current);
     const cur = { a: hexToVec3(init.accent), b: hexToVec3(init.accent2), base: hexToVec3(init.bg) };
     const mouse = { x: 0, y: 0.1, tx: 0, ty: 0.1 };

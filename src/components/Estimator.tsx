@@ -94,8 +94,8 @@ export default function Estimator() {
     <section id="estimator" className="relative py-24 md:py-36 scroll-mt-20 px-5">
       <div className="max-w-[52rem] mx-auto">
         <SectionHead
-          eyebrow="Instant ballpark"
-          title={<>The <span className="grad-ac-text">estimator.</span></>}
+          eyebrow="rough estimate"
+          title={<>throw your idea <span className="grad-ac-text">in here.</span></>}
         />
 
         <Reveal>
@@ -114,7 +114,7 @@ export default function Estimator() {
 
             <div className="p-6 md:p-8 font-mono text-[13px] md:text-sm leading-relaxed">
               <div className="text-zinc-600 mb-5">
-                # describe the system you need — get a price range and a timeframe
+                # describe what you need and get a rough price and timeframe
                 <span className="mt-1 block text-ac-dim">
                   # minimum commission: $10 or 4,000 robux
                 </span>
@@ -164,7 +164,7 @@ export default function Estimator() {
                     >
                       {r.estimate.considerations.map((c, i) => (
                         <li key={i} className="flex gap-2">
-                          <span className="text-ac shrink-0">▹</span>
+                          <span className="text-ac shrink-0">+</span>
                           <span>{c}</span>
                         </li>
                       ))}
@@ -217,7 +217,7 @@ export default function Estimator() {
                 </button>
                 <span className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-zinc-600">
                   <CheckCircle2 className="w-3.5 h-3.5 text-ac" />
-                  ballpark only — final quote in dms
+                  rough estimate only, final quote in dms
                 </span>
                 <a
                   href={DISCORD_LINK}
@@ -225,7 +225,7 @@ export default function Estimator() {
                   rel="noopener noreferrer"
                   className="sm:ml-auto text-[11px] uppercase tracking-[0.16em] text-white link-sweep"
                 >
-                  send me this spec →
+                  send me this spec
                 </a>
               </div>
               {notice && (

@@ -20,7 +20,7 @@ export default function Work() {
         <Reveal className="mb-10 flex justify-center">
           <p className="inline-flex items-center gap-2.5 text-zinc-500 text-sm glass-pill rounded-full px-5 py-2.5">
             <Lock className="w-3.5 h-3.5 text-ac" />
-            More on request — some client work stays private until release.
+            More on request. Some client work stays private until release.
           </p>
         </Reveal>
 
