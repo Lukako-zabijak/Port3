@@ -192,7 +192,7 @@ function Hero({ ready }: { ready: boolean }) {
         <div className="hero-intro">
           <p>
             Hey, I&apos;m Luka. I&apos;ve been using Roblox Studio for around 6 years and scripting for 5.
-            I mainly work on combat, anti-cheat, data, trading, and backend systems.
+            I mainly work on combat, anti cheat, data, trading, and backend systems.
           </p>
           <p>
             The goal is pretty simple: make it feel good for players, keep the server in charge, and leave you
@@ -230,11 +230,7 @@ function Hero({ ready }: { ready: boolean }) {
 function WorkSection() {
   return (
     <section id="work" className="page-section work-section">
-      <SectionTitle number="01">things i&apos;ve built and would happily build again.</SectionTitle>
-      <p className="section-lead">
-        No mystery screenshots here. These are the actual system breakdowns, what was wrong, and what I built
-        to fix it.
-      </p>
+      <SectionTitle number="01">selected systems, broken down properly.</SectionTitle>
 
       <div className="project-list">
         {PROJECTS.map((project, index) => (
@@ -278,7 +274,7 @@ function ReviewSection() {
 
   return (
     <section className="page-section review-section" aria-labelledby="review-heading">
-      <SectionTitle number="02">what a client actually said.</SectionTitle>
+      <SectionTitle number="02">the client&apos;s words, exactly as sent.</SectionTitle>
       <div className="review-layout">
         <Reveal className="review-info">
           <p>{review.project}</p>
@@ -309,7 +305,7 @@ function ReviewSection() {
 function SkillsSection() {
   return (
     <section id="skills" className="page-section skills-section">
-      <SectionTitle number="03">what you can hire me for.</SectionTitle>
+      <SectionTitle number="03">systems i can build for your game.</SectionTitle>
       <div className="skills-list">
         {SERVICES.map((service, index) => (
           <Reveal key={service.title}>
@@ -332,7 +328,7 @@ function SkillsSection() {
 function ProcessSection() {
   return (
     <section id="process" className="page-section process-section">
-      <SectionTitle number="04">how a commission usually goes.</SectionTitle>
+      <SectionTitle number="04">what working together looks like.</SectionTitle>
       <div className="process-list">
         {PROCESS_STEPS.map((step) => (
           <Reveal key={step.step}>
@@ -351,7 +347,7 @@ function ProcessSection() {
 function PricingSection() {
   return (
     <section id="pricing" className="page-section pricing-section">
-      <SectionTitle number="05">rough pricing before you dm me.</SectionTitle>
+      <SectionTitle number="05">clear pricing before the first dm.</SectionTitle>
       <p className="section-lead">
         These are starting points, not mystery numbers. The final quote depends on the actual scope.
       </p>
@@ -389,7 +385,7 @@ function FaqSection() {
 
   return (
     <section id="faq" className="page-section faq-section">
-      <SectionTitle number="07">stuff people ask before paying me.</SectionTitle>
+      <SectionTitle number="07">questions worth answering early.</SectionTitle>
       <div className="faq-list">
         {FAQS.map((item, index) => {
           const active = open === index;

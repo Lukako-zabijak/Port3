@@ -95,7 +95,7 @@ export default function Estimator() {
       <div className="max-w-[52rem] mx-auto">
         <SectionHead
           eyebrow="rough estimate"
-          title={<>throw your idea <span className="grad-ac-text">in here.</span></>}
+          title={<>describe the system <span className="grad-ac-text">you need.</span></>}
         />
 
         <Reveal>
