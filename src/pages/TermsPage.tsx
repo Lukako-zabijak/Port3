@@ -58,7 +58,7 @@ export default function TermsPage() {
           <p className="mt-7 max-w-2xl text-base leading-7 text-zinc-400 md:text-lg md:leading-8">
             These terms explain how I handle programming commissions from quote to handover. A written project quote adds the exact scope, price, and schedule for each job.
           </p>
-          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 md:text-xs">
+          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/10 pt-5 font-mono text-[10px] tracking-[0.2em] text-zinc-500 md:text-xs">
             <span>
               version <span className="text-ac">{terms_version}</span>
             </span>
@@ -69,7 +69,7 @@ export default function TermsPage() {
         </motion.div>
 
         <nav aria-label="Terms contents" className="mt-16 border-y border-white/10 py-7 lg:hidden">
-          <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-ac">Contents</p>
+          <p className="font-mono text-[10px] tracking-[0.24em] text-ac">Contents</p>
           <ol className="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-2">
             {terms_sections.map((section) => (
               <li key={section.id}>
@@ -88,7 +88,7 @@ export default function TermsPage() {
         <div className="mt-14 grid gap-16 lg:mt-24 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-20">
           <aside className="hidden lg:block">
             <nav aria-label="Terms contents" className="sticky top-28">
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-ac">Contents</p>
+              <p className="font-mono text-[10px] tracking-[0.24em] text-ac">Contents</p>
               <ol className="mt-5 space-y-3 border-l border-white/10 pl-5">
                 {terms_sections.map((section) => (
                   <li key={section.id}>
@@ -155,7 +155,7 @@ export default function TermsPage() {
             href={DISCORD_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center justify-center gap-3 border border-ac-40 px-6 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ac transition-colors hover:bg-ac hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ac"
+            className="group inline-flex items-center justify-center gap-3 border border-ac-40 px-6 py-4 font-mono text-[10px] tracking-[0.18em] text-ac transition-colors hover:bg-ac hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ac"
           >
             <MessageCircle className="h-4 w-4" />
             Ask on Discord
@@ -165,7 +165,7 @@ export default function TermsPage() {
 
         <Link
           to="/"
-          className="group mt-12 inline-flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 transition-colors hover:text-ac focus-visible:outline-none focus-visible:text-ac"
+          className="group mt-12 inline-flex items-center gap-3 font-mono text-[10px] tracking-[0.2em] text-zinc-500 transition-colors hover:text-ac focus-visible:outline-none focus-visible:text-ac"
         >
           <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
           Back to portfolio

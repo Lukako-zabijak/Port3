@@ -136,7 +136,7 @@ export default function Estimator() {
                     <div className="text-zinc-500 break-words">
                       <span className="text-ac">lukako@dev</span>
                       <span className="text-zinc-600">:~$ </span>
-                      estimate --spec "{r.spec}"
+                      estimate spec "{r.spec}"
                     </div>
                     <div className="mt-4 grid grid-cols-3 gap-3">
                       {[
@@ -178,7 +178,7 @@ export default function Estimator() {
                 <div className="mb-4 text-zinc-500">
                   <span className="text-ac">lukako@dev</span>
                   <span className="text-zinc-600">:~$ </span>
-                  estimate --spec "{input}"
+                  estimate spec "{input}"
                   <div className="mt-3 flex items-center gap-2.5 text-zinc-400">
                     <span className="w-3.5 h-3.5 rounded-full border-2 border-white/10 border-t-ac animate-spin" />
                     {THINKING_STEPS[stepIdx]}
@@ -200,7 +200,7 @@ export default function Estimator() {
                   onKeyDown={(e) => e.key === 'Enter' && run()}
                   
                   disabled={busy}
-                  placeholder='estimate --spec "a combat system with raycast hits and saving"'
+                  placeholder='estimate spec "a combat system with raycast hits and saving"'
                   className="flex-1 min-w-[14rem] bg-transparent text-zinc-200 placeholder:text-zinc-700 focus:outline-none disabled:opacity-50"
                 />
                 
