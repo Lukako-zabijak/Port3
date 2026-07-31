@@ -1,18 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import {
+  ArrowRight,
+  CheckCircle2,
+  Clock3,
+  DollarSign,
+  Layers3,
+  MessageCircle,
+  Sparkles,
+} from 'lucide-react';
 import { estimator_error, getEstimate, THINKING_STEPS, type Estimate } from '../lib/estimate';
 import { DISCORD_LINK } from '../lib/content';
-import { SectionHead, Reveal, EASE } from './bits';
+import { EASE } from './bits';
 
 interface Run {
   spec: string;
   estimate: Estimate;
 }
 
-const MIN_THINK_MS = 2100;
+const min_think_ms = 2100;
 const cooldown_ms = 180_000;
 const cooldown_storage_key = 'lukako-estimator-cooldown-until';
+const prompt_starters = [
+  'A combat system with raycast hits and saving',
+  'A secure player data system',
+  'An inventory and trading system',
+] as const;
 
 function get_cooldown_remaining(): number {
   const expires_at = Number(window.localStorage.getItem(cooldown_storage_key));
@@ -29,16 +42,16 @@ function format_cooldown(remaining: number): string {
 }
 
 export default function Estimator() {
-  const [input, setInput] = useState('');
-  const [busy, setBusy] = useState(false);
-  const [stepIdx, setStepIdx] = useState(0);
-  const [runs, setRuns] = useState<Run[]>([]);
-  const [notice, setNotice] = useState<string | null>(null);
-  const [cooldown_until, setCooldownUntil] = useState(() => {
+  const [input, set_input] = useState('');
+  const [busy, set_busy] = useState(false);
+  const [step_idx, set_step_idx] = useState(0);
+  const [runs, set_runs] = useState<Run[]>([]);
+  const [notice, set_notice] = useState<string | null>(null);
+  const [cooldown_until, set_cooldown_until] = useState(() => {
     if (typeof window === 'undefined') return 0;
     return Date.now() + get_cooldown_remaining();
   });
-  const inputRef = useRef<HTMLInputElement>(null);
+  const input_ref = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (runs.length > 0) {
@@ -50,7 +63,7 @@ export default function Estimator() {
     const remaining = cooldown_until - Date.now();
     if (remaining <= 0) return;
 
-    const timer = window.setTimeout(() => setCooldownUntil(0), remaining);
+    const timer = window.setTimeout(() => set_cooldown_until(0), remaining);
     return () => window.clearTimeout(timer);
   }, [cooldown_until]);
 
@@ -59,183 +72,174 @@ export default function Estimator() {
     if (!spec || busy) return;
     const cooldown_remaining = get_cooldown_remaining();
     if (cooldown_remaining > 0) {
-      setNotice(`Please wait ${format_cooldown(cooldown_remaining)} before running another estimate.`);
+      set_notice(`Please wait ${format_cooldown(cooldown_remaining)} before running another estimate.`);
       return;
     }
-    setNotice(null);
-    setBusy(true);
-    setStepIdx(0);
+    set_notice(null);
+    set_busy(true);
+    set_step_idx(0);
 
-    const stepTimer = window.setInterval(() => {
-      setStepIdx((i) => Math.min(i + 1, THINKING_STEPS.length - 1));
-    }, MIN_THINK_MS / THINKING_STEPS.length);
+    const step_timer = window.setInterval(() => {
+      set_step_idx((index) => Math.min(index + 1, THINKING_STEPS.length - 1));
+    }, min_think_ms / THINKING_STEPS.length);
 
     const started = performance.now();
     try {
       const estimate = await getEstimate(spec);
       const elapsed = performance.now() - started;
-      if (elapsed < MIN_THINK_MS) {
-        await new Promise((r) => setTimeout(r, MIN_THINK_MS - elapsed));
+      if (elapsed < min_think_ms) {
+        await new Promise((resolve) => setTimeout(resolve, min_think_ms - elapsed));
       }
-      setRuns((r) => [...r.slice(-2), { spec, estimate }]);
-      setInput('');
+      set_runs((previous_runs) => [...previous_runs.slice(-2), { spec, estimate }]);
+      set_input('');
       const next_cooldown = Date.now() + cooldown_ms;
       window.localStorage.setItem(cooldown_storage_key, String(next_cooldown));
-      setCooldownUntil(next_cooldown);
+      set_cooldown_until(next_cooldown);
     } catch (error) {
-      setNotice(error instanceof estimator_error ? error.message : 'The estimator is temporarily unavailable. Please try again shortly.');
+      set_notice(error instanceof estimator_error ? error.message : 'The estimator is temporarily unavailable. Please try again shortly.');
     } finally {
-      window.clearInterval(stepTimer);
-      setBusy(false);
+      window.clearInterval(step_timer);
+      set_busy(false);
     }
   };
 
   return (
-    <section id="estimator" className="relative py-24 md:py-36 scroll-mt-20 px-5">
-      <div className="max-w-[52rem] mx-auto">
-        <SectionHead
-          eyebrow="rough estimate"
-          title={<>describe the system <span className="grad-ac-text">you need.</span></>}
-        />
+    <section id="estimator" className="estimator-tool">
+      <div className="estimator-tool-head">
+        <div>
+          <span className="estimator-kicker">
+            <Sparkles />
+            AI estimator
+          </span>
+          <h3>Tell me what you want built.</h3>
+          <p>Give it the useful details. You will get a rough scope, price, and timeframe.</p>
+        </div>
+        <div className="estimator-rules">
+          <span>Minimum commission</span>
+          <strong>$10 or 4,000 Robux</strong>
+          <small>One estimate every three minutes</small>
+        </div>
+      </div>
 
-        <Reveal>
-          <div
-            className="glass-deep overflow-hidden shadow-2xl shadow-black/40"
-            onClick={() => inputRef.current?.focus()}
-          >
-            {/* title bar */}
-            <div className="flex items-center gap-2 px-5 py-3 border-b border-white/5 font-mono text-xs text-zinc-500">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]/80" />
-              <span className="ml-3">lukako@dev: ~/estimate</span>
-              <span className="ml-auto text-[10px] text-zinc-600">zsh</span>
-            </div>
+      <div className="estimator-form">
+        <label htmlFor="estimator-spec">Your project brief</label>
+        <div className="estimator-input-wrap" onClick={() => input_ref.current?.focus()}>
+          <textarea
+            ref={input_ref}
+            id="estimator-spec"
+            value={input}
+            onChange={(event) => {
+              set_input(event.target.value);
+              if (notice) set_notice(null);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) run();
+            }}
+            disabled={busy}
+            rows={5}
+            placeholder="Example: I need a combat system with raycast hits, abilities, mobile controls, and player data saving."
+          />
+          <span>{input.length} characters</span>
+        </div>
 
-            <div className="p-6 md:p-8 font-mono text-[13px] md:text-sm leading-relaxed">
-              <div className="text-zinc-600 mb-5">
-                # describe what you need and get a rough price and timeframe
-                <span className="mt-1 block text-ac-dim">
-                  # minimum commission: $10 or 4,000 robux
-                </span>
-                <span className="mt-1 block text-zinc-600">
-                  # one estimate per client every three minutes
-                </span>
-              </div>
-
-              {/* previous runs */}
-              <AnimatePresence>
-                {runs.map((r, ri) => (
-                  <motion.div
-                    key={ri}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.45, ease: EASE }}
-                    className="mb-7"
-                  >
-                    <div className="text-zinc-500 break-words">
-                      <span className="text-ac">lukako@dev</span>
-                      <span className="text-zinc-600">:~$ </span>
-                      estimate spec "{r.spec}"
-                    </div>
-                    <div className="mt-4 grid grid-cols-3 gap-3">
-                      {[
-                        ['tier', r.estimate.tier],
-                        ['price', r.estimate.price],
-                        ['time', r.estimate.time],
-                      ].map(([k, v], i) => (
-                        <motion.div
-                          key={k}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.15 + i * 0.1, duration: 0.4, ease: EASE }}
-                          className="rounded-xl border border-white/8 bg-white/[0.04] px-4 py-3.5"
-                        >
-                          <div className="text-[9px] uppercase tracking-[0.2em] text-zinc-500 mb-1">{k}</div>
-                          <div className={`font-bold ${k === 'price' ? 'text-ac' : 'text-white'} text-sm md:text-lg`}>{v}</div>
-                        </motion.div>
-                      ))}
-                    </div>
-                    <motion.ul
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5, duration: 0.4 }}
-                      className="mt-4 space-y-1.5 text-zinc-500 text-xs md:text-[13px]"
-                    >
-                      {r.estimate.considerations.map((c, i) => (
-                        <li key={i} className="flex gap-2">
-                          <span className="text-ac shrink-0">+</span>
-                          <span>{c}</span>
-                        </li>
-                      ))}
-                    </motion.ul>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-
-              {/* thinking line */}
-              {busy && (
-                <div className="mb-4 text-zinc-500">
-                  <span className="text-ac">lukako@dev</span>
-                  <span className="text-zinc-600">:~$ </span>
-                  estimate spec "{input}"
-                  <div className="mt-3 flex items-center gap-2.5 text-zinc-400">
-                    <span className="w-3.5 h-3.5 rounded-full border-2 border-white/10 border-t-ac animate-spin" />
-                    {THINKING_STEPS[stepIdx]}
-                  </div>
-                </div>
-              )}
-
-              {/* input line */}
-              <div className="flex items-center gap-2 flex-wrap rounded-xl border border-white/8 bg-black/20 px-4 py-3.5 focus-within:border-ac-30 transition-colors">
-                <span className="text-ac shrink-0">lukako@dev</span>
-                <span className="text-zinc-600 shrink-0">:~$</span>
-                <input
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => {
-                    setInput(e.target.value);
-                    if (notice) setNotice(null);
-                  }}
-                  onKeyDown={(e) => e.key === 'Enter' && run()}
-                  
-                  disabled={busy}
-                  placeholder='estimate spec "a combat system with raycast hits and saving"'
-                  className="flex-1 min-w-[14rem] bg-transparent text-zinc-200 placeholder:text-zinc-700 focus:outline-none disabled:opacity-50"
-                />
-                
-              </div>
-
-              <div id="estimator-out" className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <button
-                  onClick={run}
-                  disabled={busy || !input.trim() || cooldown_until > Date.now()}
-                  className="inline-flex items-center gap-2.5 bg-ac text-zinc-950 px-6 py-3 rounded-full font-bold text-[11px] uppercase tracking-[0.14em] hover:brightness-110 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed glow-ac"
-                >
-                  run estimate
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-                <span className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-zinc-600">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-ac" />
-                  rough estimate only, final quote in dms
-                </span>
-                <a
-                  href={DISCORD_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="sm:ml-auto text-[11px] uppercase tracking-[0.16em] text-white link-sweep"
-                >
-                  send me this spec
-                </a>
-              </div>
-              {notice && (
-                <p role="alert" className="mt-4 max-w-2xl text-xs leading-relaxed text-amber-300">
-                  {notice}
-                </p>
-              )}
-            </div>
+        <div className="prompt-starters" aria-label="example project briefs">
+          <span>Try an example</span>
+          <div>
+            {prompt_starters.map((prompt) => (
+              <button key={prompt} type="button" onClick={() => set_input(prompt)} disabled={busy}>
+                {prompt}
+              </button>
+            ))}
           </div>
-        </Reveal>
+        </div>
+
+        <div className="estimator-actions">
+          <button
+            type="button"
+            onClick={run}
+            disabled={busy || !input.trim() || cooldown_until > Date.now()}
+            className="estimate-button"
+          >
+            {busy ? 'Working it out' : 'Get my estimate'}
+            {busy ? <span className="estimate-spinner" /> : <ArrowRight />}
+          </button>
+          <p>
+            <CheckCircle2 />
+            Rough estimate only. Final quote happens in DMs.
+          </p>
+        </div>
+
+        {busy ? (
+          <motion.div
+            className="estimator-progress"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <span />
+            <p>{THINKING_STEPS[step_idx]}</p>
+          </motion.div>
+        ) : null}
+
+        {notice ? <p role="alert" className="estimator-notice">{notice}</p> : null}
+      </div>
+
+      <div id="estimator-out" className="estimator-results">
+        <AnimatePresence initial={false}>
+          {runs.map((item, run_index) => (
+            <motion.article
+              key={`${item.spec}-${run_index}`}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.45, ease: EASE }}
+              className="estimate-result"
+            >
+              <header>
+                <div>
+                  <span>Your estimate</span>
+                  <h4>{item.spec}</h4>
+                </div>
+                <CheckCircle2 />
+              </header>
+
+              <div className="estimate-metrics">
+                <div>
+                  <Layers3 />
+                  <span>Scope</span>
+                  <strong>{item.estimate.tier}</strong>
+                </div>
+                <div>
+                  <DollarSign />
+                  <span>Price</span>
+                  <strong>{item.estimate.price}</strong>
+                </div>
+                <div>
+                  <Clock3 />
+                  <span>Timeline</span>
+                  <strong>{item.estimate.time}</strong>
+                </div>
+              </div>
+
+              <div className="estimate-details">
+                <span>What affects the quote</span>
+                <ul>
+                  {item.estimate.considerations.map((consideration) => (
+                    <li key={consideration}>
+                      <CheckCircle2 />
+                      {consideration}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
+                <MessageCircle />
+                Send me this brief
+                <ArrowRight />
+              </a>
+            </motion.article>
+          ))}
+        </AnimatePresence>
       </div>
     </section>
   );
