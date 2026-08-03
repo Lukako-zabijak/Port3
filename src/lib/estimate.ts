@@ -29,62 +29,62 @@ const RULES: Rule[] = [
   {
     pattern: /combat|weapon|hitbox|melee|parry|block|sword|gun|fps/i,
     weight: 3,
-    tip: 'Raycast and hitbox checks must run on the server. Client side hit detection is a free win for exploiters.',
+    tip: 'Raycast and hitbox checks must run on the server — client-side hit detection is a free win for exploiters.',
   },
   {
     pattern: /anti[- ]?cheat|exploit|security|ban|moderation/i,
     weight: 3,
-    tip: 'Log before you ban: aggressive instant bans catch legit high ping players. Confidence scoring avoids the angry DMs.',
+    tip: 'Log before you ban: aggressive instant-bans catch legit high-ping players. Confidence scoring avoids the angry DMs.',
   },
   {
     pattern: /data ?store|saving|save|profile|inventory data|progress/i,
     weight: 2.5,
-    tip: 'Session locked profiles are not optional for saving. Without them, rejoin duping is a matter of time.',
+    tip: 'Session-locked profiles are non-negotiable for saving — without them, rejoin-duping is a matter of time.',
   },
   {
     pattern: /round|lobby|matchmaking|game ?loop|queue/i,
     weight: 1.5,
-    tip: 'Round loops need graceful handling for players leaving mid match, or the state machine eventually deadlocks.',
+    tip: 'Round loops need graceful handling for players leaving mid-match, or the state machine eventually deadlocks.',
   },
   {
     pattern: /ui|shop|menu|interface|hud|inventory screen/i,
     weight: 1.5,
-    tip: 'UI art is on you. Wiring, tweening and state are on me. Clear assets up front keeps this fast.',
+    tip: 'UI art is on you — wiring, tweening and state are on me. Clear assets up front keeps this fast.',
   },
   {
     pattern: /npc|boss|enemy|pathfind|ai\b/i,
     weight: 2,
-    tip: 'State machine NPCs stay cheap on the server; per frame raycast spam does not. Worth deciding early.',
+    tip: 'State-machine NPCs stay cheap on the server; per-frame raycast spam does not. Worth deciding early.',
   },
   {
     pattern: /framework|oop|modular|architecture/i,
     weight: 2,
-    tip: 'A modular core pays for itself the moment you add a second system. It is a slightly slower start, then much faster afterwards.',
+    tip: 'A modular core pays for itself the moment you add a second system — slightly slower start, much faster everything after.',
   },
   {
     pattern: /trad(e|ing)|economy|currency|market/i,
     weight: 2.5,
-    tip: 'Trading needs atomic server transactions. Two step commits are how duplication glitches are born.',
+    tip: 'Trading needs atomic server transactions. Two-step commits are how duplication glitches are born.',
   },
   {
     pattern: /admin|command|mod tool/i,
     weight: 1.5,
-    tip: 'Admin commands should log every call. Moderation without an audit trail always ends badly.',
+    tip: 'Admin commands should log every call — moderation without an audit trail always ends badly.',
   },
   {
     pattern: /pet|simulator|clicker|tycoon/i,
     weight: 2,
-    tip: 'Simulator style games live or die on data design. Batched writes keep DataStore limits far away.',
+    tip: 'Simulator-style games live or die on data design. Batched writes keep DataStore limits far away.',
   },
   {
     pattern: /vehicle|car|plane|boat/i,
     weight: 2,
-    tip: 'Network ownership matters for vehicles. The server should arbitrate, not simulate, every bump.',
+    tip: 'Network ownership matters for vehicles — the server should arbitrate, not simulate, every bump.',
   },
   {
     pattern: /vfx|effect|animation|tween|cutscene/i,
     weight: 0.5,
-    tip: 'Client side VFX with server triggers keeps the game smooth without trusting the client with gameplay.',
+    tip: 'Client-side VFX with server triggers keeps the game smooth without trusting the client with gameplay.',
   },
 ];
 
@@ -99,7 +99,7 @@ const scope_signals: Array<{ pattern: RegExp; weight: number }> = [
 ];
 
 const GENERIC_TIPS = [
-  'Everything critical gets validated server side. The client is a view, never a source of truth.',
+  'Everything critical gets validated server-side — the client is a view, never a source of truth.',
   'A clear spec up front is the single biggest factor in keeping the price at the low end.',
   'Systems are built modular, so extending this later costs hours, not days.',
 ];
@@ -139,28 +139,28 @@ function estimate_from_score(
   let time: string;
   if (score <= 1) {
     tier = 'small';
-    price = '$40 to $75';
-    time = '2 to 6 hours';
+    price = 'R$4K – R$20K / $10 – $75';
+    time = '2 – 6 hours';
   } else if (score <= 2.5) {
     tier = 'standard';
-    price = '$75 to $140';
-    time = '6 to 12 hours';
+    price = 'R$20K – R$55K / $75 – $200';
+    time = '6 – 12 hours';
   } else if (score <= 4.5) {
     tier = 'medium';
-    price = '$170 to $200';
-    time = '1 to 2 days';
+    price = 'R$55K – R$135K / $200 – $500';
+    time = '1 – 2 days';
   } else if (score <= 6.5) {
     tier = 'large';
-    price = '$200 to $350';
-    time = '3 to 7 days';
+    price = 'R$135K – R$200K / $500 – $750';
+    time = '3 – 7 days';
   } else if (score <= 9) {
     tier = 'complex';
-    price = '$350 to $500';
-    time = '5 to 10 days';
+    price = 'R$200K – R$270K / $750 – $1K';
+    time = '5 – 10 days';
   } else {
     tier = 'xl';
-    price = '$500+';
-    time = '1 to 2 weeks';
+    price = 'R$270K+ / $1K+';
+    time = '1 – 2 weeks';
   }
 
   const considerations = [...tips, ...GENERIC_TIPS].slice(0, 3);

@@ -16,8 +16,8 @@ describe('terms content', () => {
   });
 
   it('publishes the approved version and effective date', () => {
-    expect(terms_version).toBe('1.2');
-    expect(terms_effective_date).toBe('21 July 2026');
+    expect(terms_version).toBe('1.3');
+    expect(terms_effective_date).toBe('4 August 2026');
   });
 
   it('publishes the minimum commission', () => {
@@ -25,12 +25,13 @@ describe('terms content', () => {
     expect(payment?.bullets?.join(' ')).toContain('minimum commission is 4,000 Robux');
   });
 
-  it('accepts payment only through robux gamepasses', () => {
+  it('accepts payment through robux gamepasses or paypal', () => {
     const payment = terms_sections.find((section) => section.id === 'payment');
     const copy = [...(payment?.paragraphs ?? []), ...(payment?.bullets ?? [])].join(' ');
-    expect(copy).toContain('only in Robux');
+    expect(copy).toContain('Robux');
     expect(copy).toContain('gamepasses');
-    expect(copy).not.toMatch(/paypal/i);
+    expect(copy).toMatch(/paypal/i);
+    expect(copy).toContain('270,000 Robux');
   });
 
   it('keeps playable access locked until full payment', () => {

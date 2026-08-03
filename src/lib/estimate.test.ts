@@ -5,15 +5,15 @@ describe('price estimator engine', () => {
   it('prices a multi-screen UI spec as a standard build', () => {
     const e = localEstimate('a shop UI with clean tweening and a settings menu');
     expect(e.tier).toBe('standard');
-    expect(e.price).toBe('$75 to $140');
-    expect(e.time).toBe('6 to 12 hours');
+    expect(e.price).toBe('R$20K – R$55K / $75 – $200');
+    expect(e.time).toBe('6 – 12 hours');
   });
 
   it('prices a combat system as a medium build', () => {
     const e = localEstimate('a melee combat system with raycast hits and parry mechanics');
     expect(e.tier).toBe('medium');
-    expect(e.price).toBe('$170 to $200');
-    expect(e.time).toBe('1 to 2 days');
+    expect(e.price).toBe('R$55K – R$135K / $200 – $500');
+    expect(e.time).toBe('1 – 2 days');
   });
 
   it('prices a full game backend as the largest tier', () => {
@@ -21,8 +21,8 @@ describe('price estimator engine', () => {
       'full game: round-based combat with matchmaking, datastore saving for player profiles, trading, and anti-cheat'
     );
     expect(e.tier).toBe('xl');
-    expect(e.price).toBe('$500+');
-    expect(e.time).toBe('1 to 2 weeks');
+    expect(e.price).toBe('R$270K+ / $1K+');
+    expect(e.time).toBe('1 – 2 weeks');
   });
 
   it('caps build notes at three and leads with spec-specific advice', () => {
@@ -79,7 +79,7 @@ describe('price estimator engine', () => {
   it('keeps a basic standalone round system below the medium tier', () => {
     const e = localEstimate('a basic round system');
     expect(e.tier).toBe('standard');
-    expect(e.price).toBe('$75 to $140');
+    expect(e.price).toBe('R$20K – R$55K / $75 – $200');
   });
 
   it('allows ai complexity to raise the local estimate', async () => {
@@ -96,7 +96,7 @@ describe('price estimator engine', () => {
 
     const e = await getEstimate('a basic combat system');
     expect(e.tier).toBe('xl');
-    expect(e.price).toBe('$500+');
+    expect(e.price).toBe('R$270K+ / $1K+');
     vi.unstubAllGlobals();
   });
 
@@ -114,7 +114,7 @@ describe('price estimator engine', () => {
 
     const e = await getEstimate('a melee combat system with raycast hits and parry mechanics');
     expect(e.tier).toBe('medium');
-    expect(e.price).toBe('$170 to $200');
+    expect(e.price).toBe('R$55K – R$135K / $200 – $500');
     vi.unstubAllGlobals();
   });
 });

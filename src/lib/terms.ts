@@ -6,8 +6,8 @@ export interface terms_section {
   bullets?: string[];
 }
 
-export const terms_version = '1.2';
-export const terms_effective_date = '21 July 2026';
+export const terms_version = '1.3';
+export const terms_effective_date = '4 August 2026';
 
 export const terms_sections: terms_section[] = [
   {
@@ -42,13 +42,16 @@ export const terms_sections: terms_section[] = [
     number: '04',
     title: 'Payment',
     paragraphs: [
-      'Payment is accepted only in Robux through the gamepasses specified for the commission. Unless the quote says otherwise, 50% is due upfront and the remaining 50% is due after a recorded demonstration but before any playable access, editable source code, or final files are handed over.',
+      'Payment is accepted in Robux through the gamepasses specified for the commission or in USD through PayPal. Unless the quote says otherwise, 50% is due upfront and the remaining 50% is due after a recorded demonstration but before any playable access, editable source code, or final files are handed over.',
     ],
     bullets: [
-      'The minimum commission is 4,000 Robux, shown on the portfolio as a $10 reference. Smaller commissions are not accepted.',
+      'The minimum commission is 4,000 Robux or $10 through PayPal and applies only to extremely small systems. Smaller commissions are not accepted.',
+      'Complex frameworks and small games start at 55,000 Robux or $200.',
+      'Larger games start at 135,000 Robux or $500.',
+      'Giant front-page games start at 270,000 Robux or $1,000 and can scale significantly higher with scope.',
       'Each gamepass price accounts for Roblox transaction fees so the amount I receive equals the accepted Robux quote.',
-      'The quote states the exact Robux amount and identifies the gamepasses used for payment. Robux is not represented as cash or guaranteed DevEx value.',
-      'You confirm that you are authorized to commission the work and use the Roblox account making each purchase.',
+      'The quote states the exact Robux or USD amount and identifies the gamepasses or PayPal payment path used for the commission. Robux is not represented as cash or guaranteed DevEx value.',
+      'You confirm that you are authorized to commission the work and use the Roblox or PayPal account making each payment.',
     ],
   },
   {

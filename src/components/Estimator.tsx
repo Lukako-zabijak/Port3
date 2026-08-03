@@ -116,7 +116,7 @@ export default function Estimator() {
         </div>
         <div className="estimator-rules">
           <span>Minimum commission</span>
-          <strong>$10 or 4,000 Robux</strong>
+          <strong>$10 via PayPal or 4,000 Robux</strong>
           <small>One estimate every three minutes</small>
         </div>
       </div>

@@ -162,7 +162,7 @@ export const PROCESS_STEPS = [
   {
     step: '02',
     title: 'Quote locked in',
-    body: 'I reply with a fixed Robux price and a timeframe. You pay 50% upfront through the specified gamepass, then I start writing code.',
+    body: 'I reply with a fixed Robux or USD price and a timeframe. You pay 50% upfront through the specified gamepass or PayPal, then I start writing code.',
   },
   {
     step: '03',
@@ -179,35 +179,42 @@ export const PROCESS_STEPS = [
 /* ── Pricing ── */
 export const PRICING_TIERS = [
   {
-    name: 'UI Systems',
-    desc: 'Shop logic, inventory systems, menu wiring and tweening on your UI art.',
-    price: 'from $40',
-    note: 'paid in robux',
+    name: 'Extremely Small Systems',
+    desc: 'Tiny, clearly scoped programming requests that still meet the minimum commission.',
+    price: '4K R$ / $10',
+    note: 'minimum commission',
     featured: false,
   },
   {
-    name: 'Combat & Frameworks',
-    desc: 'Modular combat, OOP frameworks, raycasting, and netcode. The heavy machinery.',
-    price: 'from $165',
-    note: 'most common request',
+    name: 'Complex Frameworks & Small Games',
+    desc: 'Advanced standalone frameworks or the complete programming foundation for a smaller game.',
+    price: '55K R$ / $200',
+    note: 'starting price',
     featured: true,
   },
   {
-    name: 'Full Game Backend',
-    desc: 'The entire server side of a game: loop, data, security, the lot.',
-    price: 'quoted',
-    note: 'scoped in DMs',
+    name: 'Larger Games',
+    desc: 'Broader games with several connected systems, persistent data, security, and production-ready structure.',
+    price: '135K R$ / $500',
+    note: 'starting price',
+    featured: false,
+  },
+  {
+    name: 'Giant Front-Page Games',
+    desc: 'Large-scale production work with deep systems, heavy integration, and significantly broader scope.',
+    price: '270K+ R$ / $1K+',
+    note: 'scales with scope',
     featured: false,
   },
 ];
 
 export const PAYMENT_POINTS = [
-  'Minimum commission: $10 or 4,000 Robux. Smaller requests are not accepted',
-  '50% upfront, 50% on demo. No revenue share, no percentages',
-  'Robux only, paid through the gamepasses specified for the commission',
+  'Minimum commission: 4,000 Robux or $10 through PayPal — reserved for extremely small systems',
+  '50% upfront, 50% on demo — no rev-share, no percentages',
+  'Payment is accepted in Robux through specified gamepasses or in USD through PayPal',
   'Gamepass prices account for Roblox fees so the received amount matches the quote',
-  'Fixed price once scoped. No surprise invoices',
-  'Small tasks welcome when they meet the minimum commission',
+  'Fixed price once scoped — no surprise invoices',
+  'Complex frameworks and small games start at 55K Robux or $200; larger scopes rise from there',
 ];
 
 export const RULES = [
@@ -233,7 +240,7 @@ export const FAQS = [
   },
   {
     q: 'How does payment work?',
-    a: 'Payment is Robux only. You pay 50% upfront through the specified gamepass before I write the first line, then the remaining 50% through the final gamepass after I send a recorded demo. Playable access and source are delivered only after full payment. No percentages or revenue share.',
+    a: 'Payment is accepted in Robux through specified gamepasses or in USD through PayPal. You pay 50% upfront before I start, then the remaining 50% after I send a recorded demo. Playable access and source are delivered only after full payment. No percentages or rev-share.',
   },
   {
     q: 'Will it survive exploiters?',
@@ -241,6 +248,6 @@ export const FAQS = [
   },
   {
     q: 'Can I hire you for something small?',
-    a: 'Yes, as long as the spec is clear and the quote meets the $10 or 4,000 Robux minimum. Run it through the estimator first, then DM me if the range looks right.',
+    a: 'Yes, as long as it is an extremely small, clearly scoped system and meets the 4,000 Robux or $10 PayPal minimum. Run it through the estimator first, then DM me if the range looks right.',
   },
 ];

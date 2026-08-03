@@ -9,7 +9,7 @@ export default function Pricing() {
       <div className="max-w-[76rem] mx-auto">
         <SectionHead eyebrow="Straight numbers" title={<>Pricing, <span className="grad-ac-text">upfront.</span></>} />
 
-        <div className="grid md:grid-cols-3 gap-4 md:gap-5 mb-5">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5 mb-5">
           {PRICING_TIERS.map((t, i) => (
             <motion.div
               key={t.name}
