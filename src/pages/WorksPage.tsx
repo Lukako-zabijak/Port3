@@ -7,6 +7,7 @@ import {
   work_items,
   youtube_embed_url,
   youtube_thumbnail_fallback_url,
+  youtube_thumbnail_sd_url,
   youtube_thumbnail_url,
   youtube_url,
   type work_item,
@@ -16,6 +17,20 @@ const works_description = 'Watch Lukako Roblox programming showcases covering co
 
 function video_card({ item, index, featured = false }: { item: work_item; index: number; featured?: boolean }) {
   const [playing, set_playing] = use_state(false);
+
+  const recover_thumbnail = (image: HTMLImageElement) => {
+    if (image.src.includes('/maxresdefault.jpg')) {
+      image.src = youtube_thumbnail_sd_url(item.youtube_id);
+      return;
+    }
+
+    if (image.src.includes('/sddefault.jpg')) {
+      image.src = youtube_thumbnail_fallback_url(item.youtube_id);
+      return;
+    }
+
+    image.onerror = null;
+  };
 
   return (
     <motion.article
@@ -44,9 +59,12 @@ function video_card({ item, index, featured = false }: { item: work_item; index:
           >
             <img
               src={youtube_thumbnail_url(item.youtube_id)}
+              onLoad={(event) => {
+                const image = event.currentTarget;
+                if (image.naturalWidth <= 120 || image.naturalHeight <= 90) recover_thumbnail(image);
+              }}
               onError={(event) => {
-                event.currentTarget.onerror = null;
-                event.currentTarget.src = youtube_thumbnail_fallback_url(item.youtube_id);
+                recover_thumbnail(event.currentTarget);
               }}
               alt={`youtube thumbnail for ${item.title}`}
               loading="lazy"

@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { work_items, youtube_thumbnail_url, youtube_url } from './works';
+import {
+  work_items,
+  youtube_thumbnail_fallback_url,
+  youtube_thumbnail_sd_url,
+  youtube_thumbnail_url,
+  youtube_url,
+} from './works';
 
 describe('works catalog', () => {
   it('contains every carrd video once', () => {
@@ -12,6 +18,8 @@ describe('works catalog', () => {
     work_items.forEach((item) => {
       expect(youtube_url(item.youtube_id)).toContain('youtube.com/watch');
       expect(youtube_thumbnail_url(item.youtube_id)).toContain('i.ytimg.com/vi/');
+      expect(youtube_thumbnail_sd_url(item.youtube_id)).toContain('/sddefault.jpg');
+      expect(youtube_thumbnail_fallback_url(item.youtube_id)).toContain('/hqdefault.jpg');
       expect(item.description.length).toBeGreaterThan(20);
     });
   });

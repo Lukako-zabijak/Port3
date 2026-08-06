@@ -89,4 +89,5 @@ export const work_items: work_item[] = [
 export const youtube_url = (youtube_id: string) => `https://www.youtube.com/watch?v=${youtube_id}`;
 export const youtube_embed_url = (youtube_id: string) => `https://www.youtube-nocookie.com/embed/${youtube_id}?autoplay=1&rel=0`;
 export const youtube_thumbnail_url = (youtube_id: string) => `https://i.ytimg.com/vi/${youtube_id}/maxresdefault.jpg`;
+export const youtube_thumbnail_sd_url = (youtube_id: string) => `https://i.ytimg.com/vi/${youtube_id}/sddefault.jpg`;
 export const youtube_thumbnail_fallback_url = (youtube_id: string) => `https://i.ytimg.com/vi/${youtube_id}/hqdefault.jpg`;
