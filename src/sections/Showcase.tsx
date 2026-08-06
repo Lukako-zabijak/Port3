@@ -1,8 +1,7 @@
 import { motion } from 'motion/react';
 import { ArrowUpRight, Play } from 'lucide-react';
+import { Link } from 'react-router';
 import { EASE } from '../components/bits';
-
-const showcase_url = 'https://lukako.carrd.co/';
 
 export default function Showcase() {
   return (
@@ -37,10 +36,8 @@ export default function Showcase() {
         </div>
 
         <div className="lg:pb-1">
-          <a
-            href={showcase_url}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/works"
             className="group block border border-ac bg-ac-5 p-6 glow-ac transition-all duration-300 hover:bg-ac-10 sm:p-8"
           >
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
@@ -48,7 +45,7 @@ export default function Showcase() {
             </span>
             <span className="mt-3 flex items-center justify-between gap-5">
               <span className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                lukako.carrd.co
+                Full project showcase
               </span>
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ac text-zinc-950 transition-transform duration-300 group-hover:rotate-45">
                 <ArrowUpRight className="h-5 w-5" />
@@ -57,7 +54,7 @@ export default function Showcase() {
             <span className="mt-6 block border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-ac">
               open the full showcase
             </span>
-          </a>
+          </Link>
         </div>
       </motion.div>
     </section>

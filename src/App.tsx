@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
+import { createElement as create_element } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import Cursor from './components/Cursor';
 import SilkBg from './components/SilkBg';
 import PortfolioPage from './pages/PortfolioPage';
 import TermsPage from './pages/TermsPage';
+import works_page from './pages/WorksPage';
 import {
   applyTheme,
   getTheme,
@@ -38,6 +40,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<PortfolioPage theme={theme} on_theme={set_theme} />} />
         <Route path="/terms" element={<TermsPage />} />
+        <Route path="/works" element={create_element(works_page)} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>

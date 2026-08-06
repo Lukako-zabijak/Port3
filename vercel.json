@@ -3,6 +3,10 @@
     {
       "source": "/terms",
       "destination": "/"
+    },
+    {
+      "source": "/works",
+      "destination": "/"
     }
   ]
 }

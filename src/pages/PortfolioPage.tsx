@@ -32,8 +32,6 @@ import { THEMES, type ThemeKey } from '../lib/themes';
 import '../portfolio.css';
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const carrd_link = 'https://lukako.carrd.co/';
-
 const nav_links = [
   ['Work', 'work'],
   ['Review', 'review'],
@@ -131,10 +129,10 @@ function SiteNav({
           >
             <Palette />
           </button>
-          <a href={carrd_link} target="_blank" rel="noopener noreferrer" className="nav-carrd">
-            Carrd
+          <Link to="/works" className="nav-carrd">
+            Works
             <ArrowUpRight />
-          </a>
+          </Link>
           <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="nav-dm">
             DM me
             <ArrowUpRight />
@@ -208,10 +206,10 @@ function SiteNav({
               ))}
             </nav>
             <div className="mobile-menu-actions">
-              <a href={carrd_link} target="_blank" rel="noopener noreferrer">
-                Open my Carrd
+              <Link to="/works">
+                View all works
                 <ArrowUpRight />
-              </a>
+              </Link>
               <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
                 DM me on Discord
                 <ArrowUpRight />
@@ -242,10 +240,10 @@ function Hero({ ready }: { ready: boolean }) {
               View the work
               <ArrowDown />
             </a>
-            <a href={carrd_link} target="_blank" rel="noopener noreferrer" className="button-secondary">
-              Open my Carrd
+            <Link to="/works" className="button-secondary">
+              View all works
               <ArrowUpRight />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -351,18 +349,13 @@ function WorkSection() {
         </div>
       </div>
 
-      <a
-        href={carrd_link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="showcase-link"
-      >
+      <Link to="/works" className="showcase-link">
         <span>
-          <small>More videos, demos, and older work</small>
-          See my full Carrd portfolio
+          <small>10 videos, demos, and older work</small>
+          Open the full project showcase
         </span>
         <ArrowUpRight />
-      </a>
+      </Link>
     </section>
   );
 }
@@ -612,15 +605,10 @@ function ContactSection() {
               Roblox profile
               <ArrowUpRight />
             </a>
-            <a
-              href={carrd_link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button-secondary"
-            >
-              Carrd portfolio
+            <Link to="/works" className="button-secondary">
+              Project showcase
               <ArrowUpRight />
-            </a>
+            </Link>
           </div>
           <small>
             By commissioning me, you agree to the <Link to="/terms">terms of service</Link>.
@@ -659,7 +647,7 @@ export default function PortfolioPage({
         <span>© {new Date().getFullYear()} Lukako</span>
         <div>
           <Link to="/terms">TOS</Link>
-          <a href={carrd_link} target="_blank" rel="noopener noreferrer">Carrd</a>
+          <Link to="/works">Works</Link>
           <a href="#top">Back to top</a>
         </div>
         <span>
