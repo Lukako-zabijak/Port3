@@ -351,7 +351,7 @@ function WorkSection() {
 
       <Link to="/works" className="showcase-link">
         <span>
-          <small>10 videos, demos, and older work</small>
+          <small>11 videos, demos, and older work</small>
           Open the full project showcase
         </span>
         <ArrowUpRight />

@@ -14,7 +14,7 @@ import {
 
 const works_description = 'Watch Lukako Roblox programming showcases covering combat, game systems, security, data, and production architecture.';
 
-function video_card({ item, index }: { item: work_item; index: number }) {
+function video_card({ item, index, featured = false }: { item: work_item; index: number; featured?: boolean }) {
   const [playing, set_playing] = use_state(false);
 
   return (
@@ -24,7 +24,7 @@ function video_card({ item, index }: { item: work_item; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.65, delay: Math.min(index % 2, 1) * 0.06, ease }}
-      className="group scroll-mt-28 border-t border-white/10 pt-5"
+      className={`group scroll-mt-28 border-t border-white/10 pt-5 ${featured ? 'md:col-span-2 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.55fr)] md:gap-8 md:border-y md:py-8' : ''}`}
     >
       <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 shadow-2xl shadow-black/20">
         {playing ? (
@@ -60,20 +60,20 @@ function video_card({ item, index }: { item: work_item; index: number }) {
         )}
       </div>
 
-      <div className="grid gap-4 py-6 sm:grid-cols-[1fr_auto] sm:items-start">
+      <div className={`grid gap-4 py-6 sm:grid-cols-[1fr_auto] sm:items-start ${featured ? 'md:flex md:flex-col md:justify-center md:py-2' : ''}`}>
         <div>
           <div className="flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.2em] text-ac">
             <span>{String(index + 1).padStart(2, '0')}</span>
-            <span>{item.status === 'archive' ? 'older work' : 'current showcase'}</span>
+            <span>{featured ? 'newest upload' : item.status === 'archive' ? 'older work' : 'current showcase'}</span>
           </div>
-          <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-white md:text-3xl">{item.title}</h2>
+          <h2 className={`mt-3 font-display font-semibold tracking-tight text-white ${featured ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl'}`}>{item.title}</h2>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-400 md:text-[15px]">{item.description}</p>
         </div>
         <a
           href={youtube_url(item.youtube_id)}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-400 transition-colors hover:text-ac focus-visible:outline-none focus-visible:text-ac"
+          className={`inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-400 transition-colors hover:text-ac focus-visible:outline-none focus-visible:text-ac ${featured ? 'md:mt-4' : ''}`}
         >
           open on youtube
           <ArrowUpRight className="h-4 w-4" />
@@ -118,14 +118,20 @@ export default function works_page() {
       </header>
 
       <main className="relative z-10 mx-auto max-w-[76rem] px-5 pb-24 pt-12 md:pb-36 md:pt-20">
-        <motion.header initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease }} className="max-w-5xl">
-          <h1 className="font-display text-5xl font-bold leading-[0.94] tracking-[-0.055em] text-white sm:text-7xl md:text-8xl">
-            Systems in motion<span className="text-ac">.</span>
-          </h1>
-          <p className="mt-7 max-w-2xl text-base leading-7 text-zinc-400 md:text-lg md:leading-8">
-            The complete video archive of systems I have built in Roblox Studio. Play any showcase here or open the original video on YouTube.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-x-8 gap-y-3 border-y border-white/10 py-5 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 md:text-xs">
+        <motion.header initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease }} className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-end">
+          <div>
+            <h1 className="font-display text-5xl font-bold leading-[0.94] tracking-[-0.055em] text-white sm:text-7xl md:text-8xl">
+              Systems in motion<span className="text-ac">.</span>
+            </h1>
+            <p className="mt-7 max-w-2xl text-base leading-7 text-zinc-400 md:text-lg md:leading-8">
+              The complete video archive of systems I have built in Roblox Studio. Play any showcase here or open the original video on YouTube.
+            </p>
+          </div>
+          <div className="border-l border-ac-40 pl-5">
+            <strong className="font-display text-6xl font-bold leading-none text-white">{work_items.length}</strong>
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">documented builds, from current work to the early archive</p>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-x-8 gap-y-3 border-y border-white/10 py-5 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 md:text-xs lg:col-span-2">
             <span><span className="text-ac">{work_items.length}</span> videos</span>
             <span><span className="text-zinc-300">{current_count}</span> current showcases</span>
             <span>youtube originals</span>
@@ -133,7 +139,7 @@ export default function works_page() {
         </motion.header>
 
         <div className="mt-16 grid gap-x-8 gap-y-14 md:mt-24 md:grid-cols-2 md:gap-y-20">
-          {work_items.map((item, index) => create_element(video_card, { item, index, key: item.id }))}
+          {work_items.map((item, index) => create_element(video_card, { item, index, featured: index === 0, key: item.id }))}
         </div>
 
         <Link to="/" className="group mt-20 inline-flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 transition-colors hover:text-ac focus-visible:outline-none focus-visible:text-ac">

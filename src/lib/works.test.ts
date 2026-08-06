@@ -3,8 +3,9 @@ import { work_items, youtube_thumbnail_url, youtube_url } from './works';
 
 describe('works catalog', () => {
   it('contains every carrd video once', () => {
-    expect(work_items).toHaveLength(10);
-    expect(new Set(work_items.map((item) => item.youtube_id)).size).toBe(10);
+    expect(work_items).toHaveLength(11);
+    expect(new Set(work_items.map((item) => item.youtube_id)).size).toBe(11);
+    expect(work_items[0].youtube_id).toBe('TzfICkyYF6w');
   });
 
   it('links every project to youtube-hosted media', () => {

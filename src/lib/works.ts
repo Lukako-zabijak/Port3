@@ -8,6 +8,13 @@ export type work_item = {
 
 export const work_items: work_item[] = [
   {
+    id: 'advanced-pathfinding',
+    title: 'Advanced pathfinding system',
+    description: 'A complex NPC pathfinding system where agents communicate discoveries to each other. They share blocked walls and usable entrances, use color-coded lines while evaluating routes, and update the group when new information arrives. I also built a freecam system for the showcase.',
+    youtube_id: 'TzfICkyYF6w',
+    status: 'current',
+  },
+  {
     id: 'fully-scripted-game',
     title: 'Fully scripted game',
     description: 'The game had been left heavily unfinished with poor pre-existing code. I remade every script from scratch, rebuilt the backend, added significantly more features and robust anti-cheat protection, and fixed a bug the previous scripters could not solve.',
