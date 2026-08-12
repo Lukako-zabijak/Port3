@@ -33,8 +33,55 @@
   letter-spacing: -0.04em;
 }
 
-.nav-logo span {
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.nav-logo-accent {
   color: var(--ac);
+}
+
+.logo-mark {
+  position: relative;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0.48rem;
+  background: #050505;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.logo-mark img {
+  position: absolute;
+  top: -40.07%;
+  left: -57.71%;
+  width: 214.73%;
+  max-width: none;
+}
+
+.nav-logo:hover .logo-mark {
+  border-color: color-mix(in srgb, var(--ac) 48%, rgba(255, 255, 255, 0.14));
+  box-shadow: 0 0 1rem color-mix(in srgb, var(--ac) 20%, transparent);
+  transform: translateY(-1px);
+}
+
+.preloader-mark {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1.05rem;
+  box-shadow: 0 0 2rem color-mix(in srgb, var(--ac) 14%, transparent);
+}
+
+.mobile-menu-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 .nav-links {
@@ -1759,6 +1806,10 @@
     min-height: 58px;
     padding: 0 0.45rem 0 0.9rem;
     border-radius: 0.95rem;
+  }
+
+  .nav-logo-word {
+    display: none;
   }
 
   .nav-carrd,

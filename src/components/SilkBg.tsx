@@ -217,7 +217,6 @@ export default function SilkBg({ theme }: { theme: ThemeKey }) {
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onMove);
       document.removeEventListener('visibilitychange', onVisibility);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, []);
 

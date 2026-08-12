@@ -109,7 +109,10 @@ function SiteNav({
     <>
       <header className="site-nav">
         <button className="nav-logo" onClick={() => go('top')}>
-          lukako<span>_</span>
+          <span className="logo-mark" aria-hidden="true">
+            <img src="/lukode-logo-source.png" alt="" />
+          </span>
+          <span className="nav-logo-word">lukako<span className="nav-logo-accent">_</span></span>
         </button>
 
         <nav className="nav-links" aria-label="Main navigation">
@@ -192,7 +195,12 @@ function SiteNav({
             transition={{ duration: 0.24 }}
           >
             <div className="mobile-menu-head">
-              <span>lukako_</span>
+              <span className="mobile-menu-brand">
+                <span className="logo-mark" aria-hidden="true">
+                  <img src="/lukode-logo-source.png" alt="" />
+                </span>
+                lukako<span className="nav-logo-accent">_</span>
+              </span>
               <button aria-label="Close menu" onClick={() => set_menu_open(false)}>
                 <X />
               </button>

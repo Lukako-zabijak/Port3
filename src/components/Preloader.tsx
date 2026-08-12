@@ -40,8 +40,11 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
             transition={{ duration: 0.5, ease: 'easeOut' }}
             className="flex flex-col items-center"
           >
-            <div className="font-display text-3xl font-bold tracking-tight text-white">
-              lukako<span className="text-ac">_</span>
+            <div className="flex flex-col items-center gap-3 font-display text-xl font-bold tracking-tight text-white">
+              <span className="logo-mark preloader-mark" aria-hidden="true">
+                <img src="/lukode-logo-source.png" alt="" />
+              </span>
+              <span>lukako<span className="text-ac">_</span></span>
             </div>
             <div className="mt-6 w-44 h-px bg-white/10 relative overflow-hidden rounded-full">
               <div
