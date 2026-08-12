@@ -233,6 +233,32 @@ function SiteNav({
 function Hero({ ready }: { ready: boolean }) {
   return (
     <section id="top" className="hero-section">
+      <div className="hero-code-atmosphere" aria-hidden="true">
+        <span>trade_protocol (module)</span>
+        <pre>{`local function renew_or_resolve(transaction: any, ops: any): (any?, string?)
+  if transaction.state == "completed" or transaction.state == "aborted" then
+    return transaction, nil
+  end
+
+  local renewed, renew_error = ops.renew(transaction.id)
+  if renewed ~= nil then
+    return renewed, nil
+  end
+
+  local current, read_error = read_current(transaction.id, ops)
+  if current == nil then
+    return nil, read_error or renew_error
+  end
+
+  if current.state ~= "completed" and current.state ~= "aborted"
+    and not ops.matches_fence(current) then
+    return nil, "coordinator_fenced"
+  end
+
+  return current, nil
+end`}</pre>
+      </div>
+
       <motion.div
         className="hero-main"
         initial={{ opacity: 0, y: 34 }}
