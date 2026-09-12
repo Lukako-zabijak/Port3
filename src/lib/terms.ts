@@ -35,6 +35,7 @@ export const terms_sections: terms_section[] = [
     paragraphs: [
       'A quote is fixed once accepted unless the scope changes. Work begins after the 50% upfront payment has cleared and I have received the materials needed to start.',
       'Timelines are good faith estimates. Client delays, missing dependencies, platform incidents, or changes outside my control may move the delivery date.',
+      'Any daily or weekly work-hour availability I state applies only after I have been formally hired or accepted onto the development team for the relevant role. Pre-hire tests, trial tasks, evaluations, and approval assignments are not subject to those ongoing work-hour commitments unless we expressly agree otherwise in writing.',
     ],
   },
   {
