@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion, useScroll, useSpring } from 'motion/react';
+import { motion, useScroll, useSpring, MotionConfig as motion_config } from 'motion/react';
 import { createElement as create_element } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import Cursor from './components/Cursor';
@@ -29,7 +29,7 @@ export default function App() {
     storeTheme(theme);
   }, [theme]);
 
-  return (
+  return create_element(motion_config, { reducedMotion: 'user' },
     <div className="relative min-h-screen text-zinc-300 antialiased">
       <Cursor />
       <SilkBg theme={theme} />

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowDown,
@@ -26,10 +26,15 @@ import {
   PROJECTS,
   ROBLOX_ID,
   ROBLOX_LINK,
-  SERVICES,
 } from '../lib/content';
 import { THEMES, type ThemeKey } from '../lib/themes';
 import '../portfolio.css';
+import { createElement as create_element } from 'react';
+import code_inspector from '../components/code-inspector';
+import hero_scene from '../components/hero-scene';
+import { recorded_preview, trade_playground, capability_explorer, recording_rail } from '../components/portfolio-experience';
+import { work_items } from '../lib/works';
+import '../experience.css';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 const nav_links = [
@@ -59,7 +64,7 @@ function Reveal({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 26 }}
+      initial={{ opacity: 0 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.7, delay, ease }}
@@ -99,6 +104,14 @@ function SiteNav({
 }) {
   const [menu_open, set_menu_open] = useState(false);
   const [palette_open, set_palette_open] = useState(false);
+  const [active_section, set_active_section] = useState('');
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) if (entry.isIntersecting) set_active_section(entry.target.id);
+    }, { rootMargin: '-15% 0px -60% 0px' });
+    nav_links.forEach(([, id]) => { const element = document.getElementById(id); if (element) observer.observe(element); });
+    return () => observer.disconnect();
+  }, []);
 
   const go = (id: string) => {
     set_menu_open(false);
@@ -108,7 +121,7 @@ function SiteNav({
   return (
     <>
       <header className="site-nav">
-        <button className="nav-logo" onClick={() => go('top')}>
+        <button className="nav-logo" aria-label="back to top" onClick={() => go('top')}>
           <span className="logo-mark" aria-hidden="true">
             <img src="/lukode-logo-source.png" alt="" />
           </span>
@@ -117,7 +130,7 @@ function SiteNav({
 
         <nav className="nav-links" aria-label="Main navigation">
           {nav_links.map(([label, id]) => (
-            <button key={id} onClick={() => go(id)}>
+            <button key={id} aria-current={active_section === id ? 'location' : undefined} onClick={() => go(id)}>
               {label}
             </button>
           ))}
@@ -232,7 +245,7 @@ function SiteNav({
 
 function Hero({ ready }: { ready: boolean }) {
   return (
-    <section id="top" className="hero-section">
+    <section id="top" className="hero-section hero-lab">
       <div className="hero-code-atmosphere" aria-hidden="true">
         <span>trade_protocol (module)</span>
         <pre>{`local function renew_or_resolve(transaction: any, ops: any): (any?, string?)
@@ -281,19 +294,21 @@ end`}</pre>
           </div>
         </div>
 
+        {create_element(hero_scene)}
         <aside className="hero-brief">
           <p>
             Hey, I&apos;m Luka. I have been working in Roblox Studio for 6 years and scripting
             for 5 years.
           </p>
           <p>
-            I build combat, data, trading, security, and backend systems that feel immediate
-            for players while the server keeps the final say.
+            I'm able to make combat, data, trading, security &amp; backend systems that have an immediate
+            feel for players while staying server authoritative.
           </p>
           <div className="hero-status">
             <span />
             Available for commissions
           </div>
+          {create_element(code_inspector)}
         </aside>
       </motion.div>
 
@@ -319,7 +334,7 @@ end`}</pre>
   );
 }
 
-function WorkSection() {
+function WorkSection({ on_brief }: { on_brief: (text: string) => void }) {
   const [active_project, set_active_project] = useState(0);
   const project = PROJECTS[active_project];
 
@@ -328,7 +343,7 @@ function WorkSection() {
       <SectionHeading
         number="01"
         title="Selected systems"
-        copy="Three examples of how I approach combat, security, and game architecture."
+        copy="Here you can see some examples of how i approach combat, security & game architecture (keep in mind some of these are old)"
       />
 
       <div className="workbench">
@@ -355,7 +370,8 @@ function WorkSection() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.32, ease }}
             >
-              <header>
+              {create_element(recorded_preview, { key: active_project, item: work_items[[2, 7, 0][active_project]], label: 'related recording · separate from this framework breakdown' })}
+              <div className="case-narrative"><header>
                 <span>0{active_project + 1}</span>
                 <p>{project.tag}</p>
               </header>
@@ -370,7 +386,7 @@ function WorkSection() {
                   <p>{project.built}</p>
                 </div>
               </div>
-              <ul>
+              <h4 className="case-outcome-label">What this delivers</h4><ul>
                 {project.highlights.map((item) => (
                   <li key={item}>
                     <Check />
@@ -378,6 +394,7 @@ function WorkSection() {
                   </li>
                 ))}
               </ul>
+              <button className="button-primary" onClick={() => on_brief(project.title)}>plan a similar system <ArrowUpRight /></button></div>
             </motion.article>
           </AnimatePresence>
         </div>
@@ -390,6 +407,7 @@ function WorkSection() {
         </span>
         <ArrowUpRight />
       </Link>
+      {create_element(recording_rail)}
     </section>
   );
 }
@@ -415,6 +433,7 @@ function ReviewSection() {
           <strong>{review.client}</strong>
           <p>{review.project}</p>
           <small>{review.role}</small>
+          <ul className="review-contributions">{review.proof.map((item) => <li key={item}>{item}</li>)}</ul>
         </aside>
 
         <Reveal className="review-message">
@@ -425,7 +444,7 @@ function ReviewSection() {
         </Reveal>
       </div>
 
-      <Reveal className="review-proof">
+      <details className="review-original"><summary>Read the original Discord message</summary><div className="review-proof">
         <figure>
           <img
             src={review_screenshot}
@@ -435,38 +454,7 @@ function ReviewSection() {
             loading="lazy"
           />
         </figure>
-      </Reveal>
-    </section>
-  );
-}
-
-function SkillsSection() {
-  return (
-    <section id="skills" className="page-section skills-section">
-      <SectionHeading
-        number="03"
-        title="What I can handle"
-        copy="The systems behind the game, from the first round loop to the last save."
-      />
-
-      <div className="capability-grid">
-        {SERVICES.map((service, index) => (
-          <Reveal key={service.title} delay={(index % 2) * 0.06}>
-            <article>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <div>
-                <h3>{service.title}</h3>
-                <p>{service.body}</p>
-              </div>
-            </article>
-          </Reveal>
-        ))}
-      </div>
-
-      <p className="skills-note">
-        Programming only. You bring the models, VFX, animations, and UI art. I build the
-        systems that make them work.
-      </p>
+      </div></details>
     </section>
   );
 }
@@ -510,7 +498,7 @@ function PricingSection() {
       <SectionHeading
         number="05"
         title="Rough pricing"
-        copy="Starting points before we turn your idea into a proper scope."
+        copy="These are starting prices. The final price depends on what you need."
       />
 
       <div className="pricing-table">
@@ -547,19 +535,19 @@ function PricingSection() {
   );
 }
 
-function EstimatorSection() {
+function EstimatorSection({ context, on_clear }: { context: string; on_clear: () => void }) {
   return (
-    <section className="estimator-section">
+    <section id="commission" className="estimator-section">
       <div className="estimator-shell">
         <div className="estimator-intro">
           <span>06</span>
-          <h2>Turn the idea into a rough scope</h2>
+          <h2>Tell me about your idea</h2>
           <p>
             Describe what you need. The estimator gives you a starting range before you DM me.
           </p>
         </div>
         <div className="estimator-panel">
-          <Estimator />
+          <Estimator context={context} on_clear={on_clear} />
         </div>
       </div>
     </section>
@@ -575,7 +563,7 @@ function FaqSection() {
         <SectionHeading
           number="07"
           title="Before you ask"
-          copy="The common questions, answered properly."
+          copy="Some things you might want to know before DMing me."
         />
 
         <div className="faq-list">
@@ -661,19 +649,26 @@ export default function PortfolioPage({
   on_theme: (theme: ThemeKey) => void;
 }) {
   const [ready, set_ready] = useState(false);
+  const [brief_context, set_brief_context] = useState('');
+  const plan = (context: string) => {
+    set_brief_context(context);
+    document.getElementById('commission')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  };
 
   return (
     <>
       <Preloader onDone={() => set_ready(true)} />
+      <a href="#portfolio-content" className="skip-content">skip to content</a>
       <SiteNav theme={theme} on_theme={on_theme} />
-      <main className="portfolio-page">
+      <main id="portfolio-content" className="portfolio-page">
         {ready ? <Hero ready={ready} /> : <div className="hero-section" />}
-        <WorkSection />
+        <WorkSection on_brief={plan} />
         <ReviewSection />
-        <SkillsSection />
+        {create_element(trade_playground, { on_brief: plan })}
+        {create_element(capability_explorer, { on_brief: plan })}
         <ProcessSection />
         <PricingSection />
-        <EstimatorSection />
+        <EstimatorSection context={brief_context} on_clear={() => set_brief_context('')} />
         <FaqSection />
         <ContactSection />
       </main>

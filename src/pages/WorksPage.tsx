@@ -109,9 +109,15 @@ export default function works_page() {
 
     document.title = 'Project Showcase | Lukako';
     if (description) description.content = works_description;
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    const target = window.location.hash.slice(1);
+    const frame = window.requestAnimationFrame(() => {
+      const section = target ? document.getElementById(target) : null;
+      if (section) section.scrollIntoView({ behavior: 'auto', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'auto' });
+    });
 
     return () => {
+      window.cancelAnimationFrame(frame);
       document.title = previous_title;
       if (description && previous_description) description.content = previous_description;
     };

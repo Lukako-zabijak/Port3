@@ -120,35 +120,35 @@ export const PRINCIPLES = [
 export const SERVICES = [
   {
     title: 'Core Game Loops',
-    body: 'Round cycles, lobby flow, matchmaking logic and win conditions. It is the skeleton your whole game hangs on.',
+    body: 'Rounds, lobbies, matchmaking & win conditions. Basically, the main loop that keeps your game running.',
   },
   {
     title: 'Combat Systems',
-    body: 'Weapons, hitboxes, parry and block logic, cooldowns. Feels instant on the client, decided on the server.',
+    body: 'Weapons, hitboxes, parrying, blocking & cooldowns. I make them feel responsive while keeping the important checks on the server.',
   },
   {
     title: 'Data & Saving',
-    body: 'Session locked profiles, migrations, retry logic. Your players\' progress survives crashes and dupes.',
+    body: 'Saving player progress, locking sessions & retrying failed saves. I also handle moving older data over when needed.',
   },
   {
     title: 'Anti Cheat & Security',
-    body: 'Server validation for movement, remotes and purchases. Built in from the start, not bolted on later.',
+    body: 'I check movement, remotes & purchases on the server. These checks are part of the system from the start.',
   },
   {
     title: 'NPC & AI Logic',
-    body: 'Pathfinding enemies, state machine bosses, NPC routines that don\'t tank server FPS.',
+    body: 'Enemies that find their way around, bosses with different states & other NPC behaviour, while keeping performance in mind.',
   },
   {
     title: 'UI Logic',
-    body: 'You bring the art, I wire it up. Shops, inventories, drag and drop, clean tweening.',
+    body: 'Shops, inventories, drag & drop, tweens etc. You provide the UI and i make it work.',
   },
   {
     title: 'Trading Systems',
-    body: 'Secure player to player trades, item validation, confirmation flows and transaction handling.',
+    body: 'Player to player trading, checking items & making sure both players confirm before a trade goes through.',
   },
   {
     title: 'Data Migration',
-    body: 'Move old saves into safer schemas without wiping progress or leaving players stuck between versions.',
+    body: 'I can move your old saves into a new format while keeping player progress intact.',
   },
 ];
 
@@ -232,7 +232,7 @@ export const RULES = [
 export const FAQS = [
   {
     q: 'Do you design UI or animate models?',
-    a: 'No. I\'m a programmer, not an artist. You provide the UI art, models and animations, and I write the logic that makes them actually work. That split is what keeps me fast.',
+    a: 'I only program. All other parts (VFX, SFX, UI, models etc.) must be provided.',
   },
   {
     q: 'How long does a typical system take?',

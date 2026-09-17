@@ -12,6 +12,9 @@ import {
 import { estimator_error, getEstimate, THINKING_STEPS, type Estimate } from '../lib/estimate';
 import { DISCORD_LINK } from '../lib/content';
 import { EASE } from './bits';
+import { createElement as create_element } from 'react';
+import brief_copy from './brief-copy';
+import { format_brief } from '../lib/trade-demo';
 
 interface Run {
   spec: string;
@@ -41,8 +44,10 @@ function format_cooldown(remaining: number): string {
   return `${Math.max(1, Math.ceil(remaining / 60_000))} minute${remaining > 60_000 ? 's' : ''}`;
 }
 
-export default function Estimator() {
+export default function Estimator({ context = '', on_clear }: { context?: string; on_clear?: () => void }) {
   const [input, set_input] = useState('');
+  const [devices, set_devices] = useState('');
+  const [timeframe, set_timeframe] = useState('');
   const [busy, set_busy] = useState(false);
   const [step_idx, set_step_idx] = useState(0);
   const [runs, set_runs] = useState<Run[]>([]);
@@ -68,8 +73,8 @@ export default function Estimator() {
   }, [cooldown_until]);
 
   const run = async () => {
-    const spec = input.trim();
-    if (!spec || busy) return;
+    const spec = format_brief(input, context, devices, timeframe);
+    if (!input.trim() || busy) return;
     const cooldown_remaining = get_cooldown_remaining();
     if (cooldown_remaining > 0) {
       set_notice(`Please wait ${format_cooldown(cooldown_remaining)} before running another estimate.`);
@@ -112,7 +117,7 @@ export default function Estimator() {
             AI estimator
           </span>
           <h3>Tell me what you want built.</h3>
-          <p>Give it the useful details. You will get a rough scope, price, and timeframe.</p>
+          <p>Explain what you need &amp; it'll give you a rough idea of the work, price and time involved.</p>
         </div>
         <div className="estimator-rules">
           <span>Minimum commission</span>
@@ -122,6 +127,7 @@ export default function Estimator() {
       </div>
 
       <div className="estimator-form">
+        {context && <div className="brief-context"><span>inspired by <strong>{context}</strong></span><button type="button" onClick={on_clear} disabled={busy}>remove context</button></div>}
         <label htmlFor="estimator-spec">Your project brief</label>
         <div className="estimator-input-wrap" onClick={() => input_ref.current?.focus()}>
           <textarea
@@ -141,7 +147,10 @@ export default function Estimator() {
           />
           <span>{input.length} characters</span>
         </div>
-
+        <div className="brief-fields">
+          <label htmlFor="brief-devices">Target devices<select id="brief-devices" value={devices} onChange={(event) => set_devices(event.target.value)} disabled={busy}><option value="">not decided yet</option><option value="desktop">desktop</option><option value="desktop and mobile">desktop and mobile</option><option value="desktop, mobile and console">desktop, mobile and console</option></select></label>
+          <label htmlFor="brief-timeframe">Desired timeframe<input id="brief-timeframe" value={timeframe} onChange={(event) => set_timeframe(event.target.value)} placeholder="optional — e.g. next month" maxLength={120} disabled={busy} /></label>
+        </div>
         <div className="prompt-starters" aria-label="example project briefs">
           <span>Try an example</span>
           <div>
@@ -181,6 +190,11 @@ export default function Estimator() {
         ) : null}
 
         {notice ? <p role="alert" className="estimator-notice">{notice}</p> : null}
+        <div className="commission-handoff">
+          <p>Prefer to talk first? Copy your brief and paste it into Discord. No estimate required.</p>
+          {create_element(brief_copy, { text: input.trim() ? format_brief(input, context, devices, timeframe) : '' })}
+          <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="text-action">open discord <ArrowRight /></a>
+        </div>
       </div>
 
       <div id="estimator-out" className="estimator-results">
@@ -232,9 +246,10 @@ export default function Estimator() {
                 </ul>
               </div>
 
+              {create_element(brief_copy, { text: `${item.spec}\n\nrough estimate (not a final quote): ${item.estimate.price}\ntimeframe: ${item.estimate.time}\n${item.estimate.considerations.join('\n')}` })}
               <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
                 <MessageCircle />
-                Send me this brief
+                Open Discord to send your brief
                 <ArrowRight />
               </a>
             </motion.article>

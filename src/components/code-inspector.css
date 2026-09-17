@@ -1,0 +1,59 @@
+.inspect-code-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 44px;
+  margin-top: 1rem;
+  color: var(--ac);
+  font-family: 'jetbrains mono', monospace;
+  font-size: 0.75rem;
+}
+.inspect-code-trigger:hover { color: white; }
+.inspect-code-overlay {
+  z-index: 200;
+  background: rgb(0 0 0 / 75%);
+  backdrop-filter: blur(12px);
+}
+.inspect-code-dialog {
+  position: fixed;
+  z-index: 201;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(1120px, calc(100% - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  border: 1px solid color-mix(in srgb, var(--ac) 25%, transparent);
+  border-radius: 1.5rem;
+  background: var(--bg);
+  color: #d4d4d8;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  box-shadow: 0 30px 100px #0009;
+}
+.inspect-code-heading { padding-right: 4rem; }
+.inspect-code-heading > p:first-child {
+  color: var(--ac);
+  font: 0.65rem 'jetbrains mono', monospace;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.8rem;
+}
+.inspect-code-heading h2 { font: 600 clamp(1.6rem, 3vw, 2.4rem)/1.15 'outfit', sans-serif; color: white; }
+.inspect-code-heading h2 + p { max-width: 46rem; margin-top: 0.8rem; color: #a1a1aa; line-height: 1.7; font-size: 0.9rem; }
+.inspect-code-close { position: absolute; right: 1.25rem; top: 1.25rem; min-height: 44px; padding: 0 0.7rem; color: #d4d4d8; font-size: 0.8rem; }
+.inspect-code-body { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 2rem; margin-top: 2rem; }
+.inspect-code-source { min-width: 0; }
+.inspect-code-file { padding: 0.9rem 1rem; background: var(--panel); border-bottom: 1px solid #ffffff15; border-radius: 0.7rem 0.7rem 0 0; color: var(--ac); font: 0.7rem 'jetbrains mono', monospace; }
+.inspect-code-source pre { overflow-x: auto; padding: 1rem; background: #09090b; border-radius: 0 0 0.7rem 0.7rem; color: #e4e4e7; font: 0.72rem/1.9 'jetbrains mono', monospace; tab-size: 2; }
+.inspect-code-caption { margin-top: 0.8rem; color: #a1a1aa; font-size: 0.75rem; line-height: 1.6; }
+.inspect-code-notes { display: flex; flex-direction: column; gap: 1.5rem; }
+.inspect-code-notes li > span { float: left; margin-right: 0.7rem; color: var(--ac); font: 0.75rem/1.8 'jetbrains mono', monospace; }
+.inspect-code-notes h3 { color: white; font-weight: 600; }
+.inspect-code-notes code { display: block; margin: 0.6rem 0; color: var(--ac); font-size: 0.7rem; overflow-wrap: anywhere; }
+.inspect-code-notes p { color: #a1a1aa; font-size: 0.82rem; line-height: 1.7; }
+.inspect-code-dialog :focus-visible, .inspect-code-trigger:focus-visible { outline: 2px solid var(--ac); outline-offset: 3px; }
+@media (max-width: 760px) {
+  .inspect-code-body { grid-template-columns: minmax(0, 1fr); }
+  .inspect-code-dialog { border-radius: 1rem; }
+}
