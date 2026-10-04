@@ -1,261 +1,30 @@
-import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import {
-  ArrowRight,
-  CheckCircle2,
-  Clock3,
-  DollarSign,
-  Layers3,
-  MessageCircle,
-  Sparkles,
-} from 'lucide-react';
-import { estimator_error, getEstimate, THINKING_STEPS, type Estimate } from '../lib/estimate';
-import { DISCORD_LINK } from '../lib/content';
-import { EASE } from './bits';
-import { createElement as create_element } from 'react';
+import { createElement as create_element, useState as use_state } from 'react';
+import { ArrowRight as arrow_icon } from 'lucide-react';
+import { DISCORD_LINK as discord_link } from '../lib/content';
 import brief_copy from './brief-copy';
 import { format_brief } from '../lib/trade-demo';
 
-interface Run {
-  spec: string;
-  estimate: Estimate;
-}
+export default function commission_brief({ context = '', on_clear }: { context?: string; on_clear?: () => void }) {
+  const [input, set_input] = use_state('');
+  const [devices, set_devices] = use_state('');
+  const [timeframe, set_timeframe] = use_state('');
+  const [budget, set_budget] = use_state('');
+  const [billing, set_billing] = use_state('not decided yet');
+  const brief = input.trim() ? [format_brief(input, context, devices, timeframe), `payment preference: ${billing}`, budget.trim() ? `client budget: ${budget.trim()}` : ''].filter(Boolean).join('\n\n') : '';
 
-const min_think_ms = 2100;
-const cooldown_ms = 180_000;
-const cooldown_storage_key = 'lukako-estimator-cooldown-until';
-const prompt_starters = [
-  'A combat system with raycast hits and saving',
-  'A secure player data system',
-  'An inventory and trading system',
-] as const;
-
-function get_cooldown_remaining(): number {
-  const expires_at = Number(window.localStorage.getItem(cooldown_storage_key));
-  const remaining = expires_at - Date.now();
-  if (!Number.isFinite(expires_at) || remaining <= 0) {
-    window.localStorage.removeItem(cooldown_storage_key);
-    return 0;
-  }
-  return remaining;
-}
-
-function format_cooldown(remaining: number): string {
-  return `${Math.max(1, Math.ceil(remaining / 60_000))} minute${remaining > 60_000 ? 's' : ''}`;
-}
-
-export default function Estimator({ context = '', on_clear }: { context?: string; on_clear?: () => void }) {
-  const [input, set_input] = useState('');
-  const [devices, set_devices] = useState('');
-  const [timeframe, set_timeframe] = useState('');
-  const [busy, set_busy] = useState(false);
-  const [step_idx, set_step_idx] = useState(0);
-  const [runs, set_runs] = useState<Run[]>([]);
-  const [notice, set_notice] = useState<string | null>(null);
-  const [cooldown_until, set_cooldown_until] = useState(() => {
-    if (typeof window === 'undefined') return 0;
-    return Date.now() + get_cooldown_remaining();
-  });
-  const input_ref = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    if (runs.length > 0) {
-      document.getElementById('estimator-out')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }, [runs]);
-
-  useEffect(() => {
-    const remaining = cooldown_until - Date.now();
-    if (remaining <= 0) return;
-
-    const timer = window.setTimeout(() => set_cooldown_until(0), remaining);
-    return () => window.clearTimeout(timer);
-  }, [cooldown_until]);
-
-  const run = async () => {
-    const spec = format_brief(input, context, devices, timeframe);
-    if (!input.trim() || busy) return;
-    const cooldown_remaining = get_cooldown_remaining();
-    if (cooldown_remaining > 0) {
-      set_notice(`Please wait ${format_cooldown(cooldown_remaining)} before running another estimate.`);
-      return;
-    }
-    set_notice(null);
-    set_busy(true);
-    set_step_idx(0);
-
-    const step_timer = window.setInterval(() => {
-      set_step_idx((index) => Math.min(index + 1, THINKING_STEPS.length - 1));
-    }, min_think_ms / THINKING_STEPS.length);
-
-    const started = performance.now();
-    try {
-      const estimate = await getEstimate(spec);
-      const elapsed = performance.now() - started;
-      if (elapsed < min_think_ms) {
-        await new Promise((resolve) => setTimeout(resolve, min_think_ms - elapsed));
-      }
-      set_runs((previous_runs) => [...previous_runs.slice(-2), { spec, estimate }]);
-      set_input('');
-      const next_cooldown = Date.now() + cooldown_ms;
-      window.localStorage.setItem(cooldown_storage_key, String(next_cooldown));
-      set_cooldown_until(next_cooldown);
-    } catch (error) {
-      set_notice(error instanceof estimator_error ? error.message : 'The estimator is temporarily unavailable. Please try again shortly.');
-    } finally {
-      window.clearInterval(step_timer);
-      set_busy(false);
-    }
-  };
-
-  return (
-    <section id="estimator" className="estimator-tool">
-      <div className="estimator-tool-head">
-        <div>
-          <span className="estimator-kicker">
-            <Sparkles />
-            AI estimator
-          </span>
-          <h3>Tell me what you want built.</h3>
-          <p>Explain what you need &amp; it'll give you a rough idea of the work, price and time involved.</p>
-        </div>
-        <div className="estimator-rules">
-          <span>Minimum commission</span>
-          <strong>$10 via PayPal or 4,000 Robux</strong>
-          <small>One estimate every three minutes</small>
-        </div>
+  return <section id="estimator" className="estimator-tool">
+    <div className="estimator-tool-head"><div><span className="estimator-kicker">your project</span><h3>Tell me what you want built.</h3><p>We can go with $27 an hour, or work off your budget. Send me what you need &amp; we'll figure out what fits.</p></div></div>
+    <div className="estimator-form">
+      {context && <div className="brief-context"><span>inspired by <strong>{context}</strong></span><button type="button" onClick={on_clear}>remove context</button></div>}
+      <label htmlFor="estimator-spec">Your project brief</label>
+      <div className="estimator-input-wrap"><textarea id="estimator-spec" value={input} onChange={(event) => set_input(event.target.value)} rows={5} placeholder="What do you need me to make? Include anything important." /><span>{input.length} characters</span></div>
+      <div className="brief-fields">
+        <label htmlFor="brief-billing">How would you like to work?<select id="brief-billing" value={billing} onChange={(event) => set_billing(event.target.value)}><option>not decided yet</option><option>hourly — $27/hour</option><option>work off my budget</option></select></label>
+        <label htmlFor="brief-budget">Your budget<input id="brief-budget" value={budget} onChange={(event) => set_budget(event.target.value)} placeholder="optional — include the currency" maxLength={120} /></label>
+        <label htmlFor="brief-devices">Target devices<select id="brief-devices" value={devices} onChange={(event) => set_devices(event.target.value)}><option value="">not decided yet</option><option>desktop</option><option>desktop and mobile</option><option>desktop, mobile and console</option></select></label>
+        <label htmlFor="brief-timeframe">Desired timeframe<input id="brief-timeframe" value={timeframe} onChange={(event) => set_timeframe(event.target.value)} placeholder="optional — e.g. next month" maxLength={120} /></label>
       </div>
-
-      <div className="estimator-form">
-        {context && <div className="brief-context"><span>inspired by <strong>{context}</strong></span><button type="button" onClick={on_clear} disabled={busy}>remove context</button></div>}
-        <label htmlFor="estimator-spec">Your project brief</label>
-        <div className="estimator-input-wrap" onClick={() => input_ref.current?.focus()}>
-          <textarea
-            ref={input_ref}
-            id="estimator-spec"
-            value={input}
-            onChange={(event) => {
-              set_input(event.target.value);
-              if (notice) set_notice(null);
-            }}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) run();
-            }}
-            disabled={busy}
-            rows={5}
-            placeholder="Example: I need a combat system with raycast hits, abilities, mobile controls, and player data saving."
-          />
-          <span>{input.length} characters</span>
-        </div>
-        <div className="brief-fields">
-          <label htmlFor="brief-devices">Target devices<select id="brief-devices" value={devices} onChange={(event) => set_devices(event.target.value)} disabled={busy}><option value="">not decided yet</option><option value="desktop">desktop</option><option value="desktop and mobile">desktop and mobile</option><option value="desktop, mobile and console">desktop, mobile and console</option></select></label>
-          <label htmlFor="brief-timeframe">Desired timeframe<input id="brief-timeframe" value={timeframe} onChange={(event) => set_timeframe(event.target.value)} placeholder="optional — e.g. next month" maxLength={120} disabled={busy} /></label>
-        </div>
-        <div className="prompt-starters" aria-label="example project briefs">
-          <span>Try an example</span>
-          <div>
-            {prompt_starters.map((prompt) => (
-              <button key={prompt} type="button" onClick={() => set_input(prompt)} disabled={busy}>
-                {prompt}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="estimator-actions">
-          <button
-            type="button"
-            onClick={run}
-            disabled={busy || !input.trim() || cooldown_until > Date.now()}
-            className="estimate-button"
-          >
-            {busy ? 'Working it out' : 'Get my estimate'}
-            {busy ? <span className="estimate-spinner" /> : <ArrowRight />}
-          </button>
-          <p>
-            <CheckCircle2 />
-            Rough estimate only. Final quote happens in DMs.
-          </p>
-        </div>
-
-        {busy ? (
-          <motion.div
-            className="estimator-progress"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <span />
-            <p>{THINKING_STEPS[step_idx]}</p>
-          </motion.div>
-        ) : null}
-
-        {notice ? <p role="alert" className="estimator-notice">{notice}</p> : null}
-        <div className="commission-handoff">
-          <p>Prefer to talk first? Copy your brief and paste it into Discord. No estimate required.</p>
-          {create_element(brief_copy, { text: input.trim() ? format_brief(input, context, devices, timeframe) : '' })}
-          <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="text-action">open discord <ArrowRight /></a>
-        </div>
-      </div>
-
-      <div id="estimator-out" className="estimator-results">
-        <AnimatePresence initial={false}>
-          {runs.map((item, run_index) => (
-            <motion.article
-              key={`${item.spec}-${run_index}`}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.45, ease: EASE }}
-              className="estimate-result"
-            >
-              <header>
-                <div>
-                  <span>Your estimate</span>
-                  <h4>{item.spec}</h4>
-                </div>
-                <CheckCircle2 />
-              </header>
-
-              <div className="estimate-metrics">
-                <div>
-                  <Layers3 />
-                  <span>Scope</span>
-                  <strong>{item.estimate.tier}</strong>
-                </div>
-                <div>
-                  <DollarSign />
-                  <span>Price</span>
-                  <strong>{item.estimate.price}</strong>
-                </div>
-                <div>
-                  <Clock3 />
-                  <span>Timeline</span>
-                  <strong>{item.estimate.time}</strong>
-                </div>
-              </div>
-
-              <div className="estimate-details">
-                <span>What affects the quote</span>
-                <ul>
-                  {item.estimate.considerations.map((consideration) => (
-                    <li key={consideration}>
-                      <CheckCircle2 />
-                      {consideration}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {create_element(brief_copy, { text: `${item.spec}\n\nrough estimate (not a final quote): ${item.estimate.price}\ntimeframe: ${item.estimate.time}\n${item.estimate.considerations.join('\n')}` })}
-              <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
-                <MessageCircle />
-                Open Discord to send your brief
-                <ArrowRight />
-              </a>
-            </motion.article>
-          ))}
-        </AnimatePresence>
-      </div>
-    </section>
-  );
+      <div className="commission-handoff"><p>Copy this &amp; send it to me on Discord. I'll go through it with you.</p>{create_element(brief_copy, { text: brief })}<a href={discord_link} target="_blank" rel="noopener noreferrer" className="text-action">open discord {create_element(arrow_icon)}</a></div>
+    </div>
+  </section>;
 }

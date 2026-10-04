@@ -157,64 +157,49 @@ export const PROCESS_STEPS = [
   {
     step: '01',
     title: 'Send the spec',
-    body: 'After having the AI estimator giving you a price and time estimate, feel free to DM me on Discord.',
+    body: 'Send me what you need & your budget on Discord. We can go with $27 an hour or agree on work that fits your budget.',
   },
   {
     step: '02',
-    title: 'Quote locked in',
-    body: 'I reply with a fixed Robux or USD price and a timeframe. You pay 50% upfront through the specified gamepass or PayPal, then I start writing code.',
+    title: 'Agree on the work',
+    body: 'We agree on the scope, timeframe & how payments work before i start. If we go hourly, we also agree on the hours or spending limit.',
   },
   {
     step: '03',
     title: 'Progress updates',
-    body: 'While working, I\'ll set milestones. After hitting every milestone, I\'ll DM you, show the current state the game is in, so you can make changes early. Everything stays in my private place, and I\'ll publish the changes to your actual game once you pay the remaining 50%.',
+    body: 'I\'ll DM you at milestones & show how the game is looking, so you can ask for changes early. The work stays in my private place until the agreed payments are settled.',
   },
   {
     step: '04',
     title: 'Review & handover',
-    body: 'I send a recorded demo of the finished system for review. After the included revision and remaining 50% are settled, I deliver the source and walk you through it.',
+    body: 'I send a recorded demo for you to review. Once revisions & the final payment are settled, i hand over the source and walk you through it.',
   },
 ];
 
 /* ── Pricing ── */
 export const PRICING_TIERS = [
   {
-    name: 'Extremely Small Systems',
-    desc: 'Tiny, clearly scoped programming requests that still meet the minimum commission.',
-    price: '4K R$ / $10',
-    note: 'minimum commission',
+    name: 'Hourly',
+    desc: 'We agree on what you need & a spending limit. You pay for the time i spend on the agreed work.',
+    price: '$27 / hour',
+    note: 'usd',
     featured: false,
   },
   {
-    name: 'Complex Frameworks & Small Games',
-    desc: 'Advanced standalone frameworks or the complete programming foundation for a smaller game.',
-    price: '55K R$ / $200',
-    note: 'starting price',
+    name: 'Your budget',
+    desc: 'Tell me your budget & what you want made. We\'ll agree on what fits before i start.',
+    price: 'Let\'s talk',
+    note: 'agreed together',
     featured: true,
-  },
-  {
-    name: 'Larger Games',
-    desc: 'Broader games with several connected systems, persistent data, security, and production-ready structure.',
-    price: '135K R$ / $500',
-    note: 'starting price',
-    featured: false,
-  },
-  {
-    name: 'Giant Front-Page Games',
-    desc: 'Large-scale production work with deep systems, heavy integration, and significantly broader scope.',
-    price: '270K+ R$ / $1K+',
-    note: 'scales with scope',
-    featured: false,
   },
 ];
 
 export const PAYMENT_POINTS = [
-  'Minimum commission: 4,000 Robux or $10 through PayPal — reserved for extremely small systems',
-  '50% upfront, 50% on demo — no rev-share, no percentages',
+  'Hourly work is $27 USD per hour, or we can work off your budget',
+  'We agree on the scope, payment schedule & spending limit before i start',
   'Payment is accepted in Robux through specified gamepasses or in USD through PayPal',
   'Gamepass prices account for Roblox fees so the received amount matches the quote',
-  'Fixed price once scoped — no surprise invoices',
-  'Complex frameworks and small games start at 55K Robux or $200; larger scopes rise from there',
+  'No preset project prices or automatic price estimates',
 ];
 
 export const RULES = [
@@ -236,11 +221,11 @@ export const FAQS = [
   },
   {
     q: 'How long does a typical system take?',
-    a: 'Small tasks land in 2 to 12 hours. Medium systems like a combat framework take 1 to 2 days. Large structural work runs 3 to 7 days. The estimator below gives you a tailored timeframe.',
+    a: 'It depends on what you need & what you already have. Send me the details and we\'ll agree on a timeframe before i start.',
   },
   {
     q: 'How does payment work?',
-    a: 'Payment is accepted in Robux through specified gamepasses or in USD through PayPal. You pay 50% upfront before I start, then the remaining 50% after I send a recorded demo. Playable access and source are delivered only after full payment. No percentages or rev-share.',
+    a: 'Either $27 USD an hour, or we work off your budget. We agree on payments before i start. For budget-based work, it\'s normally 50% upfront & 50% after the demo. For hourly work, we agree on prepaid hours or a deposit and billing intervals. Payment is through PayPal or agreed Robux gamepasses. Playable access & source come after full payment. No rev-share.',
   },
   {
     q: 'Will it survive exploiters?',
@@ -248,6 +233,6 @@ export const FAQS = [
   },
   {
     q: 'Can I hire you for something small?',
-    a: 'Yes, as long as it is an extremely small, clearly scoped system and meets the 4,000 Robux or $10 PayPal minimum. Run it through the estimator first, then DM me if the range looks right.',
+    a: 'Yes. Send me what you need & we can go hourly or work off your budget.',
   },
 ];

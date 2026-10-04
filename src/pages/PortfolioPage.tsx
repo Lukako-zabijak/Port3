@@ -50,7 +50,7 @@ const hero_facts = [
   ['6 years', 'in Roblox Studio'],
   ['5 years', 'of scripting'],
   ['100 players', 'tested at once'],
-  ['50 / 50', 'payment split'],
+  ['$27 / hour', 'or your budget'],
 ] as const;
 
 function Reveal({
@@ -497,8 +497,8 @@ function PricingSection() {
     <section id="pricing" className="page-section pricing-section">
       <SectionHeading
         number="05"
-        title="Rough pricing"
-        copy="These are starting prices. The final price depends on what you need."
+        title="How we can work"
+        copy="Either we go hourly, or we work off your budget. We'll agree on the work before i start."
       />
 
       <div className="pricing-table">
@@ -543,7 +543,7 @@ function EstimatorSection({ context, on_clear }: { context: string; on_clear: ()
           <span>06</span>
           <h2>Tell me about your idea</h2>
           <p>
-            Describe what you need. The estimator gives you a starting range before you DM me.
+            Tell me what you need &amp; what budget you're working with, then send it over on Discord.
           </p>
         </div>
         <div className="estimator-panel">

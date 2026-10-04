@@ -16,13 +16,16 @@ describe('terms content', () => {
   });
 
   it('publishes the approved version and effective date', () => {
-    expect(terms_version).toBe('1.3');
-    expect(terms_effective_date).toBe('4 August 2026');
+    expect(terms_version).toBe('1.4');
+    expect(terms_effective_date).toBe('5 October 2026');
   });
 
-  it('publishes the minimum commission', () => {
+  it('uses hourly or budget billing without preset project prices', () => {
     const payment = terms_sections.find((section) => section.id === 'payment');
-    expect(payment?.bullets?.join(' ')).toContain('minimum commission is 4,000 Robux');
+    const copy = payment?.bullets?.join(' ') ?? '';
+    expect(copy).toContain('$27 USD per hour');
+    expect(copy).toContain('fits your budget');
+    expect(copy).not.toMatch(/minimum commission|55,000|135,000|270,000/);
   });
 
   it('accepts payment through robux gamepasses or paypal', () => {
@@ -31,7 +34,14 @@ describe('terms content', () => {
     expect(copy).toContain('Robux');
     expect(copy).toContain('gamepasses');
     expect(copy).toMatch(/paypal/i);
-    expect(copy).toContain('270,000 Robux');
+  });
+
+  it('allows portfolio use by default with an explicit opt-out and confidentiality limits', () => {
+    const copy = terms_sections.find((section) => section.id === 'confidentiality')?.paragraphs.join(' ') ?? '';
+    expect(copy).toContain('do not need to ask for separate approval');
+    expect(copy).toContain('You may prohibit or limit portfolio use');
+    expect(copy).toContain('does not override an NDA');
+    expect(copy).toContain('third-party rights');
   });
 
   it('keeps playable access locked until full payment', () => {

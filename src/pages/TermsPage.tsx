@@ -56,7 +56,7 @@ export default function TermsPage() {
             Terms of Service<span className="text-ac">.</span>
           </h1>
           <p className="mt-7 max-w-2xl text-base leading-7 text-zinc-400 md:text-lg md:leading-8">
-            These terms explain how I handle programming commissions from quote to handover. A written project quote adds the exact scope, price, and schedule for each job.
+            These terms explain how I handle programming commissions. We agree in writing on the scope, hourly or budget-based billing, payment schedule, and timeframe before work starts.
           </p>
           <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/10 pt-5 font-mono text-[10px] tracking-[0.2em] text-zinc-500 md:text-xs">
             <span>

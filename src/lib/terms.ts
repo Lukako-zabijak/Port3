@@ -6,8 +6,8 @@ export interface terms_section {
   bullets?: string[];
 }
 
-export const terms_version = '1.3';
-export const terms_effective_date = '4 August 2026';
+export const terms_version = '1.4';
+export const terms_effective_date = '5 October 2026';
 
 export const terms_sections: terms_section[] = [
   {
@@ -33,7 +33,8 @@ export const terms_sections: terms_section[] = [
     number: '03',
     title: 'Quotes and scheduling',
     paragraphs: [
-      'A quote is fixed once accepted unless the scope changes. Work begins after the 50% upfront payment has cleared and I have received the materials needed to start.',
+      'We agree in writing to either hourly work at $27 USD per hour or a scope based on your stated budget. The agreement records the scope, billing basis, payment schedule, and any spending cap. Hourly work is billed for documented time; a client budget is not a promise to complete unspecified work within that amount.',
+      'Work begins after the agreed upfront payment has cleared and I have received the materials needed to start. Any change to the agreed scope or spending cap must be agreed in writing before the additional work begins.',
       'Timelines are good faith estimates. Client delays, missing dependencies, platform incidents, or changes outside my control may move the delivery date.',
       'Any daily or weekly work-hour availability I state applies only after I have been formally hired or accepted onto the development team for the relevant role. Pre-hire tests, trial tasks, evaluations, and approval assignments are not subject to those ongoing work-hour commitments unless we expressly agree otherwise in writing.',
     ],
@@ -43,13 +44,10 @@ export const terms_sections: terms_section[] = [
     number: '04',
     title: 'Payment',
     paragraphs: [
-      'Payment is accepted in Robux through the gamepasses specified for the commission or in USD through PayPal. Unless the quote says otherwise, 50% is due upfront and the remaining 50% is due after a recorded demonstration but before any playable access, editable source code, or final files are handed over.',
+      'Payment is accepted in USD through PayPal or in Robux through the gamepasses agreed for the commission. For hourly work, the written agreement sets the prepaid hours or deposit, billing intervals, and spending cap. For a budget-based commission, unless we agree otherwise, 50% of the agreed amount is due upfront and the remaining 50% is due after a recorded demonstration but before any playable access, editable source code, or final files are handed over.',
     ],
     bullets: [
-      'The minimum commission is 4,000 Robux or $10 through PayPal and applies only to extremely small systems. Smaller commissions are not accepted.',
-      'Complex frameworks and small games start at 55,000 Robux or $200.',
-      'Larger games start at 135,000 Robux or $500.',
-      'Giant front-page games start at 270,000 Robux or $1,000 and can scale significantly higher with scope.',
+      'My hourly rate is $27 USD per hour. Alternatively, we can agree on work that fits your budget. There are no preset project prices or automatic price estimates.',
       'Each gamepass price accounts for Roblox transaction fees so the amount I receive equals the accepted Robux quote.',
       'The quote states the exact Robux or USD amount and identifies the gamepasses or PayPal payment path used for the commission. Robux is not represented as cash or guaranteed DevEx value.',
       'You confirm that you are authorized to commission the work and use the Roblox or PayPal account making each payment.',
@@ -89,7 +87,7 @@ export const terms_sections: terms_section[] = [
     number: '08',
     title: 'Cancellation and refunds',
     paragraphs: [
-      'If either side cancels, completed work is measured against agreed milestones or documented progress. You pay for completed work, and unused prepaid amounts are returned through the original method where possible.',
+      'If either side cancels, hourly work is charged for documented hours at the agreed rate; budget-based work is measured against agreed milestones or documented progress. You pay for completed work, and unused prepaid amounts are returned through the original method where possible.',
       'Nonrecoverable platform fees may be excluded from a refund unless mandatory law requires otherwise. If I cancel, unearned amounts are returned and paid completed work may still be delivered.',
       'Applicable consumer withdrawal, refund, and other mandatory rights remain unaffected.',
     ],
@@ -121,8 +119,9 @@ export const terms_sections: terms_section[] = [
     number: '11',
     title: 'Portfolio and confidentiality',
     paragraphs: [
-      'I will not show commissioned work publicly without your written permission. Permission can limit exactly what may be shown, and refusing permission does not affect the service you receive.',
-      'Private assets, unreleased projects, credentials, and confidential project information will not be disclosed.',
+      'Unless you explicitly tell me otherwise in writing, I may use commissioned work and related project materials in my portfolio, including screenshots, recordings, demonstrations, and relevant code excerpts. By accepting these terms, you grant permission for that portfolio use; I do not need to ask for separate approval each time.',
+      'You may prohibit or limit portfolio use by telling me in writing, including through Discord. I will follow that restriction for future use and remove affected material from portfolio pages I control. Opting out does not affect the service you receive.',
+      'This portfolio permission does not override an NDA, an agreed confidentiality or release restriction, third-party rights, or mandatory law. Credentials, personal data, and other protected confidential information will not be disclosed. Client-provided materials may be shown only to the extent you are entitled to grant that use.',
     ],
   },
   {
